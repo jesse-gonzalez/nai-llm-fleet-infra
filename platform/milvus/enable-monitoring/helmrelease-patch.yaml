@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  values:
+    # Enabling Service Monitor
+    metrics:
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          monitoring: apps

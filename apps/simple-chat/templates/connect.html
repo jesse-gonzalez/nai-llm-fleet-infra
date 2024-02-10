@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect to Inference Host</title>
+    <!-- Adding jQuery for easy AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#connectForm').submit(function (e) {
+                e.preventDefault();
+                var host = $('#inferenceHost').val();
+                $.ajax({
+                    type: "POST",
+                    url: "/connect",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify({ 'inference_host': host }),
+                    success: function (data) {
+                        alert(data.message);
+                        window.location.href = '/'; // Redirect to the main page
+                    },
+                    error: function (error) {
+                        alert('Failed to connect: ' + error.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>Connect to a New Inference Host</h1>
+
+    <form id="connectForm">
+        <label for="inferenceHost">Inference Host:</label><br>
+        <input type="text" id="inferenceHost" name="inferenceHost" required><br><br>
+        <input type="submit" value="Connect">
+    </form>
+
+</body>
+
+</html>

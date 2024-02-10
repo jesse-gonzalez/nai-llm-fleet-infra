@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+  name: uptrace-grpc-ingress
+  namespace: uptrace
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: uptrace-grpc.${ingress_subdomain}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: uptrace
+            port:
+              number: 14317
+  tls:
+  - secretName: uptrace-grpc-tls
+    hosts:
+    - uptrace-grpc.${ingress_subdomain}

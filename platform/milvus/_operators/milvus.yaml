@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: milvus
+  labels:
+    toolkit.fluxcd.io/tenant: platform-team
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  interval: 4h
+  url: https://zilliztech.github.io/milvus-helm/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  targetNamespace: ${namespace_name:=milvus}
+  chart:
+    spec:
+      chart: milvus
+      interval: 1h
+      sourceRef:
+        kind: HelmRepository
+        name: milvus
+      version: "4.1.9"
+  interval: 1h
+  values:
+    cluster:
+      enabled: false
+    image:
+      all:
+        pullSecrets:
+        - regcred
+    etcd:
+      replicaCount: 1
+    minio:
+      mode: standalone
+    pulsar:
+      enabled: false

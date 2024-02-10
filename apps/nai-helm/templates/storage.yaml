@@ -1,0 +1,36 @@
+{{- if .Values.useExistingNFS }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Namespace }}-{{ .Release.Name }}-volume
+  labels:
+    storage: nfs
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: {{ .Values.nfs.export }}
+    server: {{ .Values.nfs.server }}
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-claim
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  selector:
+    matchLabels:
+      storage: nfs
+  storageClassName: ""
+  volumeMode: Filesystem
+  volumeName: {{ .Release.Namespace }}-{{ .Release.Name }}-volume
+{{- end }}

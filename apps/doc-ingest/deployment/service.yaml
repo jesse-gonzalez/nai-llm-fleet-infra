@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: doc-ingest
+spec:
+  template:
+    spec:
+      containers:
+      - image: quay.io/wolfgangntnx/doc-ingest:0.0.1
+        env:
+        - name: MILVUS_HOST
+          value: "10.54.78.13"

@@ -1,0 +1,12 @@
+specVersion: 0.35.0
+name: doc-ingest
+runtime: python
+registry: quay.io/wolfgangntnx
+image: quay.io/wolfgangntnx/doc-ingest:latest
+imageDigest: sha256:2d3a2816d145fde15c2c5eb299eef54ba5b26e1cf125c506d6387f0f2ddd8601
+created: 2023-10-26T16:36:49.430530972Z
+build:
+  builder: pack
+  pvcSize: 256Mi
+deploy:
+  namespace: default

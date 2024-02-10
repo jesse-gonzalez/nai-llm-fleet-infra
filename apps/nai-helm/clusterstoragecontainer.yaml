@@ -1,0 +1,17 @@
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: ClusterStorageContainer
+metadata:
+  name: nutanix-downloader
+spec:
+  container:
+    name: storage-initializer
+    image: quay.io/wolfgangntnx/nai-utils:0.2
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 1Gi
+        cpu: "1"
+  supportedUriFormats:
+    - prefix: ntnx://

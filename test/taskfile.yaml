@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+
+  bootstrap:
+    deps: [init-configs]
+
+  init-configs:
+    cmds:
+    - task: :bootstrap:init-configs
+
+  ## tests that all defaults have been set per taskfile
+  default-set:
+    vars:
+      TASK_FILES:
+        sh: find -f .taskfiles/*.yaml | cut -d / -f2 | cut -d . -f1
+    cmds:
+    - for: {var: TASK_FILES}
+      task: ':{{.ITEM}}:default'

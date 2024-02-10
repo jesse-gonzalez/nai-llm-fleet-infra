@@ -1,0 +1,26 @@
+version: '3'
+
+env:
+  K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME | default "nke-nvd-llm-management" }}'
+
+dotenv: ['configs/_common/.env']
+
+includes:
+  helpers: ./.taskfiles/helpers.yaml
+  init: ./.taskfiles/init.yaml
+  bootstrap: ./.taskfiles/bootstrap.yaml
+  kubectl: ./.taskfiles/kubectl.yaml
+  nke: ./.taskfiles/nke.yaml
+  flux: ./.taskfiles/flux.yaml
+  tofu: ./.taskfiles/tofu.yaml
+  sops: ./.taskfiles/sops.yaml
+  test: ./test
+
+tasks:
+
+  default:
+    silent: true
+    cmds:
+    - task -l
+
+

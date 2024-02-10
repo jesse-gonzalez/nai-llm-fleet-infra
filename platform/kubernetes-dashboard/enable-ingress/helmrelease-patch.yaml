@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+  namespace: flux-system
+spec:
+  values:
+    metrics-server:
+      enabled: false
+    nginx:
+      enabled: false
+    cert-manager:
+      enabled: false
+    app:
+      ingress:
+        enabled: true
+        hosts:
+        - dashboard.${ingress_subdomain}
+        ingressClassName: nginx
+        secretName: kubernetes-dashboard-certs
+        issuer:
+          name: letsencrypt
+          scope: cluster

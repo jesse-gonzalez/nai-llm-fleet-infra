@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  values:
+    # Disable MinIO and configuring External S3
+    minio:
+      enabled: false
+    externalS3:
+      enabled: true
+      host: "${objects_host}"
+      port: "${objects_port}"
+      accessKey: "${objects_access_key}"
+      secretKey: "${objects_secret_key}"
+      useSSL: ${objects_use_ssl}
+      bucketName: "${objects_bucket_name}"
+      rootPath: ""
+      region: "${objects_region}"
+      useVirtualHost: false
+

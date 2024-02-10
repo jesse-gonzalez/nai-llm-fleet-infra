@@ -1,0 +1,10 @@
+model: llama2_7b
+revision: 6fdf2e60f86ff2481f2241aaee459f85b5b0bbb9
+temperature: 0.6
+repPenalty: 1.2
+topP: 0.9
+maxTokens: 1000
+useExistingNFS: true
+nfs:
+  server: 10.54.78.48
+  export: /llm

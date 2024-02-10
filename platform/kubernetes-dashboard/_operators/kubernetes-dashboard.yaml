@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubernetes-dashboard
+  labels:
+    toolkit.fluxcd.io/tenant: platform-team
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kubernetes-dashboard
+  namespace: flux-system
+spec:
+  interval: 4h
+  url: https://kubernetes.github.io/dashboard/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+  namespace: flux-system
+spec:
+  targetNamespace: ${namespace_name:=kubernetes-dashboard}
+  chart:
+    spec:
+      chart: kubernetes-dashboard
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-dashboard
+      version: "*"
+  interval: 30m
+  values: {}

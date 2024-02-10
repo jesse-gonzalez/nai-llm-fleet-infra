@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nai-llm
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/wolfganghuse/nai-helm.git'  
+    targetRevision: main
+    path: .
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+        useExistingNFS: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: llm1 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

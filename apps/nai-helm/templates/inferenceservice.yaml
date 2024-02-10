@@ -1,0 +1,44 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  predictor:
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "gpu"
+        effect: "NoSchedule"
+    model:
+      env:
+      - name: TS_SERVICE_ENVELOPE
+        value: body
+      - name: TS_NUMBER_OF_GPU
+        value: "1"
+      - name: NAI_TEMPERATURE
+        value: "{{ .Values.temperature }}"
+      - name: NAI_REP_PENALTY
+        value: "{{ .Values.repPenalty }}"
+      - name: NAI_TOP_P
+        value: "{{ .Values.topP }}"
+      - name: NAI_MAX_TOKENS
+        value: "{{ .Values.maxTokens }}"
+      modelFormat:
+        name: pytorch
+      protocolVersion: v2
+      resources:
+        limits:
+          cpu: "8"
+          memory: 32Gi
+          nvidia.com/gpu: "1"
+        requests:
+          cpu: "8"
+          memory: 32Gi
+          nvidia.com/gpu: "1"    
+      {{- if not .Values.useExistingNFS }}
+      storageUri: ntnx://{{ .Values.model }}/{{ .Values.revision }}
+      {{- end }}
+      {{- if .Values.useExistingNFS }}
+      storageUri: pvc://{{ .Release.Name }}-claim/{{ .Values.model }}/{{ .Values.revision }}
+      {{- end }}

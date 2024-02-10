@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  values:
+    dataCoordinator:
+      replicas: 2
+      activeStandby:
+        enabled: True
+    dataNode:
+      replicas: 2
+    indexCoordinator:
+      replicas: 2
+    indexNode:
+      replicas: 2
+    queryCoordinator:
+      replicas: 2
+      activeStandby:
+        enabled: True
+    queryNode:
+      replicas: 2
+    rootCoordinator:
+      replicas: 2
+      activeStandby:
+        enabled: True

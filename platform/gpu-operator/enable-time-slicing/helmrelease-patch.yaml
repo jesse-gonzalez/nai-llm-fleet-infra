@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gpu-operator
+  namespace: flux-system
+spec:
+  values:
+    devicePlugin:
+      config:
+        name: time-slicing-config

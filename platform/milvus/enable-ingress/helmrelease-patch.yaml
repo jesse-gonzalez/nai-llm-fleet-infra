@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  values:
+    #ATTU Frontend
+    attu:
+      enabled: true
+      name: attu
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+        ingressClassName: nginx
+        hosts:
+        - attu-dev.${ingress_subdomain}
+        tls:
+        - hosts:
+          - attu-dev.${ingress_subdomain}
+          secretName: attu-dev-tld-secret

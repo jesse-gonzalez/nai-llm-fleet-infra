@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: uptrace
+  namespace: flux-system
+spec:
+  values:
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+      hosts:
+      - host: uptrace.${ingress_subdomain}
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - secretName: uptrace-tls
+        hosts:
+        - uptrace.${ingress_subdomain}

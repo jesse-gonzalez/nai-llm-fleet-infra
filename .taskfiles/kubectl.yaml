@@ -1,0 +1,11 @@
+version: '3'
+
+vars:
+  REQUIRED_TOOLS_LIST: kubectl
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    vars:
+      REQUIRED_TOOLS_LIST: "{{.REQUIRED_TOOLS_LIST}}"

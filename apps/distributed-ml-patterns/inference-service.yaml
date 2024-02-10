@@ -1,0 +1,15 @@
+# https://kserve.github.io/website/modelserving/v1beta1/tensorflow/
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: flower-sample
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: tensorflow
+      # This is only needed on Mac M1
+      image: "emacski/tensorflow-serving:2.6.0"
+      # https://kserve.github.io/website/modelserving/storage/pvc/pvc/
+      # Note that we are skipping `mountPath: /trained_model`
+      storageUri: "pvc://strategy-volume/saved_model_versions"

@@ -1,0 +1,10 @@
+model: gpt2
+revision:
+temperature: 0.2
+repPenalty: 1.75
+topP: 0.9
+maxTokens: 200
+useExistingNFS: false
+nfs:
+  server: 10.54.78.48
+  export: /llm

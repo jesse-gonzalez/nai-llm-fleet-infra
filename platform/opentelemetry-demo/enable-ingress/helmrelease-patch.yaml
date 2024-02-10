@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: opentelemetry-demo
+  namespace: flux-system
+spec:
+  values:
+    components:
+      frontendProxy:
+        ingress:
+          enabled: true
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
+          ingressClassName: nginx
+          hosts:
+            - host: otel-demo.${ingress_subdomain}
+              paths:
+                - path: /
+                  pathType: Prefix
+                  port: 8080
+          tls:
+          - hosts:
+            - otel-demo.${ingress_subdomain}
+            secretName: otel-demo-tld-secret

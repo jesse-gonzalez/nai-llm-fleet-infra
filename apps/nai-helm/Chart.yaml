@@ -1,0 +1,6 @@
+apiVersion: v2
+name: nai-llm
+description: A Helm chart for Deploying NAI LLM workload
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Model</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Add custom styles here */
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-box" style="height: 400px; border: 1px solid black; padding: 10px; overflow-y: scroll;">
+        <!-- Chat messages will go here -->
+    </div>
+    
+    <textarea id="user-input" placeholder="Type your message..." style="width: 80%; height: 50px;"></textarea>
+    <button type="button" onclick="sendMessage()">Send</button>
+    <button type="button" onclick="window.location.href='/connect'">Change Host</button> <!-- Added this button -->
+
+    <script>
+        function appendMessage(who, message) {
+            $('#chat-box').append('<p><b>' + who + ':</b> ' + message + '</p>');
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Auto scroll to the bottom
+        }
+
+        function sendMessage() {
+            var message = $('#user-input').val();
+            appendMessage('You', message);
+            $('#user-input').val('');
+
+            // Display loading message or spinner
+            appendMessage('Model', '...');
+
+            $.post('/ask', {user_message: message}, function(response) {
+                $('#chat-box p:last').remove();  // Remove loading message or spinner
+                appendMessage('Model', response.model_response);
+            }).fail(function() {
+                $('#chat-box p:last').remove();  // Remove loading message or spinner
+                appendMessage('Model', 'Failed to get a response.');
+            });
+        }
+    </script>
+</body>
+
+</html>
