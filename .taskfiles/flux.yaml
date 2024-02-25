@@ -62,8 +62,8 @@ tasks:
     cmds:
     - 'git add clusters/{{.K8S_CLUSTER_NAME}}'
     - 'git commit --quiet -am "add: cluster-configs for new cluster {{.K8S_CLUSTER_NAME}}"'
-    - 'git pull origin --quiet --autostash --set-upstream ${GITHUB_BRANCH}'
-    - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet --set-upstream ${GITHUB_BRANCH}'
+    - 'git pull origin --quiet --autostash'
+    - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet'
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_BRANCH]
 
