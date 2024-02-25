@@ -43,7 +43,7 @@ resource "github_repository_file" "secrets" {
   branch              = var.github_branch
   commit_message      = "[Flux] Configure cluster secrets for ${var.cluster_name}"
   overwrite_on_create = var.overwrite_files_on_create
-  file                = "${local.flux_platform_path}/cluster-secrets.yaml"
+  file                = "${local.flux_platform_path}/cluster-secrets.sops.yaml"
   content             = templatefile(
     "${path.module}/templates/secrets.sample.yaml", 
     {

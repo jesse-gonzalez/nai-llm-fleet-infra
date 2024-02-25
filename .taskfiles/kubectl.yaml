@@ -9,3 +9,75 @@ tasks:
   - task: :helpers:validate
     vars:
       REQUIRED_TOOLS_LIST: "{{.REQUIRED_TOOLS_LIST}}"
+
+  nodes:
+    silent: false
+    deps: [default]
+    desc: List all the nodes in your cluster
+    cmds:
+    - kubectl get nodes {{.CLI_ARGS | default "-o wide"}}
+
+  pods:
+    silent: false
+    deps: [default]
+    desc: List all the pods in your cluster
+    cmds:
+    - kubectl get pods {{.CLI_ARGS | default "-A"}}
+
+  kustomizations:
+    silent: false
+    deps: [default]
+    desc: List all the kustomizations in your cluster
+    cmds:
+    - kubectl get kustomizations {{.CLI_ARGS | default "-A"}}
+
+  helmreleases:
+    silent: false
+    deps: [default]
+    desc: List all the helmreleases in your cluster
+    cmds:
+    - kubectl get helmreleases {{.CLI_ARGS | default "-A"}}
+
+  helmrepositories:
+    silent: false
+    deps: [default]
+    desc: List all the helmrepositories in your cluster
+    cmds:
+    - kubectl get helmrepositories {{.CLI_ARGS | default "-A"}}
+
+  gitrepositories:
+    silent: false
+    deps: [default]
+    desc: List all the gitrepositories in your cluster
+    cmds:
+    - kubectl get gitrepositories {{.CLI_ARGS | default "-A"}}
+
+  certificates:
+    silent: false
+    deps: [default]
+    desc: List all the certificates in your cluster
+    cmds:
+    - kubectl get certificates {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificaterequests {{.CLI_ARGS | default "-A"}}
+
+  ingresses:
+    silent: false
+    deps: [default]
+    desc: List all the ingresses in your cluster
+    cmds:
+    - kubectl get ingress {{.CLI_ARGS | default "-A"}}
+
+  services:
+    silent: false
+    deps: [default]
+    desc: List all the services in your cluster
+    cmds:
+    - kubectl get services {{.CLI_ARGS | default "-A"}}
+
+  endpoints:
+    silent: false
+    deps: [default]
+    desc: List all the services in your cluster
+    cmds:
+    - kubectl get services {{.CLI_ARGS | default "-A"}}
+

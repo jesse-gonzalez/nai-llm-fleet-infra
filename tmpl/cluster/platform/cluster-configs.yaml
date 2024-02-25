@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "${BOOTSTRAP_cluster_name}"
+  environment: "${BOOTSTRAP_environment}"
+  cluster_profile: "${BOOTSTRAP_cluster_profile}"
+  kube_vip_ipam_range: "${BOOTSTRAP_kube_vip_ipam_range}"
+  wildcard_ingress_subdomain: "${BOOTSTRAP_wildcard_ingress_subdomain}"
+  milvus_objects_bucket_name: "${BOOTSTRAP_milvus_objects_bucket_name}"
+  milvus_objects_host: "${BOOTSTRAP_milvus_objects_host}"
+  milvus_objects_port: "${BOOTSTRAP_milvus_objects_port}"
+  milvus_objects_region: "${BOOTSTRAP_milvus_objects_region}"
+  milvus_objects_use_ssl: "${BOOTSTRAP_milvus_objects_use_ssl}"
+  gpu_cuda_toolkit_version: "${BOOTSTRAP_gpu_cuda_toolkit_version}"
+  gpu_time_slicing_replica_count: "${BOOTSTRAP_gpu_time_slicing_replica_count}"

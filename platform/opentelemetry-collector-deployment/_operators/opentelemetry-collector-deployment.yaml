@@ -56,7 +56,7 @@ spec:
           spike_limit_percentage: 15
       exporters:
         otlp/uptrace:
-          endpoint: uptrace-grpc.${ingress_subdomain}
+          endpoint: uptrace-grpc.${wildcard_ingress_subdomain}
           tls:
             insecure: false
           headers:

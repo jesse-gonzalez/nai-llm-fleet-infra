@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "nai-llm-prod-mgmt"
+  environment: "prod"
+  cluster_profile: "llm-management"
+  kube_vip_ipam_range: "10.38.16.15-10.38.16.20"
+  wildcard_ingress_subdomain: "nai-llm-prod-mgmt.ncnlabs.ninja"
+  milvus_objects_bucket_name: "milvus"
+  milvus_objects_host: "10.38.16.14"
+  milvus_objects_port: "80"
+  milvus_objects_region: "us-east-1"
+  milvus_objects_use_ssl: "false"
+  gpu_cuda_toolkit_version: "v1.14.3-centos7"
+  gpu_time_slicing_replica_count: "4"

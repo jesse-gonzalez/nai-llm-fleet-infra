@@ -11,11 +11,11 @@ spec:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
       hosts:
-      - host: uptrace.${ingress_subdomain}
+      - host: uptrace.${wildcard_ingress_subdomain}
         paths:
         - path: /
           pathType: Prefix
       tls:
       - secretName: uptrace-tls
         hosts:
-        - uptrace.${ingress_subdomain}
+        - uptrace.${wildcard_ingress_subdomain}

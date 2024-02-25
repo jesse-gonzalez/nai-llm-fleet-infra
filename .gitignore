@@ -79,13 +79,15 @@ opentofu/**-config
 kind-**
 
 # ignore secrets / sops yaml file
-config/**/cluster-secrets.yaml.dec
-cluster-secrets.yaml.dec
+config/**/cluster-secrets.sops.yaml.dec
+cluster-secrets.sops.yaml.dec
 
 # ignore local secrets files
 cluster-**.yaml
 !**/platform/cluster-configs.yaml
-!**/platform/cluster-secrets.yaml
+!**/platform/cluster-secrets.sops.yaml
+!cluster-configs.sample.yaml
+!cluster-secrets.sample.yaml
 
 ## devcontainer stuff
 devcontainer.env

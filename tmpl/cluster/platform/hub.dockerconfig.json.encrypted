@@ -1,0 +1,1 @@
+{"auths": {"http://docker-registry/v2/": {"username":"${BOOTSTRAP_docker_hub_user}","password":"${BOOTSTRAP_docker_hub_password}","auth":"${BOOTSTRAP_docker_hub_auth}"} }}

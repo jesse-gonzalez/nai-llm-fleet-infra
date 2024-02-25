@@ -15,7 +15,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - dashboard.${ingress_subdomain}
+        - dashboard.${wildcard_ingress_subdomain}
         ingressClassName: nginx
         secretName: kubernetes-dashboard-certs
         issuer:

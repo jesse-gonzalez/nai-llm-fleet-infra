@@ -11,39 +11,59 @@ tasks:
       REQUIRED_TOOLS_LIST: "{{.REQUIRED_TOOLS_LIST}}"
 
   full:
-    silent: true
-    deps: [nke-prompt]
-    preconditions:
-    - sh: test -f ./cluster-secrets.yaml
-      msg: './cluster-secrets.yaml not found, please copy ./cluster-secrets.yaml.example and update manually'
-    - sh: test -f ./cluster-configs.yaml
-      msg: './cluster-configs.yaml not found, please copy ./cluster-configs.yaml.example and update manually'
+    silent: false
+    deps: [default]
     desc: Initializes cluster configs, commits and pushes remotely & bootstraps FluxCD
+    vars:
+      K8S_DISTRO:
+        sh: 'task bootstrap:gum -- choose --header "What is Kubernetes Distribution?" "nke" "ocp" "rke2" "eksa"'
+      CHECK_NKE:
+        sh: '{{if eq .K8S_DISTRO "nke"}} task bootstrap:nke-prompt {{end}}'
+      K8S_CLUSTER_CONTEXT:
+        sh: kubectl config view -o jsonpath='{range .contexts[*]}{.name}{"\n"}{end}' | gum filter --placeholder "Select Target Kubernetes Cluster Context..."
+      K8S_CLUSTER_NAME:
+        sh: kubectl config view -o jsonpath='{.contexts[?(@.name == "{{.K8S_CLUSTER_CONTEXT}}")].context.cluster}'
     cmds:
-    - task: configs
-    - task: :flux:bootstrap
+    # - task: nke-prompt
+    #   vars:
+    #     CURRENT_K8S_CLUSTER: "{{.K8S_CLUSTER_NAME}}"
+    - task: bootstrap-configs
+      vars:
+        K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
+    # # # - task: init-configs
+    # # #   vars:
+    # # #     K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
+    - task: :flux:init
+      vars:
+        K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
 
   nke-prompt:
+    silent: true
+    deps: [default]
     vars:
+      CURRENT_K8S_CLUSTER:
+        sh: kubectl config view -o jsonpath='{.contexts[0].name}'
       NKE_PROMPT:
-        sh: 'task bootstrap:gum -- choose --header "Current K8s Cluster: {{.K8S_CLUSTER_NAME}}, Would you like to switch to different NKE cluster?" "yes" "no"'
+        sh: 'task bootstrap:gum -- choose --header "This is current K8s cluster context: {{.CURRENT_K8S_CLUSTER}}, Would you like to switch NKE cluster? You will be prompted for PC creds..." "yes" "no"'
     cmds:
     - '{{if eq .NKE_PROMPT "yes"}} task nke:select-creds {{end}}'
 
-  configs:
+  init-configs:
     silent: true
     deps: [default]
     desc: Initializes Cluster Configs based on Cluster Profile and Target K8s Cluster
     interactive: true
     vars:
+      K8S_DISTRO:
+        sh: 'task bootstrap:gum -- choose --header "What is Kubernetes Distribution?" "nke" "ocp" "rke2" "eksa"'
+      CHECK_NKE:
+        sh: '{{if eq .K8S_DISTRO "nke"}} task bootstrap:nke-prompt {{end}}'
       K8S_CLUSTER_CONTEXT:
         sh: kubectl config view -o jsonpath='{range .contexts[*]}{.name}{"\n"}{end}' | gum filter --placeholder "Select Target Kubernetes Cluster Context..."
       K8S_CLUSTER_NAME:
         sh: kubectl config view -o jsonpath='{.contexts[?(@.name == "{{.K8S_CLUSTER_CONTEXT}}")].context.cluster}'
-      K8S_DISTRO:
-        sh: 'task bootstrap:gum -- choose --header "What is Kubernetes Distribution?" "nke" "ocp" "rke2" "eksa"'
       CLUSTER_PROFILE:
-        sh: 'task bootstrap:gum -- choose --header "Which Cluster Profile would you like to Bootstrap?" "llm-management" "llm-workloads"'
+        sh: 'task bootstrap:gum -- choose --header "Which Cluster Profile would you like to Bootstrap?" $(find clusters/_profiles/** -type d -not -name _base -maxdepth 0 -print | cut -d / -f 3)'
       ENVIRONMENT_TYPE:
         sh: 'task bootstrap:gum -- choose --header "What Type of Environment is this?" "non-prod" "prod" '
       CLUSTER_ADDONS:
@@ -56,36 +76,50 @@ tasks:
         CLUSTER_PROFILE: "{{.CLUSTER_PROFILE}}"
         ENVIRONMENT_TYPE: "{{.ENVIRONMENT_TYPE}}"
         CLUSTER_ADDONS: "{{.CLUSTER_ADDONS}}"
-    - task: init-local-configs
-      vars:
-        K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
-        K8S_DISTRO: "{{.K8S_DISTRO}}"
-        CLUSTER_PROFILE: "{{.CLUSTER_PROFILE}}"
-        ENVIRONMENT_TYPE: "{{.ENVIRONMENT_TYPE}}"
-        CLUSTER_ADDONS: "{{.CLUSTER_ADDONS}}"
+        # - task: init-local-configs
+        #   vars:
+        #     K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
+        #     K8S_DISTRO: "{{.K8S_DISTRO}}"
+        #     CLUSTER_PROFILE: "{{.CLUSTER_PROFILE}}"
+        #     ENVIRONMENT_TYPE: "{{.ENVIRONMENT_TYPE}}"
+        #     CLUSTER_ADDONS: "{{.CLUSTER_ADDONS}}"
 
   print-vars:
     silent: true
+    deps: [default]
     cmds:
     - 'echo Target Kubernetes Cluster: $(gum style "{{.K8S_CLUSTER_NAME}}")'
     - 'echo Environment Details: $(gum style "{{.K8S_DISTRO}}:{{.CLUSTER_PROFILE}}:{{.ENVIRONMENT_TYPE}}")'
     - 'echo Additional Feature Addons: '
     - for: {var: CLUSTER_ADDONS}
       cmd: 'echo - $(gum style --foreground=#99000 {{.ITEM}})'
+    requires:
+      vars: [K8S_CLUSTER_NAME, CLUSTER_PROFILE, ENVIRONMENT_TYPE, CLUSTER_ADDONS]
 
   init-local-configs:
-    preconditions:
-    - sh: test -f ./cluster-secrets.yaml
-      msg: './cluster-secrets.yaml not found, please copy ./cluster-secrets.yaml.example and update manually'
-    - sh: test -f ./cluster-configs.yaml
-      msg: './cluster-configs.yaml not found, please copy ./cluster-configs.yaml.example and update manually'
     silent: true
     desc: Runs ./init_local_configs.sh bash script to configure cluster configs and encrypt secrets with sops
     deps: [default]
+    preconditions:
+    - sh: test -f ./cluster-secrets.sops.yaml
+      msg: './cluster-secrets.sops.yaml not found, please copy ./cluster-secrets.sample.yaml and update manually'
+    - sh: test -f ./cluster-configs.yaml
+      msg: './cluster-configs.yaml not found, please copy ./cluster-configs.sample.yaml and update manually'
     cmds:
     - ./init_local_configs.sh {{.K8S_CLUSTER_NAME}} {{.CLUSTER_PROFILE}} {{.ENVIRONMENT_TYPE}} true
     requires:
-      vars: [PROJECT_DIR, K8S_CLUSTER_NAME, CLUSTER_PROFILE, ENVIRONMENT_TYPE]
+      vars: [K8S_CLUSTER_NAME, CLUSTER_PROFILE, ENVIRONMENT_TYPE]
+
+  bootstrap-configs:
+    silent: false
+    desc: Runs ./bootstrap_configs.sh script to configure cluster configs and encrypt secrets with sops
+    deps: [default]
+    preconditions:
+    - sh: ./bootstrap_configs.sh --cluster_name {{.K8S_CLUSTER_NAME}} --verify
+    cmds:
+    - ./bootstrap_configs.sh --cluster_name {{.K8S_CLUSTER_NAME}}
+    requires:
+      vars: [K8S_CLUSTER_NAME]
 
   ## needed to make sure environment variables are passed into shell cli in dynamic variables
   gum:

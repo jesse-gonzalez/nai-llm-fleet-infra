@@ -17,21 +17,33 @@ tasks:
     cmds:
     - flux check --pre
 
-  bootstrap:
+  init:
     silent: false
-    desc: Executes FluxCD Bootstrap against Target K8s Cluster
     deps: [verify]
-    vars:
-      K8S_CLUSTER_NAME:
-        sh: kubectl config view --minify -o jsonpath='{.contexts[0].context.cluster}'
     precondition:
     - test -d {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform
     cmds:
     - kubectl create ns flux-system --dry-run=client -o yaml | kubectl apply -f -
     - task: create-decrypt-secret
     - task: git-promote
+      vars:
+        K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
+    - task: bootstrap
+      vars:
+        K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
+    - 'git pull origin --autostash'
+    - task: reconcile
+    requires:
+      vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH]
+
+  bootstrap:
+    silent: false
+    deps: [default]
+    desc: Executes FluxCD Bootstrap against Target K8s Cluster
+    cmds:
+    - echo ${GITHUB_TOKEN}, ${GITHUB_USER} {{.GITHUB_REPO}} {{.GITHUB_BRANCH}} {{.K8S_CLUSTER_NAME}}
     - |
-      export GITHUB_TOKEN={{.GITHUB_TOKEN}} && \
+      export GITHUB_TOKEN=${GITHUB_TOKEN} && \
       flux bootstrap github \
         --owner={{.GITHUB_USER}} \
         --repository={{.GITHUB_REPO}} \
@@ -39,8 +51,6 @@ tasks:
         --personal \
         --path=clusters/{{.K8S_CLUSTER_NAME}} \
         --force
-    - task: reconcile
-    - 'git pull origin --autostash'
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH]
 
@@ -49,22 +59,24 @@ tasks:
     deps: [default]
     desc: Adds newly created cluster to git and pushes to remote branch
     precondition:
-    - test -f {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform/cluster-secrets.yaml
+    - test -f {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform/cluster-secrets.sops.yaml
     - test -f {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform/cluster-configs.yaml
     - test -f {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform/kustomization.yaml
     prompt: "This will commit the code locally, push remotely and bootstrap the following cluster: {{.K8S_CLUSTER_NAME}}. Do you wish to continue?"
     cmds:
     - 'git add clusters/{{.K8S_CLUSTER_NAME}}'
-    - 'git commit -am "add: cluster-configs for new cluster {{.K8S_CLUSTER_NAME}}"'
-    - 'git pull origin --autostash'
-    - 'export GITHUB_TOKEN={{.GITHUB_TOKEN}} && git push origin'
+    - 'git commit --quiet -am "add: cluster-configs for new cluster {{.K8S_CLUSTER_NAME}}"'
+    - 'git pull origin --quiet --autostash --set-upstream {{.GITHUB_BRANCH}}'
+    - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet --set-upstream {{.GITHUB_BRANCH}}'
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_BRANCH]
 
   create-decrypt-secret:
-    deps: [default]
     silent: true
+    deps: [default]
     desc: Create K8s secret with SOPS age key
+    vars:
+      SOPS_AGE_KEY_FILE: '{{.PROJECT_DIR}}/.local/_common/age.agekey'
     cmds:
     - |
       cat {{.SOPS_AGE_KEY_FILE}} |
@@ -80,14 +92,15 @@ tasks:
       vars: [SOPS_AGE_KEY_FILE]
 
   reconcile:
-    deps: [default]
     silent: true
+    deps: [default]
     desc: Force update Flux to pull in changes from your Git repository
     cmds:
     - flux reconcile -n flux-system source git flux-system
     - flux reconcile -n flux-system kustomization flux-system
 
-  collect:
+  summary:
+    silent: true
     deps: [default]
     desc: Use to troubleshoot issues with flux resources
     cmds:
@@ -95,6 +108,7 @@ tasks:
     - flux stats
 
   watch:
+    silent: true
     deps: [default]
     desc: Watch important flux resouces via kubectl
     cmds:

@@ -10,13 +10,13 @@ spec:
       enabled: false
     externalS3:
       enabled: true
-      host: "${objects_host}"
-      port: "${objects_port}"
-      accessKey: "${objects_access_key}"
-      secretKey: "${objects_secret_key}"
-      useSSL: ${objects_use_ssl}
-      bucketName: "${objects_bucket_name}"
+      host: "${milvus_objects_host}"
+      port: "${milvus_objects_port}"
+      accessKey: "${milvus_objects_access_key}"
+      secretKey: "${milvus_objects_secret_key}"
+      useSSL: ${milvus_objects_use_ssl}
+      bucketName: "${milvus_objects_bucket_name}"
       rootPath: ""
-      region: "${objects_region}"
+      region: "${milvus_objects_region}"
       useVirtualHost: false
 

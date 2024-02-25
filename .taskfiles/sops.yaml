@@ -11,6 +11,6 @@ tasks:
       REQUIRED_TOOLS_LIST: "{{.REQUIRED_TOOLS_LIST}}"
 
   decrypt:
-    desc: decrypt sops file eg "task sops:decrypt -- cluster-secrets.yaml"
+    desc: decrypt sops file eg "task sops:decrypt -- cluster-secrets.sops.yaml"
     cmds:
     - sops --decrypt {{.CLI_ARGS}}

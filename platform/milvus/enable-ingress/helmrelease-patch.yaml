@@ -15,8 +15,8 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt
         ingressClassName: nginx
         hosts:
-        - attu-dev.${ingress_subdomain}
+        - attu-dev.${wildcard_ingress_subdomain}
         tls:
         - hosts:
-          - attu-dev.${ingress_subdomain}
+          - attu-dev.${wildcard_ingress_subdomain}
           secretName: attu-dev-tld-secret
