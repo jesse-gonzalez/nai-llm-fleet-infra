@@ -42,8 +42,8 @@ tasks:
       export GITHUB_TOKEN=${GITHUB_TOKEN} && \
       flux bootstrap github \
         --owner=${GITHUB_USER} \
-        --repository=${GITHUB_REPO} \
-        --branch=${GITHUB_BRANCH} \
+        --repository={{.GITHUB_REPO}} \
+        --branch={{.GITHUB_BRANCH}} \
         --personal \
         --path=clusters/{{.K8S_CLUSTER_NAME}} \
         --force
@@ -65,7 +65,7 @@ tasks:
     - 'git pull origin --quiet --autostash'
     - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet'
     requires:
-      vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_BRANCH]
+      vars: [K8S_CLUSTER_NAME]
 
   create-decrypt-secret:
     silent: true
