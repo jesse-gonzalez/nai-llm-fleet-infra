@@ -1,9 +1,9 @@
 version: '3'
 
-env:
-  K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME | default "nke-nvd-llm-management" }}'
+#vars:
+#  K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
 
-dotenv: ['configs/_common/.env']
+dotenv: ['configs/_common/.env', '.local/{{.K8S_CLUSTER_NAME}}/.config.env']
 
 includes:
   helpers: ./.taskfiles/helpers.yaml
@@ -23,6 +23,16 @@ tasks:
   default:
     silent: true
     cmds:
+    - task --summary bootstrap:silent
     - task -l
 
-
+  test:
+    cmds:
+    - 'echo $K8S_CLUSTER_NAME'
+    - 'echo {{.K8S_CLUSTER_NAME}}'
+    - echo "$BOOTSTRAP_PRISM_CENTRAL_PASSWORD"
+    - echo "$BOOTSTRAP_prism_central_password"
+    - echo "{{.PRISM_CENTRAL_PASS}}"
+    - echo "$PRISM_CENTRAL_PASS"
+    requires:
+      vars: [K8S_CLUSTER_NAME]

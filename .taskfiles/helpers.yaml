@@ -1,6 +1,4 @@
 version: '3'
-vars:
-  REQUIRED_TOOLS_LIST: which
 
 tasks:
 
@@ -10,6 +8,7 @@ tasks:
 
   validate:
     cmds:
+    - 'echo "Verifying required tools are available: {{.REQUIRED_TOOLS_LIST}}"'
     - for: {var: REQUIRED_TOOLS_LIST, split: ',', as: TOOL}
       cmd: '[ -n "$(which {{ .TOOL }})" ] || (echo "ERROR: failed to find required tool: {{ .TOOL }}." && exit 1;)'
     silent: true

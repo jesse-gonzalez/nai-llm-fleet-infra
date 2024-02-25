@@ -60,8 +60,6 @@ main() {
         verify_all
         verify_success
     else
-        ## always validating vars during initialization
-        verify_all
         # generate cluster directories
         mkdir -p "$CLUSTER_PLATFORM_DIR"
         # copy over flux-system bootstrap configs
