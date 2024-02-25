@@ -2,9 +2,13 @@ version: '3'
 
 vars:
   PROJECT_DIR:
-    sh: git rev-parse --show-toplevel
+    sh: 'git rev-parse --show-toplevel'
   GIT_COMMIT:
-    sh: git log -n 1 --format=%h
+    sh: 'git log -n 1 --format=%h'
+  GITHUB_REPO:
+    sh: 'basename $(git rev-parse --show-toplevel)'
+  GITHUB_BRANCH:
+    sh: 'git rev-parse --abbrev-ref HEAD | head -c14'
 
 tasks:
 
@@ -13,10 +17,5 @@ tasks:
     vars:
       REQUIRED_TOOLS_LIST: git
 
-  print-vars:
-    silent: true
-    cmds:
-    - echo {{.PROJECT_DIR}}
-    - echo {{.GIT_COMMIT}}
 
 
