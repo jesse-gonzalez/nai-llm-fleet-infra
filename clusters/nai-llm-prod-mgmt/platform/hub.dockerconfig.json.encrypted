@@ -1,9 +1,9 @@
 {
 	"auths": {
 		"http://docker-registry/v2/": {
-			"username": "ENC[AES256_GCM,data:yb/JYSz/wI0=,iv:IhOLJsZ8sqAl4aoOdtcDtRfTYIIIGDtvfJWeVL9WQPA=,tag:ZkBR4G0HDl6u0YuuhRDwuQ==,type:str]",
-			"password": "ENC[AES256_GCM,data:NRDZMtgzV3ZfAlH8KEacTXdkOguZ0/wzTy8//Bp9/3jo+u91,iv:M7IAKyTz0XkaqN4ENnl4AAWu0zsszEoC9sIVz3DX6D8=,tag:/j+2Eb50y0dVLxpRr+0jHg==,type:str]",
-			"auth": "ENC[AES256_GCM,data:KbnOdPlAHsLXELcG9Wln4O7NXP7dG47ayfUxzHTuUmUag3faZlhxRvmhczymcWNl9Dt43igoCCmq3zD1v55sdw==,iv:YfxqUz83uErVluEi0QvH+hdl93BIHDBg9u6GGeE3vRQ=,tag:pZ834gHsGoUdyDIA0VF22Q==,type:str]"
+			"username": "ENC[AES256_GCM,data:Vi+lbBsL2Xs=,iv:7WD3hqPvleyKABqGMKsmD+9VvghSE14SWlL31XlsHKc=,tag:73R/ndLt3+06e2a5zXcAqQ==,type:str]",
+			"password": "ENC[AES256_GCM,data:M0bk6V01zbsipg3/VCYauSkd84gUKA1OOGcOu5zQaiCjYjei,iv:R+uynLmTkeqDif03K6JLi0jGsS+Db3fzcuocQmJM13E=,tag:i5rNjeJ5x3itpXO6UyqJ5w==,type:str]",
+			"auth": "ENC[AES256_GCM,data:cKt0/a5rGsIKS+Ogq1mKQKL+hI7VMwQJqDPF+UdxtvPpLJI2JY1t7uMp6ojqMJToKkRCWT+BIaaRBkCMZHNeSQ==,iv:CgC3yYuTYyjpIHCCo5YA+Vp6b0Z3B47X6aOkFQZn6WA=,tag:m6tPBj4yk09+lzV5YM+G+A==,type:str]"
 		}
 	},
 	"sops": {
@@ -14,11 +14,11 @@
 		"age": [
 			{
 				"recipient": "age1apnz8w62yg00n3lux9ys8w59e5pxqqrg28dgzy6ajkr82aeq09gslhhm3n",
-				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpSFhVZVMvNXRtbkJnOE5q\nYWpSbTNFVkRHbXEvbDBENVhxL2FDRnk2RjBrClZaa3h0cjA5WlF0cklTTU5RQ2Ey\nWG1IOGgwd243MFZIMEpuby9Vajd6bGsKLS0tIGF3NmhsZG8walNTQXowZG50Z2dy\naHRjMjFmaEZEVjFsZitNUFlMSUk1a28K7X+aTc49tL7vwQ2R8DdtfGPjT7EOUl/M\nrjugOQoxPJC0/F1IeLU0ibc/X5MbLzlnXtC7f1RusdDB7dlwBDF++Q==\n-----END AGE ENCRYPTED FILE-----\n"
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBvczF4NzhaVit1Q1FMRi83\nTFJLQ1NxaGNWdHQ0Tk1haURlT3lrVFJlbEJBCkM3MU9QWTU1dDlOSnhBNG82NWZx\nazdUQzQzUkJlNVBnYU5KWmM2VTkvZ00KLS0tIC9YZnNhdGlMd00zWDhvMFBpZkNE\neURmaUR5WVVNblI3NkxjWjhDMTBrdXMK//yslFBrXll6qELmwSdIj1e3d5fQe8k9\nxyYkje58IJ+QAY9uTtsGO1bXTZmDXyNJggqxGNQa57YJqkg6FLgEJQ==\n-----END AGE ENCRYPTED FILE-----\n"
 			}
 		],
-		"lastmodified": "2024-02-25T17:17:55Z",
-		"mac": "ENC[AES256_GCM,data:t7NKpS9EjRfHAoe+fIEXnAO0QiiHzIPFwuPsF85SW6C30OGoKVmQb5vHJFxXEqQ8dMrh6KWJMw3HhgKTJEGzf3VAsXSPP8d+CTm637bx+RK+RFhqAaz2M6y2dRAt1AbqWSUPaCvqHsS1LK0EgLX6Jb5K/4bQzZiSc0HnhI0rkZA=,iv:B7OaNZ0JTDUxsbT6ape+kpwjkw10+OUu7C5jbF2zo/I=,tag:+FEuU4uXO6FIbVNL1/i1ng==,type:str]",
+		"lastmodified": "2024-02-25T17:18:45Z",
+		"mac": "ENC[AES256_GCM,data:cR+FXKC0K7p7YNmS6IaT/ZWdyVy7tOuP4KiJkHbARTQDYupb0oyHzf81MbQIj4NyWiDCGYl0af5Iv5Awmvh9iI5SjYr7TqcpsmqWtb2Qsrfmw2hAhq8gGuBgGp5TCfrPeWpMy33wuhnHqq8BBb1spzlte8537VDoT/SajsBaFFY=,iv:C5d6LrIaV5SjfC3mrbXrVAGgkNcCrrE31nP9B+lxDq4=,tag:tf38D5Ffrzib8WL5zaKiaA==,type:str]",
 		"pgp": null,
 		"encrypted_regex": "^(data|stringData|auths)$",
 		"version": "3.8.1"
