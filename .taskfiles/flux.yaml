@@ -38,13 +38,12 @@ tasks:
     deps: [default]
     desc: Executes FluxCD Bootstrap against Target K8s Cluster
     cmds:
-    - echo ${GITHUB_TOKEN}, ${GITHUB_USER} {{.GITHUB_REPO}} {{.GITHUB_BRANCH}} {{.K8S_CLUSTER_NAME}}
     - |
       export GITHUB_TOKEN=${GITHUB_TOKEN} && \
       flux bootstrap github \
-        --owner={{.GITHUB_USER}} \
-        --repository={{.GITHUB_REPO}} \
-        --branch={{.GITHUB_BRANCH}} \
+        --owner=${GITHUB_USER} \
+        --repository=${GITHUB_REPO} \
+        --branch=${GITHUB_BRANCH} \
         --personal \
         --path=clusters/{{.K8S_CLUSTER_NAME}} \
         --force
@@ -63,8 +62,8 @@ tasks:
     cmds:
     - 'git add clusters/{{.K8S_CLUSTER_NAME}}'
     - 'git commit --quiet -am "add: cluster-configs for new cluster {{.K8S_CLUSTER_NAME}}"'
-    - 'git pull origin --quiet --autostash --set-upstream {{.GITHUB_BRANCH}}'
-    - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet --set-upstream {{.GITHUB_BRANCH}}'
+    - 'git pull origin --quiet --autostash --set-upstream ${GITHUB_BRANCH}'
+    - 'export GITHUB_TOKEN=${GITHUB_TOKEN} && git push origin --quiet --set-upstream ${GITHUB_BRANCH}'
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_BRANCH]
 
