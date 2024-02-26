@@ -34,6 +34,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+  - name: knative-eventing
   - name: kafka
   interval: 15m
   sourceRef:
