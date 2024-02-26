@@ -27,6 +27,7 @@ tasks:
     - task: bootstrap
     - git pull origin --autostash
     - task: reconcile
+    - 'echo "SUCCESS: Cluster (${K8S_CLUSTER_NAME}) has been successfully initialized. You can continue to monitor status by running task flux:watch"'
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH]
 
