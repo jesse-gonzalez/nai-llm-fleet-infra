@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - eventing-crds.yaml
-- eventing-core.yaml
-- eventing-kafka-controller.yaml
-- eventing-kafka-source.yaml
-- serving-hpa.yaml
+#- eventing-core.yaml
+#- eventing-kafka-controller.yaml
+#- eventing-kafka-source.yaml
+#- serving-hpa.yaml

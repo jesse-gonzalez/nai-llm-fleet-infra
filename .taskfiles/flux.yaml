@@ -24,12 +24,8 @@ tasks:
     - task: create-decrypt-secret
       ## pass in yes to ignore prompt to promote git commit
     - task flux:git-promote --yes
-    # vars:
-    #   K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
     - task: bootstrap
-      # vars:
-      #   K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
-    - 'git pull origin --autostash'
+    - git pull origin --autostash
     - task: reconcile
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH]
@@ -109,5 +105,5 @@ tasks:
     deps: [default]
     desc: Watch important flux resouces via kubectl
     cmds:
-    - watch -n 1 "kubectl get gitrepo,helmrepo,hr,ks -n flux-system && flux stats"
+    - watch -n 1 "kubectl get gitrepo,helmrepo,hr,ks -n flux-system && echo && flux stats"
     interactive: true

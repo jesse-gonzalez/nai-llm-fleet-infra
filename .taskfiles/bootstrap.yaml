@@ -36,6 +36,7 @@ tasks:
     - task: :flux:init
     #   vars:
     #     K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
+    - 'echo "SUCCESS: Cluster (${K8S_CLUSTER_NAME}) has been successfully initialized. You can continue to monitor status by running task flux:watch"'
     requires:
       vars: [K8S_CLUSTER_NAME]
 
