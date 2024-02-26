@@ -8,8 +8,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  dependsOn:
-  - name: kafka
   decryption:
     provider: sops
     secretRef:
@@ -28,3 +26,35 @@ spec:
     - kind: Secret
       name: cluster-secrets
       optional: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-eventing-resource-configs
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: kafka
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/knative-eventing/_resource-configs
+  prune: true
+  wait: true
+  timeout: 5m
+  postBuild:
+    substitute:
+      namespace_name: knative-eventing
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+
