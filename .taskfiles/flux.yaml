@@ -22,12 +22,13 @@ tasks:
     cmds:
     - kubectl create ns flux-system --dry-run=client -o yaml | kubectl apply -f -
     - task: create-decrypt-secret
-    - task: git-promote
-      vars:
-        K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
+      ## pass in yes to ignore prompt to promote git commit
+    - task flux:git-promote --yes
+    # vars:
+    #   K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
     - task: bootstrap
-      vars:
-        K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
+      # vars:
+      #   K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
     - 'git pull origin --autostash'
     - task: reconcile
     requires:

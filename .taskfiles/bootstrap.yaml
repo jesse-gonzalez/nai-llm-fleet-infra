@@ -27,7 +27,7 @@ tasks:
         export K8S_CLUSTER_NAME=nai-llm-prod-mgmt && task bootstrap:silent
         K8S_CLUSTER_NAME=nai-llm-prod-mgmt task bootstrap:silent
     cmds:
-    - task: bootstrap-configs
+    - task: init-local-configs
     #  vars:
     #    K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     - task: :nke:download-creds
@@ -38,8 +38,6 @@ tasks:
     #     K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     requires:
       vars: [K8S_CLUSTER_NAME]
-
-
 
   full:
     silent: false
@@ -55,7 +53,7 @@ tasks:
       K8S_CLUSTER_NAME:
         sh: kubectl config view -o jsonpath='{.contexts[?(@.name == "{{.K8S_CLUSTER_CONTEXT}}")].context.cluster}'
     cmds:
-    - task: bootstrap-configs
+    - task: init-local-configs
       vars:
         K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     # # # - task: init-configs
@@ -124,20 +122,6 @@ tasks:
     requires:
       vars: [K8S_CLUSTER_NAME, CLUSTER_PROFILE, ENVIRONMENT_TYPE, CLUSTER_ADDONS]
 
-  # init-local-configs:
-  #   silent: true
-  #   desc: Runs ./init_local_configs.sh bash script to configure cluster configs and encrypt secrets with sops
-  #   deps: [default]
-  #   preconditions:
-  #   - sh: test -f ./cluster-secrets.sops.yaml
-  #     msg: './cluster-secrets.sops.yaml not found, please copy ./cluster-secrets.sample.yaml and update manually'
-  #   - sh: test -f ./cluster-configs.yaml
-  #     msg: './cluster-configs.yaml not found, please copy ./cluster-configs.sample.yaml and update manually'
-  #   cmds:
-  #   - ./init_local_configs.sh {{.K8S_CLUSTER_NAME}} {{.CLUSTER_PROFILE}} {{.ENVIRONMENT_TYPE}} true
-  #   requires:
-  #     vars: [K8S_CLUSTER_NAME, CLUSTER_PROFILE, ENVIRONMENT_TYPE]
-
   verify-configs:
     silent: false
     desc: Verifies that .local/{{.K8S_CLUSTER_NAME}}/.config.env configs are set and valid
@@ -149,7 +133,7 @@ tasks:
     requires:
       vars: [K8S_CLUSTER_NAME]
 
-  bootstrap-configs:
+  init-local-configs:
     silent: false
     desc: Runs ./bootstrap_configs.sh script to configure cluster configs and encrypt secrets with sops
     deps: [verify-configs]
