@@ -15,8 +15,7 @@ tasks:
       msg: "${HOME}/.kube doesn't exist, please create and try again."
     desc: Download NKE kubeconfig for specific cluster
     cmds:
-    - 'KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure'
-    - 'kubectl config view --raw --minify | tee ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg'
+    - 'KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg'
     requires:
       vars: [K8S_CLUSTER_NAME, PRISM_CENTRAL_PASS, PRISM_CENTRAL_USER, PRISM_CENTRAL_ENDPOINT]
 
