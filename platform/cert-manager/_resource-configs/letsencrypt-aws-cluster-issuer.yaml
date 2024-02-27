@@ -12,10 +12,10 @@ spec:
     solvers:
     - selector:
         dnsZones:
-        - "${BOOTSTRAP_aws_route53_dns_zone}"
+        - "${aws_route53_dns_zone}"
       dns01:
         route53:
-          region: ${BOOTSTRAP_aws_route53_region}
+          region: "${aws_route53_region}"
           secretAccessKeySecretRef:
             name: letsencrypt-aws
             key: secret-access-key
