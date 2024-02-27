@@ -19,8 +19,8 @@ spec:
   wait: true
   timeout: 5m
   postBuild:
-    substitute:
-      namespace_name: knative-operator
+    #substitute:
+    #  namespace_name: knative-operator
     substituteFrom:
     - kind: ConfigMap
       name: cluster-configs
