@@ -31,7 +31,7 @@ spec:
   patches:
   - patch: |-
       - op: remove
-        path: /spec/data/_example
+        path: /data/_example
     target:
       kind: ConfigMap
       name: config-observability
