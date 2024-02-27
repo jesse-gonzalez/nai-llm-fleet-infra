@@ -15,3 +15,5 @@ data:
   milvus_objects_use_ssl: "${BOOTSTRAP_milvus_objects_use_ssl}"
   gpu_cuda_toolkit_version: "${BOOTSTRAP_gpu_cuda_toolkit_version}"
   gpu_time_slicing_replica_count: "${BOOTSTRAP_gpu_time_slicing_replica_count}"
+  aws_route53_dns_zone: "${BOOTSTRAP_aws_route53_dns_zone}"
+  aws_route53_region: "${BOOTSTRAP_aws_route53_region}"

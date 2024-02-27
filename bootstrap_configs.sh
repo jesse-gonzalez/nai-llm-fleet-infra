@@ -229,6 +229,10 @@ verify_vars(){
     _has_envar "BOOTSTRAP_github_api_token" "is_secret"
     _has_envar "BOOTSTRAP_docker_hub_user" "is_secret"
     _has_envar "BOOTSTRAP_docker_hub_password" "is_secret"
+    _has_envar "BOOTSTRAP_aws_route53_dns_zone"
+    _has_envar "BOOTSTRAP_aws_route53_region"
+    _has_envar "BOOTSTRAP_aws_access_key_id" "is_secret"
+    _has_envar "BOOTSTRAP_aws_access_key_secret" "is_secret"
 
     _log "INFO" "Validating all OPTIONAL environment variables"
     _has_optional_envar "BOOTSTRAP_github_app_id" "is_secret"
