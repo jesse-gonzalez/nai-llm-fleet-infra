@@ -3,6 +3,7 @@ kind: Component
 resources:
 ### common repo resources
 - kafka-repo.yaml
+- knative-istio-repo.yaml
 - knative-serving-repo.yaml
 - knative-eventing-repo.yaml
 - uptrace-repo.yaml

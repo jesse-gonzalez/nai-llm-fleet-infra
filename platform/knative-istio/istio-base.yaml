@@ -1,45 +1,35 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: milvus
+  name: istio-system
   labels:
     toolkit.fluxcd.io/tenant: platform-team
+    istio-injection: disabled
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: milvus
+  name: istio
   namespace: flux-system
 spec:
   interval: 4h
-  url: https://zilliztech.github.io/milvus-helm/
+  url: https://istio-release.storage.googleapis.com/charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: milvus
+  name: istio-base
   namespace: flux-system
 spec:
-  targetNamespace: ${namespace_name:=milvus}
+  targetNamespace: ${namespace_name:=istio-system}
   chart:
     spec:
-      chart: milvus
+      chart: base
       interval: 1h
       sourceRef:
         kind: HelmRepository
-        name: milvus
+        name: istio
       version: "4.1.9"
   interval: 1h
   values:
-    cluster:
-      enabled: false
-    # image:
-    #   all:
-    #     pullSecrets:
-    #     - regcred
-    etcd:
-      replicaCount: 1
-    minio:
-      mode: standalone
-    pulsar:
-      enabled: false
+    profile: "minimal"
