@@ -1,0 +1,2 @@
+- [ ] kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.10.1/serving-crds.yaml
+- [ ] kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.10.1/serving-core.yaml
