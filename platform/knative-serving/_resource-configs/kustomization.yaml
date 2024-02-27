@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
 - ./net-istio.yaml
 - ./serving-hpa.yaml
+
+patches:
+- path: ./config-map-domain.yaml

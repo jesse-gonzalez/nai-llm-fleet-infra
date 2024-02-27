@@ -9,6 +9,4 @@ kubectl apply -f https://github.com/knative/eventing/releases/download/knative-v
 kubectl apply -f https://github.com/knative-sandbox/eventing-kafka-broker/releases/download/knative-v1.11.11/eventing-kafka-controller.yaml
 kubectl apply -f https://github.com/knative-sandbox/eventing-kafka-broker/releases/download/knative-v1.11.11/eventing-kafka-source.yaml
 
-# HPA
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.11/serving-hpa.yaml
 
