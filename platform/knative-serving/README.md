@@ -1,12 +1,24 @@
-- [ ] kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-crds.yaml
-- [ ] kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-core.yaml
-- 
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-crds.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-core.yaml
+ 
 # HPA
 kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-hpa.yaml
+
+# TLS
+kubectl apply -f https://github.com/knative/net-certmanager/releases/download/knative-v1.11.5/release.yaml
 
 
 TODO: 
 
+kubectl patch configmap/config-domain \
+  --namespace knative-serving \
+  --type merge \
+  --patch '{"data":{"kubeflow.nai-llm-prod-mgmt.ncnlabs.ninja":""}}' --dry-run 
+
+
+  config:
+    # domain:
+    #   knative.${wildcard_ingress_subdomain}: ""
 
 Configure base domain:
 
