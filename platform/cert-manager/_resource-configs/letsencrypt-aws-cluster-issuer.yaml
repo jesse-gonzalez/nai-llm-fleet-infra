@@ -17,7 +17,7 @@ spec:
         route53:
           region: "${aws_route53_region}"
           secretAccessKeySecretRef:
-            name: letsencrypt-aws
+            name: letsencrypt-aws-secret
             key: secret-access-key
           accessKeyIDSecretRef:
             name: letsencrypt-aws-secret
