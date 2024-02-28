@@ -11,8 +11,8 @@ kind: Kustomization
 resources:
 - image-pull-secret.yaml
 
-patches:
-- path: helmrelease-patch.yaml
-  target:
-    kind: HelmRelease
+# patches:
+# - path: helmrelease-patch.yaml
+#   target:
+#     kind: HelmRelease
 
