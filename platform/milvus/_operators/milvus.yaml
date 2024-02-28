@@ -33,10 +33,6 @@ spec:
   values:
     cluster:
       enabled: false
-    # image:
-    #   all:
-    #     pullSecrets:
-    #     - docker-hub-regcred
     etcd:
       replicaCount: 1
     minio:
