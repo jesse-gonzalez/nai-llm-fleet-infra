@@ -6,7 +6,7 @@ secretGenerator:
   type: kubernetes.io/dockerconfigjson
   files:
   - .dockerconfigjson=hub.dockerconfig.json.encrypted
-  namespace: milvus
+  namespace: uptace
 
 resources:
 - uptrace.yaml
