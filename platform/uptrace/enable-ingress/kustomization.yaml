@@ -6,3 +6,5 @@ patches:
   target:
     kind: HelmRelease
 
+resources:
+- uptrace-grpc-ingress.yaml

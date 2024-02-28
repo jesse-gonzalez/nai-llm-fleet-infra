@@ -9,3 +9,7 @@ spec:
       all:
         pullSecrets:
         - docker-hub-regcred
+    etcd:
+      image:
+        pullSecrets:
+        - regcred

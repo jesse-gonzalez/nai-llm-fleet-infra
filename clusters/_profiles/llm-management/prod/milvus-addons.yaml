@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   components:
-  #- ../enable-loadbalancing
+  - ../enable-image-pull-secret
   - ../enable-monitoring
-  #- ../enable-attu-frontend
-  #- ../enable-nutanix-objects
+  - ../enable-ingress
+  - ../enable-nutanix-objects

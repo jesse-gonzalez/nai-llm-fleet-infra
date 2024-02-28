@@ -30,4 +30,10 @@ spec:
         name: kubernetes-dashboard
       version: "*"
   interval: 30m
-  values: {}
+  values:
+    metrics-server:
+      enabled: false
+    nginx:
+      enabled: false
+    cert-manager:
+      enabled: false

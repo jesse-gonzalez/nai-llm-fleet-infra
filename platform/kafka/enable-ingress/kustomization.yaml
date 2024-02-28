@@ -5,3 +5,6 @@ patches:
   target:
     kind: HelmRelease
 
+
+resources:
+- kafka-ingress.yaml

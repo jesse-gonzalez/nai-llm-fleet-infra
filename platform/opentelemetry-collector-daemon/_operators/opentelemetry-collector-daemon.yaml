@@ -31,6 +31,8 @@ spec:
       version: "0.80.1"
   interval: 1h
   values:
+    imagePullSecrets:
+    - name: docker-hub-regcred
     mode: daemonset
     presets:
       logsCollection:

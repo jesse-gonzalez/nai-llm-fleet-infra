@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kafka
+  namespace: flux-system
+spec:
+  values:
+    listeners:
+      client:
+        protocol: PLAINTEXT
+      controller:
+        protocol: PLAINTEXT
+      external:
+        protocol: PLAINTEXT
+    externalAccess:
+      enabled: true
+      controller:
+        service:
+          type: ClusterIP
+          ports:
+            external: 9094
+          domain: 'kafka.${wildcard_ingress_subdomain}'
+      broker:
+        service:
+          type: ClusterIP
+          port:
+            external: 9094
+          domain: 'kafka.${wildcard_ingress_subdomain}'
+    #  service:
+    #    broker:
+    #      type: NodePort
+    #      ports:
+    #        external: 9094
+    #    controller:
+    #      type: NodePort
+    #      containerPorts:
+    #        external: 9094
+    #  autoDiscovery:
+    #    enabled: true
+    serviceAccount:
+      create: true
+    rbac:
+      create: true
+
+
