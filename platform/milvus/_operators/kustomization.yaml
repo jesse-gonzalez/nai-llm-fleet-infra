@@ -13,6 +13,7 @@ secretGenerator:
   - username=${docker_hub_user}
   - password=${docker_hub_password}
   type: kubernetes.io/dockerconfigjson
+  namespace: milvus
 
 resources:
 - milvus.yaml
