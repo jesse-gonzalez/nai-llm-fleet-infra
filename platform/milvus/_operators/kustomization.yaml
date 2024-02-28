@@ -9,3 +9,4 @@ kind: Kustomization
 
 resources:
 - milvus.yaml
+- image-pull-secret.yaml
