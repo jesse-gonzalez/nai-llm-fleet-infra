@@ -64,6 +64,9 @@ main() {
         mkdir -p "$CLUSTER_PLATFORM_DIR"
         # copy over flux-system bootstrap configs
         cp -rf "$TEMPLATES_DIR/flux-system" "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}"
+        # touch gotk-components.yaml and gotk-sync.yaml files. These are managed by completely managed by flux bootstrap process.
+        touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-components.yaml"
+        touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-sync.yaml"
         # generate cluster settings
         envsubst < "$TEMPLATES_DIR/platform/cluster-configs.yaml" \
             > "$CLUSTER_PLATFORM_DIR/cluster-configs.yaml"
