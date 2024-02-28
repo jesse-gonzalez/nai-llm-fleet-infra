@@ -9,3 +9,4 @@ spec:
   - ../enable-monitoring
   - ../enable-ingress
   - ../enable-nutanix-objects
+  - ../enable-cluster-mode
