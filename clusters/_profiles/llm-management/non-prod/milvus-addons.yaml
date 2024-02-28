@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   components:
+  - ../enable-image-pull-secret
   - ../enable-loadbalancer
   - ../enable-monitoring
   - ../enable-ingress
