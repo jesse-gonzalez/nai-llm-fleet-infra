@@ -7,6 +7,12 @@ kind: Kustomization
 #   files:
 #   - .dockerconfigjson=hub.dockerconfig.json.encrypted
 
+secretGenerator:
+- name: docker-hub-regcred
+  literals:
+  - username=${docker_hub_user}
+  - password=${docker_hub_password}
+  type: kubernetes.io/dockerconfigjson
+
 resources:
 - milvus.yaml
-- image-pull-secret.yaml

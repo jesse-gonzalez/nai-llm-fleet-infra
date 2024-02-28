@@ -108,3 +108,11 @@ tasks:
     cmds:
     - watch -n 1 "kubectl get gitrepo,helmrepo,hr,ks -n flux-system && echo && flux stats"
     interactive: true
+
+  tree:
+    silent: true
+    deps: [default]
+    desc: The flux tree command shows the list of resources reconciled by a Flux object.
+    cmds:
+    - flux tree kustomization {{.CLI_ARGS | default "flux-system"}}
+
