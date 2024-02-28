@@ -32,7 +32,7 @@ spec:
   interval: 1h
   values:
     imagePullSecrets:
-    - name: regcred
+    - name: docker-hub-regcred
     mode: deployment
     replicaCount: 1
     presets:

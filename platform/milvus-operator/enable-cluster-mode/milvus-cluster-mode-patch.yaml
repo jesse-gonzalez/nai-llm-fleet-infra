@@ -9,5 +9,5 @@ spec:
   dependencies: {}
   components: {}
   # imagePullSecrets: # Optional
-  # - name: regcred
+  # - name: docker-hub-regcred
   config: {}
