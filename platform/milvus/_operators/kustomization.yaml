@@ -10,8 +10,8 @@ kind: Kustomization
 secretGenerator:
 - name: docker-hub-regcred
   literals:
-  - username=${docker_hub_user}
-  - password=${docker_hub_password}
+  - docker-username=${docker_hub_user}
+  - docker-password=${docker_hub_password}
   type: kubernetes.io/dockerconfigjson
   namespace: milvus
 
