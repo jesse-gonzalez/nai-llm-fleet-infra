@@ -9,7 +9,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-  - name: kyverno-repo
+  - name: kyverno
   - name: cert-manager-resource-configs
   - name: ingress-nginx
   decryption:
