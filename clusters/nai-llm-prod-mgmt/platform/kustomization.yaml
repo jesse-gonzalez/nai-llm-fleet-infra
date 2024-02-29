@@ -6,3 +6,12 @@ components:
 resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml
+
+secretGenerator:
+- name: docker-hub-regcred
+  type: kubernetes.io/dockerconfigjson
+  files:
+  - .dockerconfigjson=hub.dockerconfig.json.encrypted
+
+configurations:
+- kustomizeconfig.yaml

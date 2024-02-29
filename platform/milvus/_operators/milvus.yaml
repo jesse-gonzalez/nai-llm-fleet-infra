@@ -30,6 +30,9 @@ spec:
         name: milvus
       version: "4.1.9"
   interval: 1h
+  valuesFrom:
+  - kind: Secret
+    name: docker-hub-regcred
   values:
     cluster:
       enabled: false
