@@ -12,6 +12,8 @@ spec:
   prune: true
   wait: true
   timeout: 5m
+  dependsOn:
+  - name: kyverno-repo
   postBuild:
     substitute:
       namespace_name: opentelemetry

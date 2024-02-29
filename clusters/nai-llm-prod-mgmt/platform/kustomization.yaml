@@ -12,6 +12,3 @@ secretGenerator:
   type: kubernetes.io/dockerconfigjson
   files:
   - .dockerconfigjson=hub.dockerconfig.json.encrypted
-
-configurations:
-- kustomizeconfig.yaml

@@ -1,28 +1,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: opentelemetry
+  name: kyverno
   namespace: flux-system
 spec:
   interval: 15m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  dependsOn:
-  - name: kyverno-repo
-  - name: cert-manager-resource-configs
-  - name: ingress-nginx
   decryption:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/opentelemetry/_operators
+  path: ./platform/kyverno/_operators
   prune: true
   wait: true
   timeout: 5m
   postBuild:
     substitute:
-      namespace_name: opentelemetry
+      namespace_name: kyverno
     substituteFrom:
     - kind: ConfigMap
       name: cluster-configs
@@ -34,26 +30,26 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: opentelemetry-resource-configs
+  name: kyverno-resource-configs
   namespace: flux-system
 spec:
+  dependsOn:
+  - name: kyverno
   interval: 15m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  dependsOn:
-  - name: opentelemetry
   decryption:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/opentelemetry/_resource-configs
+  path: ./platform/kyverno/_resource-configs
   prune: true
   wait: true
   timeout: 5m
   postBuild:
     substitute:
-      namespace_name: opentelemetry
+      namespace_name: kyverno
     substituteFrom:
     - kind: ConfigMap
       name: cluster-configs
@@ -61,4 +57,3 @@ spec:
     - kind: Secret
       name: cluster-secrets
       optional: false
-
