@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-secretGenerator:
-- name: docker-hub-regcred
-  type: kubernetes.io/dockerconfigjson
-  files:
-  - .dockerconfigjson=hub.dockerconfig.json.encrypted
-  namespace: uptrace
+# secretGenerator:
+# - name: docker-hub-regcred
+#   type: kubernetes.io/dockerconfigjson
+#   files:
+#   - .dockerconfigjson=hub.dockerconfig.json.encrypted
+#   namespace: uptrace
 
 resources:
 - uptrace.yaml
