@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-secretGenerator:
-- name: docker-hub-regcred
-  type: kubernetes.io/dockerconfigjson
-  files:
-  - .dockerconfigjson=hub.dockerconfig.json.encrypted
-  namespace: milvus
+# secretGenerator:
+# - name: docker-hub-regcred
+#   type: kubernetes.io/dockerconfigjson
+#   files:
+#   - .dockerconfigjson=hub.dockerconfig.json.encrypted
+#   namespace: milvus
 
 # secretGenerator:
 # - name: docker-hub-regcred
@@ -18,3 +18,4 @@ secretGenerator:
 
 resources:
 - milvus.yaml
+- image-pull-secret.yaml
