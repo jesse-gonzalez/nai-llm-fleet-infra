@@ -7,11 +7,11 @@ resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml
 
-generatorOptions:
-  disableNameSuffixHash: true
+# generatorOptions:
+#   disableNameSuffixHash: true
 
-secretGenerator:
-- name: docker-hub-regcred
-  type: kubernetes.io/dockerconfigjson
-  files:
-  - .dockerconfigjson=hub.dockerconfig.json.encrypted
+# secretGenerator:
+# - name: docker-hub-regcred
+#   type: kubernetes.io/dockerconfigjson
+#   files:
+#   - .dockerconfigjson=hub.dockerconfig.json.encrypted

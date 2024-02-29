@@ -21,6 +21,7 @@ tasks:
     - test -d {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform
     cmds:
     - kubectl create ns flux-system --dry-run=client -o yaml | kubectl apply -f -
+    - task: create-image-pull-secret
     - task: create-decrypt-secret
       ## pass in yes to ignore prompt to promote git commit
     - task flux:git-promote --yes
@@ -84,6 +85,20 @@ tasks:
         Age Key not found. Have you initialized local configs?
     requires:
       vars: [SOPS_AGE_KEY_FILE]
+
+  create-image-pull-secret:
+    silent: true
+    deps: [default]
+    desc: Create Docker Hub Pull Secret (docker-hub-regcred) in flux-system. Will be synced to specific namespace by kyverno via clusterpolicy.
+    cmds:
+    - |
+      kubectl create secret docker-registry docker-hub-regcred \
+        --docker-username=${DOCKER_HUB_USER} \
+        --docker-password=${DOCKER_HUB_PASS} \
+        --namespace=flux-system \
+        --dry-run=client -o yaml | kubectl apply -f -
+    requires:
+      vars: [DOCKER_HUB_USER, DOCKER_HUB_PASS]
 
   reconcile:
     silent: true
