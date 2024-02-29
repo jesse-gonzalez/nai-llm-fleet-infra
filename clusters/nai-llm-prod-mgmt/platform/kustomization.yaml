@@ -12,7 +12,6 @@ secretGenerator:
   type: kubernetes.io/dockerconfigjson
   files:
   - .dockerconfigjson=hub.dockerconfig.json.encrypted
-  namespace: flux-system
 
 configurations:
 - kustomizeconfig.yaml
