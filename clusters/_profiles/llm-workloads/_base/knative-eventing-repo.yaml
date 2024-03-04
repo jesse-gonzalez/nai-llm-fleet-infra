@@ -37,7 +37,6 @@ metadata:
 spec:
   dependsOn:
   - name: knative-eventing
-  - name: kafka
   interval: 15m
   sourceRef:
     kind: GitRepository
