@@ -1,33 +1,73 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: redis
+  name: jupyterhub
   labels:
     toolkit.fluxcd.io/tenant: platform-team
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: bitnami
+  name: jupyterhub
   namespace: flux-system
 spec:
   interval: 4h
-  url: https://charts.bitnami.com/bitnami
+  url: https://hub.jupyter.org/helm-chart/
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: redis
+  name: jupyterhub
   namespace: flux-system
 spec:
-  targetNamespace: ${namespace_name:=redis}
+  targetNamespace: ${namespace_name:=jupyterhub}
   chart:
     spec:
-      chart: redis
+      chart: jupyterhub
       interval: 1h
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: jupyterhub
       version: "18.1.x"
   interval: 1h
+  values:
+    singleuser:
+      defaultUrl: "/lab"
+      storage:
+        capacity: 100Gi
+      extraTolerations: [{"key": "dedicated", "operator": "Equal", "value": "gpu", "effect": "NoSchedule"}]
+      extraEnv:
+        JUPYTERHUB_SINGLEUSER_APP: "jupyter_server.serverapp.ServerApp"
+      profileList:
+      - display_name: "Minimal environment"
+        description: "To avoid too much bells and whistles: Python."
+        default: true
+      - display_name: "GPU Server"
+        description: "Spawns a notebook server with access to a GPU"
+        kubespawner_override:
+          extra_resource_limits:
+            nvidia.com/gpu: "1"
+      networkPolicy:
+        egressAllowRules:
+          cloudMetadataServer: true
+          privateIPs: true
+      cloudMetadata:
+        blockWithIptables: false
+    hub:
+      config:
+        Authenticator:
+          admin_users:
+          - admin
+          allowed_users:
+          - user1
+          - user2
+          - user3
+          - user4
+        DummyAuthenticator:
+          password: nutanix.1
+        JupyterHub:
+          authenticator_class: dummy
+    proxy:
+      service:
+        type: ClusterIP
 
