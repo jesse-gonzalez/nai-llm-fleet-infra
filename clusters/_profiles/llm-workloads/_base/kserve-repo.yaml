@@ -28,6 +28,16 @@ spec:
     - kind: Secret
       name: cluster-secrets
       optional: false
+  patches:
+  - patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/imagePullSecrets/-
+        value:
+          name: "docker-hub-regcred"
+    target:
+      kind: Deployment
+      name: kserve-controller-manager
+      namespace: kserve
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
