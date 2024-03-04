@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "nke-nvd-llm-mgmt-01"
+  environment: "non-prod"
+  cluster_profile: "llm-management"
+  kube_vip_ipam_range: "10.50.26.82-10.50.26.83"
+  kube_vip_nginx_ingress_ipam: "10.50.26.80/32"
+  kube_vip_istio_system_ipam: "10.50.26.81/32"
+  wildcard_ingress_subdomain: "nke-nvd-llm-mgmt-01.gptnvd.cloudnative.nvdlab.net"
+  milvus_objects_bucket_name: "milvus"
+  documents_objects_bucket_name: "documents01"
+  objects_host: "objects.gptnvd.cloudnative.nvdlab.net"
+  objects_port: "443"
+  objects_region: "us-east-1"
+  objects_use_ssl: "true"
+  gpu_cuda_toolkit_version: "v1.14.3-centos7"
+  gpu_time_slicing_replica_count: "4"
+  aws_route53_dns_zone: "ncnlabs.ninja"
+  aws_route53_region: "us-east-2"

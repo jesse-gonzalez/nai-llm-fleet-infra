@@ -1,0 +1,26 @@
+{
+	"auths": {
+		"http://docker-registry/v2/": {
+			"username": "ENC[AES256_GCM,data:cY1yFUqL/XU=,iv:Sqvv7vgOwFOlezIDSOTiONzyRVG9krxU9trNZ/1DiOc=,tag:2BsdAzfFbgVYZxkQZ/hsKg==,type:str]",
+			"password": "ENC[AES256_GCM,data:+CN7mXhIlQaPk7SJopGpPBie+1fTMWB99D5JuPsuXM3io82p,iv:XZruwTjzD9zO7Ff9AKAGYaV5CvbGgpxWJRPaAtPfaG0=,tag:uh+Ej1jDnOcmHYlX8t3KFg==,type:str]",
+			"auth": "ENC[AES256_GCM,data:q5OK0ANafKzYoQbhitKtVtRMRmzaA1o9RugRX7ckEcGaWlqd0v/Aqiu0VR/nfUd+YCfKttQuHMSByCKViIk9+g==,iv:Z38HzotsTEe9xIPVdAJ1fdOEkp+oOtNdwmlTC3mAhCQ=,tag:FlXiFXl6hYAZUbcJ8ou+jQ==,type:str]"
+		}
+	},
+	"sops": {
+		"kms": null,
+		"gcp_kms": null,
+		"azure_kv": null,
+		"hc_vault": null,
+		"age": [
+			{
+				"recipient": "age1apnz8w62yg00n3lux9ys8w59e5pxqqrg28dgzy6ajkr82aeq09gslhhm3n",
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2dVZZOHJ3YXJaeFVjZlFQ\nQmUvbkhzSXhsaG5EYjZVRVA1WDJyTmtmOGt3Cmlpb1pmamI1UDE4UTN5ZVV3b2RJ\nUFA3RldtZDR3K05DTmxHZWRFcVFuSzAKLS0tIFlWLzc4c2hkY2hYcGhKN1NZNTlt\nR0k0UkQ4SkQ2ejBXZkVRemM1T2V2YWsKXE9XQDKACMAWI3xH/0TyLHYLOWedUQNi\ndvIzAOMVGnvs7i4GDTDdaiXS5q9DjIyBkO0o55MPh9EqbWAPE5w5WA==\n-----END AGE ENCRYPTED FILE-----\n"
+			}
+		],
+		"lastmodified": "2024-03-04T17:07:31Z",
+		"mac": "ENC[AES256_GCM,data:XwjwAx2N3N1cFEo04A5JoiM1FKL0faxb01Do78d9hTtIIM0SzHa6dcKGQ2rx5naJ1RlBkF1Fx9W8gcuTKCgdX6f5Ey6AuJ9SOeMHVf2opoO04KxnLt5ZyIo5TTHMoJr2iS5JIKS9U0xxcfKSlVk5o2pdN7Q9wN9O46n6ulLclZs=,iv:i8P2Y71LHc4UhnpY7R7Ii5DRlj82vYL8AiJgRadtKQo=,tag:eJqPpEx8+oBr15EjYBumCA==,type:str]",
+		"pgp": null,
+		"encrypted_regex": "^(data|stringData|auths)$",
+		"version": "3.8.1"
+	}
+}
