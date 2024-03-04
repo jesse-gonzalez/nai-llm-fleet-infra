@@ -11,9 +11,8 @@ metadata:
   name: gptnvd-reference-app
   namespace: flux-system
 spec:
-  type: oci
   interval: 60m0s
-  url: oci://github.com/wolfganghuse/gptnvd-reference-app
+  url: https://github.com/wolfganghuse/gptnvd-reference-app
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease

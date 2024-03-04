@@ -11,9 +11,8 @@ metadata:
   name: nai-llm
   namespace: flux-system
 spec:
-  type: oci
   interval: 60m0s
-  url: oci://github.com/wolfganghuse/nai-helm
+  url: https://github.com/wolfganghuse/nai-helm
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
