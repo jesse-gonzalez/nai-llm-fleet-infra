@@ -1,6 +1,8 @@
 apiVersion: v1
 data:
   range-global: "${kube_vip_ipam_range}"
+  cidr-ingress-nginx: "${kube_vip_nginx_ingress_ipam}"
+  cidr-istio-system: "${kube_vip_istio_system_ipam}"
 kind: ConfigMap
 metadata:
   name: kubevip

@@ -218,6 +218,8 @@ verify_vars(){
     _has_envar "BOOTSTRAP_environment"
     _has_envar "BOOTSTRAP_cluster_profile"
     _has_envar "BOOTSTRAP_kube_vip_ipam_range"
+    _has_envar "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    _has_envar "BOOTSTRAP_kube_vip_istio_system_ipam"
     _has_envar "BOOTSTRAP_wildcard_ingress_subdomain"
     _has_envar "BOOTSTRAP_objects_host"
     _has_envar "BOOTSTRAP_prism_central_endpoint"
@@ -279,7 +281,12 @@ verify_kubevip() {
     ip_ceil=$(echo "${BOOTSTRAP_kube_vip_ipam_range}" | cut -d- -f2)
 
     _has_valid_ip "${ip_floor}" "BOOTSTRAP_kube_vip_ipam_range"
-    _has_valid_ip "${ip_ceil}" "BOOTSTRAP_kube_vip_ipam_range"
+
+    _has_envar "BOOTSTRAP_kube_vip_istio_system_ipam"
+    _has_envar "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    
+    _has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    _has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
 }
 
 verify_git_repository() {

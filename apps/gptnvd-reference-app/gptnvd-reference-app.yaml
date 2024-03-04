@@ -89,7 +89,7 @@ spec:
     milvus:
       host: milvus.${wildcard_ingress_subdomain}
       port: "19530"
-      collection: documents01
+      collection: "${documents_objects_bucket_name}"
     inference:
       endpoint: http://llm.llm.${wildcard_ingress_subdomain}/v2/models/llama2_7b_chat/infer
     s3:
@@ -99,7 +99,7 @@ spec:
       region: "${objects_region}"
       accessKey: "${objects_access_key}"
       secretKey: "${objects_secret_key}"
-      bucket: documents01
+      bucket: "${documents_objects_bucket_name}"
     kafka:
       bootstrap: kafka.${wildcard_ingress_subdomain}
       externalPort: "9096"
