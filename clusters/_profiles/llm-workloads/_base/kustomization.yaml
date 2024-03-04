@@ -9,7 +9,8 @@ resources:
 - knative-eventing-repo.yaml
 - otel-collector-daemon-repo.yaml
 - otel-collector-deploy-repo.yaml
-#- gptnvd-reference-app-repo
 - milvus-repo.yaml
 #- milvus-operator-repo.yaml
+- redis-repo.yaml
 - kserve-repo.yaml
+#- gptnvd-reference-app-repo
