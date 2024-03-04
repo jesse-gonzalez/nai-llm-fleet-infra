@@ -2,6 +2,7 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: promcol
+  namespace: opentelemetry
 spec:
   mode: statefulset
   targetAllocator:
@@ -9,12 +10,12 @@ spec:
     serviceAccount: otelcol
     # prometheusCR:
     #   enabled: true
-      # serviceMonitorSelector:
-      #   matchExpressions:
-      #   - key: ntnx-p8s
-      #     operator: Exists
-      # serviceMonitorSelector:
-      #   monitoring: apps
+    # serviceMonitorSelector:
+    #   matchExpressions:
+    #   - key: ntnx-p8s
+    #     operator: Exists
+    # serviceMonitorSelector:
+    #   monitoring: apps
   config: |
     receivers:
       prometheus:
