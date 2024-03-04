@@ -10,4 +10,4 @@ resources:
 - otel-collector-deploy-repo.yaml
 - redis-repo.yaml
 - kserve-repo.yaml
-#- gptnvd-reference-app-repo
+- gptnvd-reference-app-repo
