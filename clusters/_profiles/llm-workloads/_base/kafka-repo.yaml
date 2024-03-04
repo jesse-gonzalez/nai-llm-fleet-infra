@@ -1,0 +1,30 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kafka
+  namespace: flux-system
+spec:
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+  - name: kube-vip-resource-configs
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/kafka/_operators
+  prune: true
+  wait: true
+  timeout: 5m
+  postBuild:
+    substitute:
+      namespace_name: kafka
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
