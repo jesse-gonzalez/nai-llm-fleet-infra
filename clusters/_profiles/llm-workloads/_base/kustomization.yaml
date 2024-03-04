@@ -2,6 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources:
 - gpu-operator-repo.yaml
+- knative-istio-repo.yaml
+#- knative-operator-repo.yaml
+- knative-serving-repo.yaml
+- knative-eventing-repo.yaml
 - otel-collector-daemon-repo.yaml
 - otel-collector-deploy-repo.yaml
 - gptnvd-reference-app-repo
+- milvus-repo.yaml
+#- milvus-operator-repo.yaml
+- kserve-repo.yaml

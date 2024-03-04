@@ -3,10 +3,6 @@ kind: Component
 resources:
 ### common repo resources
 - kafka-repo.yaml
-- knative-istio-repo.yaml
-#- knative-operator-repo.yaml
-- knative-serving-repo.yaml
-- knative-eventing-repo.yaml
 - uptrace-repo.yaml
 - otel-operator-repo.yaml
 - otel-collector-deploy-repo.yaml
