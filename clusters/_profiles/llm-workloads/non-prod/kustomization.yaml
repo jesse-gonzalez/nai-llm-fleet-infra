@@ -7,6 +7,9 @@ components:
 ## then _profiles/llm-workloads/_base next
 - ../_base
 
+resources:
+- jupyterhub-repo.yaml
+
 patches:
 - path: ingress-nginx-addons.yaml
 - path: kubernetes-dashboard-addons.yaml

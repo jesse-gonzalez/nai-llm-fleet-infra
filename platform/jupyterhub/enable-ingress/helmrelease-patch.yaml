@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: milvus
+  namespace: flux-system
+spec:
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+      - jupyter.${wildcard_ingress_subdomain}
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: 900m
+        cert-manager.io/cluster-issuer: letsencrypt
+      tls:
+      - hosts:
+        - jupyter.${wildcard_ingress_subdomain}
+        secretName: jupyter-tld-secret
