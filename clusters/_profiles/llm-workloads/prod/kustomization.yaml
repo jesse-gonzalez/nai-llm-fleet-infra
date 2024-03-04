@@ -11,8 +11,5 @@ patches:
 - path: cert-manager-addons.yaml
 - path: ingress-nginx-addons.yaml
 - path: kubernetes-dashboard-addons.yaml
-- path: kafka-addons.yaml
-- path: milvus-addons.yaml
-#- path: milvus-operator-addons.yaml
 - path: kserve-addons.yaml
 
