@@ -31,9 +31,8 @@ spec:
   patches:
   - patch: |-
       - op: add
-        path: /spec/template/spec/imagePullSecrets/-
-        value:
-          name: "docker-hub-regcred"
+        path: /spec/template/spec/imagePullSecrets
+        value: [{ name: docker-hub-regcred }]
     target:
       kind: Deployment
       name: kserve-controller-manager
