@@ -15,3 +15,4 @@ patches:
 - path: kubernetes-dashboard-addons.yaml
 - path: gpu-operator-addons.yaml
 - path: kserve-addons.yaml
+- path: jupyterhub-addons.yaml
