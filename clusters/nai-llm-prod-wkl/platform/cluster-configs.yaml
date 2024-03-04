@@ -5,7 +5,7 @@ metadata:
 data:
   cluster_name: "nai-llm-prod-wkl"
   environment: "prod"
-  cluster_profile: "llm-workload"
+  cluster_profile: "llm-workloads"
   kube_vip_ipam_range: "10.38.16.76-10.38.16.77"
   kube_vip_nginx_ingress_ipam: "10.38.16.74/32"
   kube_vip_istio_system_ipam: "10.38.16.75/32"
