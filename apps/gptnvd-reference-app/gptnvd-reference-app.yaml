@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gptnvd-reference-app
+  labels:
+    toolkit.fluxcd.io/tenant: platform-team
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: gptnvd-reference-app
+  namespace: flux-system
+spec:
+  type: oci
+  interval: 60m0s
+  url: oci://github.com/wolfganghuse/gptnvd-reference-app
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gptnvd-reference-app
+  namespace: flux-system
+spec:
+  targetNamespace: ${namespace_name:=gptnvd-reference-app}
+  chart:
+    spec:
+      chart: gptnvd-reference-app
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: gptnvd-reference-app
+      version: "*"
+  interval: 30m
+  values:
+    frontend:
+      enabled: true
+      replicaCount: 1
+
+      image:
+        repository: "quay.io/wolfgangntnx/frontend"
+        pullPolicy: IfNotPresent
+        tag: latest
+
+      imagePullSecrets: []
+      nameOverride: wh1
+      fullnameOverride: ""
+
+      resources:
+        requests:
+          memory: "3Gi"
+          cpu: "1"
+
+      service:
+        type: ClusterIP
+        port: 8000
+
+      ingress:
+        enabled: true
+        className: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+          nginx.ingress.kubernetes.io/proxy-body-size: 500M
+        hosts:
+        - host: frontend.${wildcard_ingress_subdomain}
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - secretName: frontend-tld-secret
+          hosts:
+          - frontend.${wildcard_ingress_subdomain}
+
+    backend:
+      enabled: true
+
+      image:
+        repository: "quay.io/wolfgangntnx/doc-ingest"
+        pullPolicy: IfNotPresent
+        tag: 0.2.2
+
+      imagePullSecrets: []
+      nameOverride: wh1
+      fullnameOverride: ""
+
+      resources:
+        limits:
+          nvidia.com/gpu: "1"
+
+    milvus:
+      host: milvus.${wildcard_ingress_subdomain}
+      port: "19530"
+      collection: documents01
+    inference:
+      endpoint: http://llm.llm.${wildcard_ingress_subdomain}/v2/models/llama2_7b_chat/infer
+    s3:
+      ## need way to handle https use cases
+      endpoint: http://${objects_host}
+      sslVerify: false
+      region: "${objects_region}"
+      accessKey: "${objects_access_key}"
+      secretKey: "${objects_secret_key}"
+      bucket: documents01
+    kafka:
+      bootstrap: kafka.${wildcard_ingress_subdomain}
+      externalPort: "9096"

@@ -4,3 +4,4 @@ resources:
 - gpu-operator-repo.yaml
 - otel-collector-daemon-repo.yaml
 - otel-collector-deploy-repo.yaml
+- gptnvd-reference-app-repo
