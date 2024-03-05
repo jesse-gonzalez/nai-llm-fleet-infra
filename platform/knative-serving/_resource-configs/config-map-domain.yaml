@@ -4,4 +4,4 @@ metadata:
   name: config-domain
   namespace: knative-serving
 data:
-  kubeflow.${wildcard_ingress_subdomain}: ""
+  ${wildcard_ingress_subdomain}: ""
