@@ -23,7 +23,7 @@ spec:
   targetNamespace: ${namespace_name:=llm}
   chart:
     spec:
-      chart: nai-helm
+      chart: nai-llm
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -31,13 +31,13 @@ spec:
       version: "*"
   interval: 30m
   values:
-    model: gpt2
-    revision:
-    temperature: 0.2
-    repPenalty: 1.75
-    topP: 0.9
-    maxTokens: 200
-    useExistingNFS: false
+    maxTokens: 4000
+    model: llama-2-13b-chat
     nfs:
-      server: 10.54.78.48
-      export: /llm
+      export: /llm-repo-k8s
+      server: files.gptnvd.cloudnative.nvdlab.net
+    repPenalty: 1.2
+    revision: c2f3ec81aac798ae26dcc57799a994dfbf521496
+    temperature: 0.2
+    topP: 0.9
+    useExistingNFS: true

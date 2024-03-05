@@ -10,6 +10,7 @@ data:
   kube_vip_nginx_ingress_ipam: "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}"
   kube_vip_istio_system_ipam: "${BOOTSTRAP_kube_vip_istio_system_ipam}"
   wildcard_ingress_subdomain: "${BOOTSTRAP_wildcard_ingress_subdomain}"
+  management_cluster_ingress_subdomain: "${BOOTSTRAP_management_cluster_ingress_subdomain}"
   milvus_objects_bucket_name: "${BOOTSTRAP_milvus_objects_bucket_name}"
   documents_objects_bucket_name: "${BOOTSTRAP_documents_objects_bucket_name}"
   objects_host: "${BOOTSTRAP_objects_host}"

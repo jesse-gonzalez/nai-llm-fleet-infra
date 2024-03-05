@@ -23,7 +23,7 @@ spec:
   targetNamespace: ${namespace_name:=gptnvd-reference-app}
   chart:
     spec:
-      chart: gptnvd-reference-app
+      chart: gptnvd-referenceapp
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -37,11 +37,10 @@ spec:
 
       image:
         repository: "quay.io/wolfgangntnx/frontend"
-        pullPolicy: IfNotPresent
-        tag: latest
+        pullPolicy: Always
 
       imagePullSecrets: []
-      nameOverride: wh1
+      nameOverride: frontend
       fullnameOverride: ""
 
       resources:
@@ -68,17 +67,16 @@ spec:
         - secretName: frontend-tld-secret
           hosts:
           - frontend.${wildcard_ingress_subdomain}
-
     backend:
       enabled: true
 
       image:
         repository: "quay.io/wolfgangntnx/doc-ingest"
-        pullPolicy: IfNotPresent
-        tag: 0.2.2
+        pullPolicy: Always
+        #tag: 0.2.7-1
 
       imagePullSecrets: []
-      nameOverride: wh1
+      nameOverride: backend
       fullnameOverride: ""
 
       resources:
@@ -86,11 +84,11 @@ spec:
           nvidia.com/gpu: "1"
 
     milvus:
-      host: milvus.${wildcard_ingress_subdomain}
+      host: milvus.${management_cluster_ingress_subdomain}
       port: "19530"
       collection: "${documents_objects_bucket_name}"
     inference:
-      endpoint: http://llm.llm.${wildcard_ingress_subdomain}/v2/models/llama2_7b_chat/infer
+      endpoint: http://llm.llm.${wildcard_ingress_subdomain}
     s3:
       ## need way to handle https use cases
       endpoint: http://${objects_host}
@@ -100,5 +98,5 @@ spec:
       secretKey: "${objects_secret_key}"
       bucket: "${documents_objects_bucket_name}"
     kafka:
-      bootstrap: kafka.${wildcard_ingress_subdomain}
+      bootstrap: kafka.${management_cluster_ingress_subdomain}
       externalPort: "9096"
