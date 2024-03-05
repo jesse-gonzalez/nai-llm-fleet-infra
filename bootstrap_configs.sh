@@ -238,6 +238,11 @@ verify_vars(){
     _has_envar "BOOTSTRAP_aws_route53_region"
     _has_envar "BOOTSTRAP_aws_access_key_id" "is_secret"
     _has_envar "BOOTSTRAP_aws_access_key_secret" "is_secret"
+    _has_envar "BOOTSTRAP_management_cluster_ingress_subdomain"
+    _has_envar "BOOTSTRAP_model"
+    _has_envar "BOOTSTRAP_revision"
+    _has_envar "BOOTSTRAP_nfs_export"
+    _has_envar "BOOTSTRAP_nfs_server"
 
     _log "INFO" "Validating all OPTIONAL environment variables"
     _has_optional_envar "BOOTSTRAP_github_app_id" "is_secret"

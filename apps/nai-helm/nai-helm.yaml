@@ -31,13 +31,13 @@ spec:
       version: "*"
   interval: 30m
   values:
-    maxTokens: 4000
-    model: llama-2-13b-chat
+    maxTokens: "${maxTokens}"
+    model: "${model}"
+    revision: "${revision}"
     nfs:
-      export: /llm-repo-k8s
-      server: files.gptnvd.cloudnative.nvdlab.net
-    repPenalty: 1.2
-    revision: c2f3ec81aac798ae26dcc57799a994dfbf521496
-    temperature: 0.2
-    topP: 0.9
-    useExistingNFS: true
+      export: "${nfs_export}"
+      server: "${nfs_server}"
+    useExistingNFS: "${useExistingNFS}"
+    repPenalty: "${repPenalty}"
+    temperature: "${temperature}"
+    topP: "${topP}"

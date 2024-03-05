@@ -21,3 +21,21 @@ data:
   gpu_time_slicing_replica_count: "2"
   aws_route53_dns_zone: "cloudnative.nvdlab.net"
   aws_route53_region: "us-east-1"
+  model: "llama-2-13b-chat"
+  revision: "c2f3ec81aac798ae26dcc57799a994dfbf521496"
+  nfs_export: "/llm-repo-k8s"
+  nfs_server: "files.gptnvd.cloudnative.nvdlab.net"
+  useExistingNFS: "true"
+  maxTokens: "4000"
+  repPenalty: "1.2"
+  temperature: "0.2"
+  topP: "0.9"
+
+
+
+
+
+
+
+
+

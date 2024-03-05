@@ -21,3 +21,21 @@ data:
   gpu_time_slicing_replica_count: "${BOOTSTRAP_gpu_time_slicing_replica_count}"
   aws_route53_dns_zone: "${BOOTSTRAP_aws_route53_dns_zone}"
   aws_route53_region: "${BOOTSTRAP_aws_route53_region}"
+  model: "${BOOTSTRAP_model}"
+  revision: "${BOOTSTRAP_revision}"
+  nfs_export: "${BOOTSTRAP_nfs_export}"
+  nfs_server: "${BOOTSTRAP_nfs_server}"
+  useExistingNFS: "${BOOTSTRAP_useExistingNFS}"
+  maxTokens: "${BOOTSTRAP_maxTokens}"
+  repPenalty: "${BOOTSTRAP_repPenalty}"
+  temperature: "${BOOTSTRAP_temperature}"
+  topP: "${BOOTSTRAP_topP}"
+
+
+
+
+
+
+
+
+
