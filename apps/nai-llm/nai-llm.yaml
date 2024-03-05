@@ -8,22 +8,22 @@ metadata:
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: nai-llm
+  name: nai-llm-helm
   namespace: flux-system
 spec:
   interval: 60m0s
-  url: https://github.com/wolfganghuse/nai-helm
+  url: https://jesse-gonzalez.github.io/nai-llm-helm/
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: llm
+  name: nai-helm
   namespace: flux-system
 spec:
   targetNamespace: ${namespace_name:=llm}
   chart:
     spec:
-      chart: nai-llm
+      chart: nai-helm
       interval: 15m
       sourceRef:
         kind: HelmRepository
