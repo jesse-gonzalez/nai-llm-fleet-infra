@@ -10,6 +10,7 @@ data:
   kube_vip_nginx_ingress_ipam: "10.38.16.74/32"
   kube_vip_istio_system_ipam: "10.38.16.75/32"
   wildcard_ingress_subdomain: "nai-llm-prod-wkl.ncnlabs.ninja"
+  management_cluster_ingress_subdomain: "nai-llm-prod-mgmt.ncnlabs.ninja"
   milvus_objects_bucket_name: "milvus"
   documents_objects_bucket_name: "documents01"
   objects_host: "10.38.16.14"
@@ -20,3 +21,21 @@ data:
   gpu_time_slicing_replica_count: "2"
   aws_route53_dns_zone: "ncnlabs.ninja"
   aws_route53_region: "us-east-2"
+  model: "llama-2-13b-chat"
+  revision: "c2f3ec81aac798ae26dcc57799a994dfbf521496"
+  nfs_export: "/llm-repo-k8s"
+  nfs_server: "files.gptnvd.cloudnative.nvdlab.net"
+  useExistingNFS: "true"
+  maxTokens: "4000"
+  repPenalty: "1.2"
+  temperature: "0.2"
+  topP: "0.9"
+
+
+
+
+
+
+
+
+
