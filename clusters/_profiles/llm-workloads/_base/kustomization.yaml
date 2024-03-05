@@ -10,5 +10,5 @@ resources:
 - otel-collector-deploy-repo.yaml
 - redis-repo.yaml
 - kserve-repo.yaml
-- nai-llm-repo.yaml
+- nai-helm-repo.yaml
 - gptnvd-reference-app-repo.yaml

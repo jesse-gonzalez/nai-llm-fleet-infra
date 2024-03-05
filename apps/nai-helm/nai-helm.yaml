@@ -17,7 +17,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: nai-helm
+  name: llm
   namespace: flux-system
 spec:
   targetNamespace: ${namespace_name:=llm}
@@ -27,7 +27,7 @@ spec:
       interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: nai-llm
+        name: nai-llm-helm
       version: "*"
   interval: 30m
   values:

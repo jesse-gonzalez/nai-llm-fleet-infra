@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: llm
+  name: nai-helm
   namespace: flux-system
 spec:
   dependsOn:
@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/nai-llm
+  path: ./apps/nai-helm
   prune: true
   wait: true
   timeout: 5m
