@@ -14,4 +14,4 @@ data:
         failRequestsGreaterThanOne: false
         resources:
           - name: nvidia.com/gpu
-            replicas: ${gpu_time_slicing_replica_count:=2}
+            replicas: ${gpu_time_slicing_replica_count:=4}
