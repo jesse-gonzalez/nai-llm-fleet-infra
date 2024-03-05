@@ -5,6 +5,10 @@ resources:
 - gpu-time-slicing-config.yaml
 
 patches:
+- path: helmrelease-patch.yaml
+  target:
+    kind: HelmRelease
+
 ## forcing the patch to make sure the cluster policy config is picked up and gpu operators resources recycled
 - path: gpu-cluster-policy-patch.yaml
   target:
