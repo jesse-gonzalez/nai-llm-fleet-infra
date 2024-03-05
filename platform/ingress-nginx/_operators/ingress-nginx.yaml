@@ -28,6 +28,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
-      version: "*"
+      version: "4.8.3"
   interval: 30m
   values: {}
