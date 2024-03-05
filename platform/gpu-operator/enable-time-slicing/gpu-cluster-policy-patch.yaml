@@ -4,6 +4,7 @@ metadata:
   name: cluster-policy
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
+  namespace: gpu-operator
 spec:
   devicePlugin:
     config:
