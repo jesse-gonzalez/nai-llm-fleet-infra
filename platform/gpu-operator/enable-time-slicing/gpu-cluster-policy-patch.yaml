@@ -1,0 +1,11 @@
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: cluster-policy
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  devicePlugin:
+    config:
+      default: any
+      name: time-slicing-config

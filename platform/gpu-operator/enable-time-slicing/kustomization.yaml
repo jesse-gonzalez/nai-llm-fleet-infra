@@ -10,7 +10,7 @@ patches:
 #     kind: HelmRelease
 
 ## forcing the patch to make sure the cluster policy config is picked up and gpu operators resources recycled
-- path: cluster-policy-patch.yaml
+- path: gpu-cluster-policy-patch.yaml
   target:
     kind: ClusterPolicy
-    version: nvidia.com/v1
+    version: "nvidia.com/v1"
