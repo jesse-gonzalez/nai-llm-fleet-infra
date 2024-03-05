@@ -18,7 +18,7 @@ data:
   objects_region: "us-east-1"
   objects_use_ssl: "true"
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
-  gpu_time_slicing_replica_count: "2"
+  gpu_time_slicing_replica_count: "4"
   aws_route53_dns_zone: "cloudnative.nvdlab.net"
   aws_route53_region: "us-east-1"
   model: "llama-2-13b-chat"
