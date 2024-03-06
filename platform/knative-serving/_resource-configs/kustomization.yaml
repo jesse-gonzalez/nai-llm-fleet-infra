@@ -5,5 +5,7 @@ resources:
 - ./net-istio.yaml
 - ./serving-hpa.yaml
 
-#patches:
-#- path: ./config-map-domain.yaml
+patches:
+- path: ./config-map-domain.yaml
+- path: ./config-features.yaml
+- path: ./config-gc.yaml
