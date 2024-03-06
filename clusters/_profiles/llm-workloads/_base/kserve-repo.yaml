@@ -5,7 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-serving
+  - name: knative-serving-resource-configs
+  - name: knative-eventing-resource-configs
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -17,7 +18,7 @@ spec:
   path: ./platform/kserve/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: kserve

@@ -13,7 +13,7 @@ spec:
   path: ./apps/gptnvd-reference-app
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: gptnvd-reference-app
