@@ -77,4 +77,3 @@ tasks:
     #desc: List all the services in your cluster
     cmds:
     - kubectl get services {{.CLI_ARGS | default "-A"}}
-

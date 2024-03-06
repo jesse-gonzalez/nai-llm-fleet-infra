@@ -7,10 +7,21 @@ tasks:
     vars:
       REQUIRED_TOOLS_LIST: kubectl,flux
 
+  gpu-collect:
+    silent: false
+    deps: [default]
+    desc: Gather common nvidia gpu resources in your cluster
+    cmds:
+    - kubectl get nodes -l nvidia.com/gpu.present=true
+    - kubectl describe nodes -l nvidia.com/gpu.present=true | grep -i nvidia.com
+    - kubectl get cm time-slicing-config -n gpu-operator
+    - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
+    - kubectl get pod -n gpu-operator
+
   ingress-collect:
     silent: false
     deps: [default]
-    desc: Gather common resources in your cluster, useful when asking for support
+    desc: Gather common ingress resources in your cluster
     cmds:
     - task: :kubectl:ingresses
     - task: :kubectl:certificates
@@ -20,7 +31,7 @@ tasks:
   flux-collect:
     silent: false
     deps: [default]
-    desc: Gather common resources in your cluster, useful when asking for support
+    desc: Gather common flux resources in your cluster
     cmds:
     - task: :kubectl:nodes
     - task: :kubectl:kustomizations
