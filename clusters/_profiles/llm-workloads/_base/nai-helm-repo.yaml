@@ -6,6 +6,7 @@ metadata:
 spec:
   dependsOn:
   - name: kserve
+  - name: gpu-operator
   interval: 15m
   sourceRef:
     kind: GitRepository
