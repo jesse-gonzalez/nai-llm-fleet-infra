@@ -6,6 +6,14 @@ resources:
 - ./serving-hpa.yaml
 
 patches:
-- path: ./config-map-domain.yaml
+- path: config-domain.yaml
+  target:
+    kind: ConfigMap
+
 - path: ./config-features.yaml
+  target:
+    kind: ConfigMap
+
 - path: ./config-gc.yaml
+  target:
+    kind: ConfigMap
