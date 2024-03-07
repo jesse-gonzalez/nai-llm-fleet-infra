@@ -25,12 +25,3 @@ spec:
     - kind: Secret
       name: cluster-secrets
       optional: false
-  patches:
-  - patch: |-
-      - op: add
-        path: /imagePullSecrets
-        value: [{ name: docker-hub-regcred }]
-    target:
-      kind: ServiceAccount
-      name: default
-      namespace: llm
