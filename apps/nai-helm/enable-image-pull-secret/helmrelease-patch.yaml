@@ -1,0 +1,9 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nai-helm
+  namespace: flux-system
+spec:
+  values:
+    imagePullSecrets:
+    - docker-hub-regcred

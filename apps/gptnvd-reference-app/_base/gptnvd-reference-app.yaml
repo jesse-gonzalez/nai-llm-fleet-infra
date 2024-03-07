@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: nai-llm-helm
-      version: "*"
+      version: "0.2.7"
   interval: 30m
   values:
     frontend:
