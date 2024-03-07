@@ -6,4 +6,4 @@ metadata:
 spec:
   values:
     imagePullSecrets:
-    - docker-hub-regcred
+    - name: docker-hub-regcred
