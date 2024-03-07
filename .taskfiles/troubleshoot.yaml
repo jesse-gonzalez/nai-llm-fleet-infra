@@ -13,7 +13,7 @@ tasks:
     desc: Gather common nvidia gpu resources in your cluster
     cmds:
     - kubectl get nodes -l nvidia.com/gpu.present=true
-    - kubectl describe nodes -l nvidia.com/gpu.present=true | grep -i nvidia.com
+    - kubectl describe nodes -l nvidia.com/gpu.present=true | egrep -i "nvidia.com|kubernetes.io"
     - kubectl get cm time-slicing-config -n gpu-operator
     - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
     - kubectl get pod -n gpu-operator
