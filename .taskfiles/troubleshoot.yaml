@@ -17,6 +17,28 @@ tasks:
     - kubectl get cm time-slicing-config -n gpu-operator
     - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
     - kubectl get pod -n gpu-operator
+    - kubectl get events -n gpu-operator --sort-by='.lastTimestamp'
+    - kubectl get pod -n gpu-operator -o name -l app=nvidia-driver-daemonset | xargs -I {} kubectl exec -n gpu-operator -i {} -c nvidia-driver-ctr -- nvidia-smi
+
+  kyverno-collect:
+    silent: true
+    deps: [default]
+    desc: Gather common kyverno resources in your cluster
+    cmds:
+    - kubectl get po,svc -n kyverno -o wide
+    - kubectl get cpol,pol -A -o wide
+    - kubectl get validatingwebhookconfigurations,mutatingwebhookconfigurations | grep -i kyverno
+    - kubectl get cadmr,admr -A -o wide
+    - kubectl get cbgscanr -o wide
+    - 'echo "number of cluster admission reports: $(kubectl get cadmr --no-headers 2> /dev/null | wc -l)"'
+    - 'echo "number of admission reports: $(kubectl get admr -A --no-headers 2> /dev/null | wc -l)"'
+    - |
+      NS_LIST=$(kubectl get ns -o jsonpath='{.items[*].metadata.name}')
+      for ns in $NS_LIST
+      do
+        echo "number of admission reports in $ns: $(kubectl get -n $ns admr --no-headers 2> /dev/null | wc -l)"
+      done
+    - kubectl get events -n kyverno --sort-by='.lastTimestamp'
 
   ingress-collect:
     silent: false
