@@ -2,3 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - nai-helm.yaml
+
+patches:
+- patch: |-
+    - op: add
+      path: imagePullSecrets
+      value: [{ name: docker-hub-regcred }]
+  target:
+    kind: ServiceAccount
+    name: default
