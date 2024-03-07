@@ -33,4 +33,4 @@ spec:
     target:
       kind: ServiceAccount
       name: default
-      namespace: kserve
+      namespace: llm
