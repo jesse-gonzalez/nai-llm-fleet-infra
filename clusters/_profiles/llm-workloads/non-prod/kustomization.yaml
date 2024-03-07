@@ -16,3 +16,4 @@ patches:
 - path: gpu-operator-addons.yaml
 - path: kserve-addons.yaml
 - path: jupyterhub-addons.yaml
+- path: nai-helm-addons.yaml
