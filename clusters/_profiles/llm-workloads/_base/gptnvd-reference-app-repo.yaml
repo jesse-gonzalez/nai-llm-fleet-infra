@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/gptnvd-reference-app
+  path: ./apps/gptnvd-reference-app/_base
   prune: true
   wait: true
   timeout: 15m

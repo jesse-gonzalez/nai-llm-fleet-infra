@@ -11,7 +11,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/nai-helm
+  path: ./apps/nai-helm/_base
   prune: true
   wait: true
   timeout: 15m
