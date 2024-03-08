@@ -11,7 +11,7 @@ data:
   kube_vip_istio_system_ipam: "10.50.119.51/32"
   wildcard_ingress_subdomain: "nke-nvd-llm-mgmt-02.cloudnative.nvdlab.net"
   management_cluster_ingress_subdomain: "nke-nvd-llm-mgmt-02.cloudnative.nvdlab.net"
-  milvus_objects_bucket_name: "milvus"
+  milvus_objects_bucket_name: "nke-nvd-llm-mgmt-02-milvus"
   documents_objects_bucket_name: "documents01"
   objects_host: "10.38.16.14"
   objects_port: "443"
