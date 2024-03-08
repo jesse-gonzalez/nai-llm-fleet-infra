@@ -6,3 +6,4 @@ metadata:
 spec:
   components:
   - ../enable-ingress
+  - ../enable-image-pull-secret

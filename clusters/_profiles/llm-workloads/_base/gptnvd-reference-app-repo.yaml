@@ -5,6 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+  - name: kserve
+  - name: gpu-operator
   - name: nai-helm
   interval: 15m
   sourceRef:

@@ -8,5 +8,3 @@ resources:
 - weave-gitops-repo.yaml
 - kubernetes-dashboard-repo.yaml
 
-
-
