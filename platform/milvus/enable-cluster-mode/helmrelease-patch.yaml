@@ -23,7 +23,11 @@ spec:
         enabled: True
     queryNode:
       replicas: 2
+    etcd:
+      replicaCount: 3
     rootCoordinator:
       replicas: 2
       activeStandby:
         enabled: True
+    pulsar:
+      enabled: true
