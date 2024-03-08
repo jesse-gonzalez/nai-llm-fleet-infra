@@ -27,5 +27,3 @@ spec:
       replicas: 2
       activeStandby:
         enabled: True
-    pulsar:
-      enabled: True

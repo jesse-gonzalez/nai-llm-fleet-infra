@@ -36,6 +36,6 @@ spec:
     etcd:
       replicaCount: 1
     minio:
-      enabled: false
+      mode: standalone
     pulsar:
       enabled: false
