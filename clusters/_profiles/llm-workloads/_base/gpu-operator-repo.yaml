@@ -10,7 +10,20 @@ spec:
     name: flux-system
   path: ./platform/gpu-operator/_operators
   prune: true
-  wait: true
+  wait: false
+  healthChecks:
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-device-plugin-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-driver-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: gpu-feature-discovery
+    namespace: gpu-operator
   timeout: 15m
   postBuild:
     substitute:
