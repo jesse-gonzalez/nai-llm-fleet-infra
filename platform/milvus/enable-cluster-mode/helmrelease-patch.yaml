@@ -5,6 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   values:
+    cluster:
+      enabled: true
     dataCoordinator:
       replicas: 2
       activeStandby:
