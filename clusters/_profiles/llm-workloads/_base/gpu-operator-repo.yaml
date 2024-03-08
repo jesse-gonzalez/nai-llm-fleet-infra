@@ -4,7 +4,7 @@ metadata:
   name: gpu-operator
   namespace: flux-system
 spec:
-  interval: 15m
+  interval: 30m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -24,7 +24,19 @@ spec:
     kind: DaemonSet
     name: gpu-feature-discovery
     namespace: gpu-operator
-  timeout: 15m
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-operator-validator
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-container-toolkit-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-dcgm-exporter
+    namespace: gpu-operator
+  timeout: 20m
   postBuild:
     substitute:
       namespace_name: gpu-operator
