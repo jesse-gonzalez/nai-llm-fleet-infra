@@ -48,7 +48,7 @@ spec:
   path: ./platform/knative-eventing/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: knative-eventing

@@ -18,7 +18,7 @@ spec:
   path: ./platform/milvus-operator/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: milvus
@@ -49,7 +49,7 @@ spec:
   path: ./platform/milvus-operator/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: milvus

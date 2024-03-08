@@ -11,7 +11,7 @@ spec:
   path: ./platform/opentelemetry-collector-deployment/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   dependsOn:
   - name: kyverno
   postBuild:

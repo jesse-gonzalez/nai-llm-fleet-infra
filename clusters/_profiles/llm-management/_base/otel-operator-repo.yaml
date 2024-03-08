@@ -19,7 +19,7 @@ spec:
   path: ./platform/opentelemetry/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: opentelemetry
@@ -50,7 +50,7 @@ spec:
   path: ./platform/opentelemetry/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: opentelemetry

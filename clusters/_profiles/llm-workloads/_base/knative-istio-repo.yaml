@@ -18,7 +18,7 @@ spec:
   path: ./platform/knative-istio/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     substitute:
       namespace_name: istio-system

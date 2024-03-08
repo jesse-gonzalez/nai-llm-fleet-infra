@@ -17,7 +17,7 @@ spec:
   path: ./platform/knative-operator/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     #substitute:
     #  namespace_name: knative-operator
@@ -48,7 +48,7 @@ spec:
   path: ./platform/knative-operator/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 15m
   postBuild:
     #substitute:
     #  namespace_name: knative-operator
