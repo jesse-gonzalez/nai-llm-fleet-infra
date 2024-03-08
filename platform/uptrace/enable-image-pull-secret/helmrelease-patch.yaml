@@ -5,6 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   values:
+    imagePullSecrets:
+    - name: docker-hub-regcred
     postgresql:
       imagePullSecrets:
       - name: docker-hub-regcred
