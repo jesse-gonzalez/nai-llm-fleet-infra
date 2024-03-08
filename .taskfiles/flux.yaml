@@ -16,7 +16,7 @@ tasks:
 
   init:
     silent: false
-    deps: [verify]
+    #deps: [verify]
     precondition:
     - test -d {{.PROJECT_DIR}}/clusters/{{.K8S_CLUSTER_NAME}}/platform
     cmds:
