@@ -11,7 +11,7 @@ data:
   kube_vip_istio_system_ipam: "10.38.110.14/32"
   wildcard_ingress_subdomain: "nai-llm-gitops-prod.ncnlabs.ninja"
   management_cluster_ingress_subdomain: "nai-llm-gitops-mgmt.ncnlabs.ninja"
-  milvus_objects_bucket_name: "milvus"
+  milvus_objects_bucket_name: "nai-llm-gitops-mgmt-milvus"
   documents_objects_bucket_name: "documents01"
   objects_host: "10.38.110.18"
   objects_port: "80"
