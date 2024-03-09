@@ -8,7 +8,7 @@ spec:
   - ../enable-image-pull-secret
   - ../enable-monitoring
   - ../enable-ingress
-  ##- ../enable-nutanix-objects
+  - ../enable-nutanix-objects
   ## enable cluster mode for nonprod
   ##- ../enable-standalone-mode
   ## enable cluster mode for prod
