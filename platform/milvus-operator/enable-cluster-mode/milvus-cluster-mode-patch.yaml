@@ -8,6 +8,4 @@ spec:
   mode: cluster
   dependencies: {}
   components: {}
-  imagePullSecrets: # Optional
-  - name: docker-hub-regcred
   config: {}
