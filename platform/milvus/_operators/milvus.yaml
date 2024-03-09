@@ -30,4 +30,4 @@ spec:
         name: milvus
       version: "4.1.13"
   interval: 1h
-  values: {}
+
