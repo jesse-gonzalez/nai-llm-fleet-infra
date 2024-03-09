@@ -33,25 +33,3 @@ spec:
   values:
     cluster:
       enabled: true
-    dataCoordinator:
-      replicas: 2
-      activeStandby:
-        enabled: True
-    dataNode:
-      replicas: 2
-    indexCoordinator:
-      replicas: 2
-    indexNode:
-      replicas: 2
-    queryCoordinator:
-      replicas: 2
-      activeStandby:
-        enabled: True
-    queryNode:
-      replicas: 2
-    rootCoordinator:
-      replicas: 2
-      activeStandby:
-        enabled: True
-    pulsar:
-      enabled: true
