@@ -6,8 +6,8 @@ metadata:
 spec:
   components:
   - ../enable-image-pull-secret
-  #- ../enable-monitoring
-  #- ../enable-ingress
+  - ../enable-monitoring
+  - ../enable-ingress
   #- ../enable-nutanix-objects
   ## enable cluster mode for nonprod
   ##- ../enable-standalone-mode
