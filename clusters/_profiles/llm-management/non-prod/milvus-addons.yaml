@@ -9,3 +9,5 @@ spec:
   - ../enable-monitoring
   - ../enable-ingress
   - ../enable-nutanix-objects
+  ## enable cluster mode for prod
+  - ../enable-cluster-mode
