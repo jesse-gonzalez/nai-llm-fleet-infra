@@ -30,5 +30,7 @@ spec:
         name: milvus-operator
       version: "0.9.x"
   interval: 1h
-  values: {}
+  values:
+    imagePullSecrets: # Optional
+    - name: docker-hub-regcred
 
