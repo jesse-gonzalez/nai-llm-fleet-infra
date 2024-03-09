@@ -32,4 +32,10 @@ spec:
   interval: 1h
   values:
     cluster:
-      enabled: true
+      enabled: false
+    etcd:
+      replicaCount: 1
+    minio:
+      mode: standalone
+    pulsar:
+      enabled: false
