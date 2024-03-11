@@ -29,3 +29,6 @@ spec:
         enabled: True
     pulsar:
       enabled: true
+      proxy:
+        configData:
+          httpNumThreads: null
