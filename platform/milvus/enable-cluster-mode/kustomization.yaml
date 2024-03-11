@@ -5,6 +5,3 @@ patches:
 - path: helmrelease-patch.yaml
   target:
     kind: HelmRelease
-
-resources:
-- pulsar-proxy-cm.yal
