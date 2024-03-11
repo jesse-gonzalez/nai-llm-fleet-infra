@@ -6,7 +6,7 @@ patches:
   target:
     kind: HelmRelease
 
-resources:
-- pulsar-proxy-cm.yaml
-
+- path: pulsar-proxy-cm.yaml
+  target:
+    kind: ConfigMap
 
