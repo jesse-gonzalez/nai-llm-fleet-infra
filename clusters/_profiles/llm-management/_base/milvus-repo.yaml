@@ -20,9 +20,6 @@ spec:
   prune: true
   wait: true
   timeout: 15m
-  install:
-    remediation:
-      retries: 3
   postBuild:
     substitute:
       namespace_name: milvus
