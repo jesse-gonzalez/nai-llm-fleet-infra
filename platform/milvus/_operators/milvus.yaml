@@ -30,12 +30,12 @@ spec:
         name: milvus
       version: "4.1.13"
   interval: 1h
-  values:
-    cluster:
-      enabled: false
-    etcd:
-      replicaCount: 1
-    minio:
-      mode: standalone
-    pulsar:
-      enabled: false
+  # values:
+  #   cluster:
+  #     enabled: false
+  #   etcd:
+  #     replicaCount: 1
+  #   minio:
+  #     mode: standalone
+  #   pulsar:
+  #     enabled: false
