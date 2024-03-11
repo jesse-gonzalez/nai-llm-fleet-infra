@@ -38,14 +38,14 @@ spec:
     patch: |
       - op: remove
         path: /data/httpNumThreads
-  - target:
-      group: helm.toolkit.fluxcd.io
-      kind: HelmRelease
-      name: milvus-vectordb
-      namespace: flux-system
-    patch: |-
-      - op: replace
-        path: /spec/values/pulsar/proxy/configData/httpNumThreads
-        values: "100"
+  # - target:
+  #     group: helm.toolkit.fluxcd.io
+  #     kind: HelmRelease
+  #     name: milvus-vectordb
+  #     namespace: flux-system
+  #   patch: |-
+  #     - op: replace
+  #       path: /spec/values/pulsar/proxy/configData/httpNumThreads
+  #       values: "100"
 
 
