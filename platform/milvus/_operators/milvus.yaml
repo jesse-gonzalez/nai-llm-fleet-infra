@@ -30,4 +30,13 @@ spec:
         name: milvus
       version: "4.1.13"
   interval: 1h
-  values: {}
+  values:
+    pulsar:
+      enabled: true
+      proxy:
+        configData:
+          PULSAR_MEM: >
+            -Xms2048m -Xmx2048m
+          PULSAR_GC: >
+            -XX:MaxDirectMemorySize=2048m
+          httpNumThreads: null
