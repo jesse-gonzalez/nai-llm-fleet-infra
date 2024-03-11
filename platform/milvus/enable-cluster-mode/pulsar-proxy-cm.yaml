@@ -5,6 +5,7 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
     app.kubernetes.io/managed-by: helm
+    meta.helm.sh/release-namespace: milvus
   namespace: milvus
 data:
   PULSAR_GC: |
