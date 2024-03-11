@@ -43,7 +43,7 @@ spec:
   - target:
       version: v1
       kind: ConfigMap
-      name: milvus-milvus-vectordb-pulsar-proxy
+      name: pulsar-proxy
     patch: |
       - op: replace
         path: /data/httpNumThreads

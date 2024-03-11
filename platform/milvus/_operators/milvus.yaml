@@ -31,6 +31,7 @@ spec:
       version: "4.1.13"
   interval: 1h
   values:
+    # setting as default to deal with issue around helm upgrades https://github.com/zilliztech/milvus-helm/issues/58
     pulsar:
       proxy:
         configData:
