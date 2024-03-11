@@ -30,6 +30,17 @@ spec:
         name: milvus
       version: "4.1.13"
   interval: 1h
+  postRenderers:
+  - kustomize:
+      patches:
+      - target:
+          version: v1
+          kind: ConfigMap
+          name: pulsar-proxy
+        patch: |
+          - op: replace
+            path: /data/httpNumThreads
+            values: "100"
   values:
     # setting as default to deal with issue around helm upgrades https://github.com/zilliztech/milvus-helm/issues/58
     pulsar:
