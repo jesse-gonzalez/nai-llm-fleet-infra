@@ -5,9 +5,9 @@ metadata:
   namespace: flux-system
 spec:
   components:
+  #- ../enable-ingress
   - ../enable-image-pull-secret
-  - ../enable-monitoring
-  - ../enable-ingress
+  #- ../enable-monitoring
   - ../enable-nutanix-objects
   ## enable cluster mode for nonprod
   ##- ../enable-standalone-mode
