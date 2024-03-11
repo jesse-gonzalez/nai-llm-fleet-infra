@@ -2,12 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: milvus-milvus-vectordb-pulsar-proxy
-  labels:
-    app.kubernetes.io/managed-by: Helm
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
-    meta.helm.sh/release-name: milvus-vectordb
-    meta.helm.sh/release-namespace: milvus
   namespace: milvus
 data:
   PULSAR_GC: |
