@@ -32,6 +32,13 @@ spec:
       optional: false
   patches:
   - target:
+      version: v1
+      kind: ConfigMap
+      name: milvus-milvus-vectordb-pulsar-proxy
+    patch: |
+      - op: remove
+        path: /data/httpNumThreads
+  - target:
       group: helm.toolkit.fluxcd.io
       kind: HelmRelease
       name: milvus-vectordb
@@ -39,13 +46,6 @@ spec:
     patch: |-
       - op: replace
         path: /spec/values/pulsar/proxy/configData/httpNumThreads
-        values: null
-  - target:
-      version: v1
-      kind: ConfigMap
-      name: milvus-vectordb-pulsar-proxy
-    patch: |
-      - op: replace
-        path: /data/httpNumThreads
-        value: "100"
+        values: "100"
+
 
