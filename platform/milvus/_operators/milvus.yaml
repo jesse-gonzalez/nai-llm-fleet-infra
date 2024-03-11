@@ -34,4 +34,4 @@ spec:
     pulsar:
       proxy:
         configData:
-          httpNumThreads: "100"
+          httpNumThreads: null
