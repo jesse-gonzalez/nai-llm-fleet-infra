@@ -12,6 +12,6 @@ patches:
     name: milvus-vectordb
     namespace: flux-system
   patch: |-
-    - op: replace
+    - op: remove
       path: /spec/values/pulsar/proxy/configData/httpNumThreads
-      value: null
+
