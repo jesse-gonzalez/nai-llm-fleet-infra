@@ -40,6 +40,25 @@ spec:
       - op: replace
         path: /spec/values/pulsar/proxy/configData/httpNumThreads
         values: null
+  - target:
+      version: v1
+      kind: ConfigMap
+      name: pulsar-proxy
+    patch: |
+      - op: replace
+        path: /data/httpNumThreads
+        values: "100"
+  postRenderers:
+  - kustomize:
+      patches:
+      - target:
+          version: v1
+          kind: ConfigMap
+          name: pulsar-proxy
+        patch: |
+          - op: replace
+            path: /data/httpNumThreads
+            values: "100"
 
 
 
