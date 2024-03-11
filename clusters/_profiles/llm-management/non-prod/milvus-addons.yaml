@@ -7,9 +7,9 @@ spec:
   components:
   #- ../enable-ingress
   - ../enable-image-pull-secret
-  #- ../enable-monitoring
-  - ../enable-nutanix-objects
-  ## enable cluster mode for nonprod
-  ##- ../enable-standalone-mode
-  ## enable cluster mode for prod
-  #- ../enable-cluster-mode
+#- ../enable-monitoring
+#- ../enable-nutanix-objects
+## enable cluster mode for nonprod
+##- ../enable-standalone-mode
+## enable cluster mode for prod
+#- ../enable-cluster-mode
