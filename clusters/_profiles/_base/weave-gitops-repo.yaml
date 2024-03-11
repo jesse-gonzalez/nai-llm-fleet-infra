@@ -15,7 +15,7 @@ spec:
   path: ./platform/weave-gitops/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       namespace_name: weave-gitops
@@ -46,7 +46,7 @@ spec:
   path: ./platform/weave-gitops/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       namespace_name: weave-gitops

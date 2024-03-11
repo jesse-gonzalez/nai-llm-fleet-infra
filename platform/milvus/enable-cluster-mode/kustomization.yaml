@@ -6,12 +6,5 @@ patches:
   target:
     kind: HelmRelease
 
-# - target:
-#     group: helm.toolkit.fluxcd.io
-#     kind: HelmRelease
-#     name: milvus-vectordb
-#     namespace: flux-system
-#   patch: |-
-#     - op: remove
-#       path: /spec/values/pulsar/proxy/configData/httpNumThreads
+
 

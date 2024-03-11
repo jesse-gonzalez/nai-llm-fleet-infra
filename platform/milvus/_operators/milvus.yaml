@@ -32,4 +32,7 @@ spec:
   interval: 1h
   values:
     pulsar:
-      enabled: false
+      enabled: true
+      proxy:
+        configData:
+          httpNumThreads: null

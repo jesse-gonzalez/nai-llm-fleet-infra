@@ -15,7 +15,7 @@ spec:
   path: ./platform/kyverno/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       namespace_name: kyverno
@@ -46,7 +46,7 @@ spec:
   path: ./platform/kyverno/_resource-configs
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       namespace_name: kyverno

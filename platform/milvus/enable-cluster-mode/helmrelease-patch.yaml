@@ -27,4 +27,9 @@ spec:
       replicas: 2
       activeStandby:
         enabled: true
+    pulsar:
+      enabled: false
+      proxy:
+        configData:
+          httpNumThreads: null
 
