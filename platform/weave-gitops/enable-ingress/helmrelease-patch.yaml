@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: kubernetes-dashboard
+  name: weave-gitops
   namespace: flux-system
 spec:
   values:
@@ -11,9 +11,9 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt
         hosts:
-        - dashboard.${wildcard_ingress_subdomain}
-        ingressClassName: nginx
-        secretName: kubernetes-dashboard-certs
+        - gitops.${wildcard_ingress_subdomain}
+        className: nginx
+        secretName: weave-gitops-certs
         issuer:
           name: letsencrypt
           scope: cluster
