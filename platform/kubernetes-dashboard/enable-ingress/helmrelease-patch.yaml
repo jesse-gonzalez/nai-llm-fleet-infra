@@ -8,8 +8,6 @@ spec:
     app:
       ingress:
         enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt
         hosts:
         - dashboard.${wildcard_ingress_subdomain}
         ingressClassName: nginx
