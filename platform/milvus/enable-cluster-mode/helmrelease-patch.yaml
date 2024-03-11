@@ -10,7 +10,7 @@ spec:
     dataCoordinator:
       replicas: 2
       activeStandby:
-        enabled: True
+        enabled: true
     dataNode:
       replicas: 2
     indexCoordinator:
@@ -20,13 +20,13 @@ spec:
     queryCoordinator:
       replicas: 2
       activeStandby:
-        enabled: True
+        enabled: true
     queryNode:
       replicas: 2
     rootCoordinator:
       replicas: 2
       activeStandby:
-        enabled: True
+        enabled: true
     pulsar:
       enabled: true
       proxy:
