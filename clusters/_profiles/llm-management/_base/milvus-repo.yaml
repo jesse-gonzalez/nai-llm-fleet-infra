@@ -45,7 +45,7 @@ spec:
       kind: ConfigMap
       name: milvus-milvus-vectordb-pulsar-proxy
     patch: |
-      - op: repace
+      - op: replace
         path: /data/httpNumThreads
         values: "100"
 
