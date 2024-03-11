@@ -28,8 +28,5 @@ spec:
       activeStandby:
         enabled: true
     pulsar:
-      enabled: false
-      proxy:
-        configData:
-          httpNumThreads: null
+      enabled: true
 
