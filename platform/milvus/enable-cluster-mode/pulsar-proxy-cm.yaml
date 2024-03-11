@@ -1,7 +1,29 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  annotations:
+    meta.helm.sh/release-name: milvus-milvus-vectordb
+    meta.helm.sh/release-namespace: milvus
+  labels:
+    app: pulsar
+    app.kubernetes.io/managed-by: Helm
+    cluster: milvus-milvus-vectordb-pulsar
+    component: proxy
+    helm.toolkit.fluxcd.io/name: milvus-vectordb
+    helm.toolkit.fluxcd.io/namespace: flux-system
+    heritage: Helm
+    release: milvus-milvus-vectordb
   name: milvus-milvus-vectordb-pulsar-proxy
   namespace: milvus
 data:
+  PULSAR_GC: |
+    -XX:MaxDirectMemorySize=2048m
+  PULSAR_MEM: |
+    -Xms2048m -Xmx2048m
+  brokerServiceURL: pulsar://milvus-milvus-vectordb-pulsar-broker:6650
+  brokerWebServiceURL: http://milvus-milvus-vectordb-pulsar-broker:8080
+  clusterName: milvus-milvus-vectordb-pulsar
   httpNumThreads: "100"
+  servicePort: "6650"
+  statusFilePath: /pulsar/status
+  webServicePort: "80"
