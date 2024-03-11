@@ -36,8 +36,9 @@ spec:
       kind: ConfigMap
       name: milvus-milvus-vectordb-pulsar-proxy
     patch: |
-      - op: remove
+      - op: repace
         path: /data/httpNumThreads
+        values: "100"
   # - target:
   #     group: helm.toolkit.fluxcd.io
   #     kind: HelmRelease
