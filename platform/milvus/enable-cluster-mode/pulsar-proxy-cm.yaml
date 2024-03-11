@@ -4,6 +4,7 @@ metadata:
   name: milvus-milvus-vectordb-pulsar-proxy
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
+    app.kubernetes.io/managed-by: helm
   namespace: milvus
 data:
   PULSAR_GC: |
