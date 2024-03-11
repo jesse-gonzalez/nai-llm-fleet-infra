@@ -32,11 +32,4 @@ spec:
   interval: 1h
   values:
     pulsar:
-      enabled: true
-      proxy:
-        configData:
-          PULSAR_MEM: >
-            -Xms2048m -Xmx2048m
-          PULSAR_GC: >
-            -XX:MaxDirectMemorySize=2048m
-          httpNumThreads: null
+      enabled: false
