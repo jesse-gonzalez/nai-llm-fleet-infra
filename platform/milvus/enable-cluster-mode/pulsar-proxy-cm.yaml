@@ -5,6 +5,7 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
     app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: milvus-vectordb
     meta.helm.sh/release-namespace: milvus
   namespace: milvus
 data:
