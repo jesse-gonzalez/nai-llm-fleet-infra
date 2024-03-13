@@ -25,12 +25,18 @@ spec:
     spec:
       chart: milvus
       interval: 1h
-      timeout: 20m
       sourceRef:
         kind: HelmRepository
         name: milvus
       version: "4.1.13"
   interval: 1h
+  timeout: 20m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     # setting as default to deal with issue around helm upgrades https://github.com/zilliztech/milvus-helm/issues/58
     pulsar:
