@@ -30,6 +30,13 @@ spec:
         name: nai-llm-helm
       version: "0.2.7"
   interval: 30m
+  timeout: 20m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     frontend:
       enabled: true
