@@ -25,6 +25,7 @@ spec:
     spec:
       chart: milvus
       interval: 1h
+      timeout: 20m
       sourceRef:
         kind: HelmRepository
         name: milvus
