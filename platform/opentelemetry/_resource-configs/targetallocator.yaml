@@ -32,7 +32,7 @@ spec:
 
     exporters:
       otlp/central:
-        endpoint: opentelemetry-collector-deployment.opentelemetry:4317
+        endpoint: opentelemetry-opentelemetry-collector-deployment.opentelemetry:4317
         tls:
           insecure: true
 
