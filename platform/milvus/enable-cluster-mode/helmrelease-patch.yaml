@@ -38,5 +38,5 @@ spec:
       enabled: false
     externalKafka:
       enabled: true
-      brokerList: kafka.kafka-kafka:9092
+      brokerList: kafka-kafka.kafka:9092
 
