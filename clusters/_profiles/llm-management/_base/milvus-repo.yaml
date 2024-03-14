@@ -12,6 +12,7 @@ spec:
   - name: kyverno
   - name: cert-manager-resource-configs
   - name: ingress-nginx
+  - name: kafka
   decryption:
     provider: sops
     secretRef:
