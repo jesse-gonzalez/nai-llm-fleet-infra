@@ -14,7 +14,7 @@ data:
   milvus_objects_bucket_name: "nke-nvd-llm-mgmt-02-milvus"
   documents_objects_bucket_name: "documents01"
   objects_host: "objects.gptnvd.cloudnative.nvdlab.net"
-  objects_port: "443"
+  objects_port: "80"
   objects_region: "us-east-1"
   objects_use_ssl: "false"
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
