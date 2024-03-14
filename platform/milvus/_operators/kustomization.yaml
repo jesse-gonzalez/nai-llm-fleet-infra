@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
 - milvus.yaml
-#- pulsar-proxy-cm.yal

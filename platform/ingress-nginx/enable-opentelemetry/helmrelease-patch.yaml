@@ -5,12 +5,6 @@ metadata:
   namespace: flux-system
 spec:
   values:
-    tcp:
-      "9092": "kafka/kafka-kafka:9092"
-      "9094": "kafka/kafka-kafka-controller-0-external:9094"
-      "9095": "kafka/kafka-kafka-controller-1-external:9094"
-      "9096": "kafka/kafka-kafka-controller-2-external:9094"
-      "19530": "milvus/milvus-milvus:19530"
     controller:
       opentelemetry:
         enabled: true
