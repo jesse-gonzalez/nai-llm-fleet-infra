@@ -58,7 +58,7 @@ spec:
         otlp/uptrace:
           endpoint: uptrace-grpc.${wildcard_ingress_subdomain}:443
           tls:
-            insecure: false
+            insecure: true
           headers:
             uptrace-dsn: 'http://project2_secret_token@localhost:14317/2'
       service:
