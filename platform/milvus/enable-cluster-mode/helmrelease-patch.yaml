@@ -27,6 +27,16 @@ spec:
       replicas: 2
       activeStandby:
         enabled: true
+    # setting as default to deal with issue around helm upgrades https://github.com/zilliztech/milvus-helm/issues/58
     pulsar:
+      enabled: false
+      proxy:
+        configData:
+          httpNumThreads: null
+    # since we're already deploying kafak
+    kafka:
+      enabled: false
+    externalKafka:
       enabled: true
+      brokerList: kafka.kafka-kafka:9092
 
