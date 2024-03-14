@@ -17,7 +17,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: uptrace
+            name: uptrace-uptrace
             port:
               number: 14317
   tls:

@@ -15,27 +15,27 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: kafka-controller-0-external
+            name: kafka-kafka-controller-0-external
             port:
               number: 9094
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: kafka-controller-1-external
+            name: kafka-kafka-controller-1-external
             port:
               number: 9094
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: kafka-controller-2-external
+            name: kafka-kafka-controller-2-external
             port:
               number: 9094
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: kafka
+            name: kafka-kafka
             port:
               number: 9092
