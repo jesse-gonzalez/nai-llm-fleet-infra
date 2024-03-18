@@ -30,9 +30,9 @@ spec:
     # setting as default to deal with issue around helm upgrades https://github.com/zilliztech/milvus-helm/issues/58
     pulsar:
       enabled: false
-      # proxy:
-      #   configData:
-      #     httpNumThreads: null
+      proxy:
+        configData:
+          httpNumThreads: null
     # since we're already deploying kafak
     kafka:
       enabled: false
