@@ -11,3 +11,4 @@ spec:
       "9095": "kafka/kafka-kafka-controller-1-external:9094"
       "9096": "kafka/kafka-kafka-controller-2-external:9094"
       "19530": "milvus/milvus-milvus-vectordb:19530"
+      "14317": "uptrace/uptrace-uptrace:uptrace:14317"

@@ -9,5 +9,6 @@ spec:
   - ../enable-image-pull-secret
   - ../enable-monitoring
   - ../enable-nutanix-objects
+  ##- ../enable-standalone-mode
   - ../enable-cluster-mode
 
