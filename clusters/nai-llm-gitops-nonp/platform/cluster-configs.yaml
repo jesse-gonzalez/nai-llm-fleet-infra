@@ -18,7 +18,7 @@ data:
   objects_region: "us-east-1"
   objects_use_ssl: "false"
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
-  gpu_time_slicing_replica_count: "2"
+  gpu_time_slicing_replica_count: "1"
   aws_route53_dns_zone: "ncnlabs.ninja"
   aws_route53_region: "us-east-2"
   model: "llama2_7b_chat"
