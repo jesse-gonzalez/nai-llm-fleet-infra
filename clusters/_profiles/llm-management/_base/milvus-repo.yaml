@@ -32,14 +32,6 @@ spec:
       name: cluster-secrets
       optional: false
 # patches:
-# - patch: |-
-#     - op: replace
-#       path: /data/httpNumThreads
-#       value: "100"
-#   target:
-#     kind: ConfigMap
-#     name: milvus-milvus-vectordb-pulsar-proxy
-#     namespace: milvus
 # - target:
 #     group: helm.toolkit.fluxcd.io
 #     kind: HelmRelease
@@ -49,3 +41,11 @@ spec:
 #     - op: replace
 #       path: /spec/values/pulsar/proxy/configData/httpNumThreads
 #       value: null
+# - patch: |-
+#     - op: replace
+#       path: /data/httpNumThreads
+#       value: "100"
+#   target:
+#     kind: ConfigMap
+#     name: milvus-milvus-vectordb-pulsar-proxy
+#     namespace: milvus
