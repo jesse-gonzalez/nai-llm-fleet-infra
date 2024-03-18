@@ -37,4 +37,5 @@ spec:
   upgrade:
     remediation:
       retries: 3
+    preserveValues: true
   values: {}
