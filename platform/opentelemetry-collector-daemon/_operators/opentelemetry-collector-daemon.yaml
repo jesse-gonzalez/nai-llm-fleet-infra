@@ -49,17 +49,17 @@ spec:
       hostMetrics:
         enabled: true
 
-    extraEnvs:
-    - name: NODE_IP
-      valueFrom:
-        fieldRef:
-          apiVersion: v1
-          fieldPath: status.hostIP
+    # extraEnvs:
+    # - name: NODE_IP
+    #   valueFrom:
+    #     fieldRef:
+    #       apiVersion: v1
+    #       fieldPath: status.hostIP
 
     config:
       receivers:
         kubeletstats:
-          endpoint: 'https://${env:NODE_IP}:10250'
+          endpoint: 'https://${env:K8S_NODE_NAME}:10250'
           insecure_skip_verify: true
       processors:
         batch:
