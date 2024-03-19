@@ -13,5 +13,5 @@ patches:
 - path: kubernetes-dashboard-addons.yaml
 - path: weave-gitops-addons.yaml
 - path: kserve-addons.yaml
-#- path: nai-helm-addons.yaml
+- path: nai-helm-addons.yaml
 
