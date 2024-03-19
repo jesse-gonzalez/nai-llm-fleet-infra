@@ -58,7 +58,7 @@ spec:
     config:
       receivers:
         kubeletstats:
-          endpoint: '${env:NODE_IP}:10250'
+          endpoint: "${env:NODE_IP}:10250"
           insecure_skip_verify: true
       processors:
         batch:
