@@ -49,24 +49,17 @@ spec:
       hostMetrics:
         enabled: true
 
-    # extraEnvs:
-    # - name: NODE_IP
-    #   valueFrom:
-    #     fieldRef:
-    #       apiVersion: v1
-    #       fieldPath: status.hostIP
+    extraEnvs:
+    - name: NODE_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: "status.hostIP"
 
     config:
-      # receivers:
-      #   kubeletstats:
-      #     collection_interval: 10s
-      #     auth_type: 'serviceAccount'
-      #     endpoint: '${env:K8S_NODE_NAME}:10250'
-      #     insecure_skip_verify: true
-      #     # metric_groups:
-      #     # - node
-      #     # - pod
-      #     # - container
+      receivers:
+        kubeletstats:
+          endpoint: '${env:NODE_IP}:10250'
+          insecure_skip_verify: true
       processors:
         batch:
           send_batch_size: 10000
