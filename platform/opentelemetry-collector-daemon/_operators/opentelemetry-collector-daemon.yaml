@@ -59,8 +59,14 @@ spec:
     config:
       receivers:
         kubeletstats:
-          endpoint: 'https://${env:K8S_NODE_NAME}:10250'
+          collection_interval: 10s
+          auth_type: 'serviceAccount'
+          endpoint: '${env:K8S_NODE_NAME}:10250'
           insecure_skip_verify: true
+          metric_groups:
+          - node
+          - pod
+          - container
       processors:
         batch:
           send_batch_size: 10000
