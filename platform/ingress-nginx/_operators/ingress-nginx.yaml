@@ -30,4 +30,10 @@ spec:
         name: ingress-nginx
       version: "4.8.3"
   interval: 30m
-  values: {}
+  values:
+    controller:
+      ingressClassResource:
+        name: nginx
+        default: true
+      replicaCount: 2
+      minAvailable: 1

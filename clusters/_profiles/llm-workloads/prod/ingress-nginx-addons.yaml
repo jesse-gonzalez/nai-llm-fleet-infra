@@ -7,3 +7,5 @@ spec:
   components:
   - ../enable-loadbalancer
   - ../enable-opentelemetry
+  - ../enable-autoscaling
+  #- ../enable-tcp-services

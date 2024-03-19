@@ -7,3 +7,4 @@ spec:
   components:
   - ../enable-loadbalancer
   - ../enable-opentelemetry
+  #- ../enable-tcp-services

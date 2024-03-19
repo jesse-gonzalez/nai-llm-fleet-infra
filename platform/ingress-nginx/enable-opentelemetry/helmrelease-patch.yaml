@@ -8,8 +8,6 @@ spec:
     controller:
       opentelemetry:
         enabled: true
-      ingressClassResource:
-        default: true
       config:
         enable-opentelemetry: "true"
         opentelemetry-config: "/etc/nginx/opentelemetry.toml"

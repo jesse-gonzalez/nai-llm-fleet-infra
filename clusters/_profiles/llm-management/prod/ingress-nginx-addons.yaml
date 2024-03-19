@@ -8,3 +8,4 @@ spec:
   - ../enable-loadbalancer
   - ../enable-opentelemetry
   - ../enable-tcp-services
+  - ../enable-autoscaling
