@@ -12,16 +12,16 @@ tasks:
     desc: Install workstation dependencies with Brew
     cmd: brew bundle --file {{.BREW_FILE}}
     preconditions:
-    - { msg: "Missing Homebrew", sh: "command -v brew" }
+    - {msg: "Missing Homebrew", sh: "command -v brew"}
     - {msg: "Missing Brewfile", sh: "test -f {{.BREW_FILE}}",}
 
   arkade:
     desc: Install Arkade dependencies
     vars:
-      ARKADE_PACKAGES: 
+      ARKADE_PACKAGES:
         sh: cat {{.ARKADE_FILE}} | xargs | sed 's/ /,/g'
     cmds:
     - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
-      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv /home/vscode/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
+      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
