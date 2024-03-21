@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  BREWFILE: "{{.ROOT_DIR}}/scripts/workstation/Brewfile"
+  ARKADE_PACKAGES: kubectl,kubectx,kubens,helm,krew,stern
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    vars:
+      REQUIRED_TOOLS_LIST: brew
+
+  brew:
+    desc: Install workstation dependencies with Brew
+    cmd: brew bundle --file {{.BREWFILE}}
+    preconditions:
+    - {msg: "Missing Brewfile", sh: "test -f {{.BREWFILE}}",}
+
+  arkade:
+    desc: Install Arkade dependencies
+    cmds:
+    - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
+    - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
+      cmd: 'arkade get {{ .TOOL }} --quiet'
+
