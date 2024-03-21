@@ -1,6 +1,6 @@
 # Nutanix GitOps Examples
 
-[![Open in Coder](https://raw.githubusercontent.com/coder/coder/main/docs/images/templates/open-in-coder.svg)](https://coder.nke-nvd-llm-wkl-02.cloudnative.nvdlab.net/templates/kubernetes/workspace?mode=manual&param.cpu=2&param.home_disk_size=10&param.memory=2)
+[![Open in Coder](https://raw.githubusercontent.com/coder/coder/main/docs/images/templates/open-in-coder.svg)](https://coder.nke-nvd-llm-wkl-02.cloudnative.nvdlab.net/templates/kubernetes/workspace?mode=manual&param.cpu=2&param.home_disk_size=100&param.memory=4)
 
 ## Directory Structure
 
