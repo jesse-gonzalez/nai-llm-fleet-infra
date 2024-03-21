@@ -2,26 +2,26 @@
 version: "3"
 
 vars:
-  BREWFILE: "{{.ROOT_DIR}}/scripts/workstation/Brewfile"
-  ARKADE_PACKAGES: kubectl,kubectx,kubens,helm,krew,stern
+  BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/Brewfile"
+  ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/Arkfile"
 
 tasks:
 
-  default:
-  - task: :helpers:validate
-    vars:
-      REQUIRED_TOOLS_LIST: brew
-
   brew:
+    platforms: [darwin]
     desc: Install workstation dependencies with Brew
-    cmd: brew bundle --file {{.BREWFILE}}
+    cmd: brew bundle --file {{.BREW_FILE}}
     preconditions:
-    - {msg: "Missing Brewfile", sh: "test -f {{.BREWFILE}}",}
+    - { msg: "Missing Homebrew", sh: "command -v brew" }
+    - {msg: "Missing Brewfile", sh: "test -f {{.BREW_FILE}}",}
 
   arkade:
     desc: Install Arkade dependencies
+    vars:
+      ARKADE_PACKAGES: 
+        sh: cat {{.ARKADE_FILE}} | xargs | sed 's/ /,/g'
     cmds:
     - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
-      cmd: 'arkade get {{ .TOOL }} --quiet'
+      cmd: 'arkade get {{ .ARKADE_PACKAGE }}'
 
