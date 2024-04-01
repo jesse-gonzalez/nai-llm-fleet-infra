@@ -8,5 +8,4 @@
 !/apps/
 !/clusters/
 !/platform/
-!/infrastructure/
-!/workloads/
+!/infra/

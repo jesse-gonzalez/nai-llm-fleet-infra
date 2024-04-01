@@ -12,3 +12,4 @@ resources:
 - kserve-repo.yaml
 - nai-helm-repo.yaml
 - gptnvd-reference-app-repo.yaml
+- kuberay-repo.yaml
