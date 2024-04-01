@@ -39,6 +39,4 @@ spec:
       retries: 3
     preserveValues: true
   values: {}
-  # values:
-  #   skipCrds: false
 

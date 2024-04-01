@@ -14,4 +14,5 @@ patches:
 - path: weave-gitops-addons.yaml
 - path: kserve-addons.yaml
 - path: nai-helm-addons.yaml
+- path: kuberay-cluster-addons.yaml
 
