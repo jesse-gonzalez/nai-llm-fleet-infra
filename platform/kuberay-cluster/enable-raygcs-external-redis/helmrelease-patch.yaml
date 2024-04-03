@@ -23,7 +23,6 @@ spec:
       - name: RAY_REDIS_ADDRESS
         value: redis-redis-headless.redis.svc.cluster.local.:6379
       # This environment variable is used in the `rayStartParams` above.
-      envFrom:
       - name: REDIS_PASSWORD
         valueFrom:
           secretKeyRef:
