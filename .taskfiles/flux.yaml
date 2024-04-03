@@ -45,6 +45,7 @@ tasks:
         --branch={{.GITHUB_BRANCH}} \
         --personal \
         --path=clusters/{{.K8S_CLUSTER_NAME}} \
+        --token-auth \
         --force
     requires:
       vars: [K8S_CLUSTER_NAME, GITHUB_TOKEN, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH]
