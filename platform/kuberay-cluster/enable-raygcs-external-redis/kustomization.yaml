@@ -3,4 +3,9 @@ kind: Component
 
 resources:
 - external-redis-secret.yaml
-- ray-cluster-external-redis.yaml
+
+patches:
+- path: helmrelease-patch.yaml
+  target:
+    kind: HelmRelease
+
