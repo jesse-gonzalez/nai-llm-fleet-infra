@@ -21,7 +21,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      namespace_name: kuberay
+      namespace_name: kuberay-cluster
     substituteFrom:
     - kind: ConfigMap
       name: cluster-configs

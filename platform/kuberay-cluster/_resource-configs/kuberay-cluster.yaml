@@ -20,7 +20,7 @@ metadata:
   name: kuberay-cluster
   namespace: flux-system
 spec:
-  targetNamespace: ${namespace_name:=kuberay}
+  targetNamespace: ${namespace_name:=kuberay-cluster}
   chart:
     spec:
       chart: ray-cluster
