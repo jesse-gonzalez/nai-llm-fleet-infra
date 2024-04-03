@@ -11,7 +11,7 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/jesse-gonzalez/nai-llm-fleet-infra
+  url: https://github.com/jesse-gonzalez/nai-llm-fleet-infra.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
