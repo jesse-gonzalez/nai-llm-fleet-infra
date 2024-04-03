@@ -23,7 +23,7 @@ spec:
   targetNamespace: ${namespace_name:=redis}
   chart:
     spec:
-      chart: redis-cluster
+      chart: redis
       interval: 1h
       sourceRef:
         kind: HelmRepository
@@ -31,9 +31,6 @@ spec:
       version: "10.0.x"
   interval: 1h
   values:
-    cluster:
-      nodes: 6
-      replicas: 1
     global:
       redis:
         password: NTI0MTU5MDAwMDAwMDAwMA==
