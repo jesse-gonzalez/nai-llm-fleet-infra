@@ -33,4 +33,4 @@ spec:
   values:
     global:
       redis:
-        password: NTI0MTU5MDAwMDAwMDAwMA==
+        password: "5241590000000000"
