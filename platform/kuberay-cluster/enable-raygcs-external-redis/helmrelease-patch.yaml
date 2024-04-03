@@ -21,7 +21,7 @@ spec:
       # Kubernetes ClusterIP service name, also created by this YAML, as the
       # connection point to the Redis server.
       - name: RAY_REDIS_ADDRESS
-        value: redis-redis-headless.redis.svc.cluster.local.:6379
+        value: redis-redis-replicas.redis.svc.cluster.local.:6379
       # This environment variable is used in the `rayStartParams` above.
       - name: REDIS_PASSWORD
         valueFrom:
