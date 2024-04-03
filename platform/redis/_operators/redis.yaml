@@ -30,4 +30,10 @@ spec:
         name: bitnami
       version: "18.1.x"
   interval: 1h
-
+  values:
+    cluster:
+      nodes: 6
+      replicas: 1
+    global:
+      redis:
+        password: NTI0MTU5MDAwMDAwMDAwMA==

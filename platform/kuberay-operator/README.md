@@ -73,9 +73,44 @@ kubectl delete -f https://raw.githubusercontent.com/ray-project/kuberay/v1.1.0-r
 
 kubectl apply -f https://raw.githubusercontent.com/ray-project/kuberay/v1.1.0-rc.0/ray-operator/config/samples/ray-job.shutdown.yaml
 kubectl delete -f https://raw.githubusercontent.com/ray-project/kuberay/v1.1.0-rc.0/ray-operator/config/samples/ray-job.shutdown.yaml
+
 ```
 
+## Leverage RayService
 
+```bash
+
+kubectl apply -f  https://raw.githubusercontent.com/ray-project/kuberay/release-1.1.0/ray-operator/config/samples/ray-service.sample.yaml
+
+kubectl get raycluster,rayjob,rayservice,po
+
+# (1) Forward the dashboard port to localhost.
+# (2) Check the Serve page in the Ray dashboard at http://localhost:8265/#/serve.
+kubectl port-forward svc/rayservice-sample-head-svc --address 0.0.0.0 8265:8265
+
+# If you already have a curl Pod, you can use `kubectl exec -it <curl-pod> -- sh` to access the Pod.
+kubectl run curl --image=radial/busyboxplus:curl -i --tty
+
+# Step 6.2: Send a request to the fruit stand app.
+curl -X POST -H 'Content-Type: application/json' rayservice-sample-serve-svc:8000/fruit/ -d '["MANGO", 2]'
+# [Expected output]: 6
+
+# Step 6.3: Send a request to the calculator app.
+curl -X POST -H 'Content-Type: application/json' rayservice-sample-serve-svc:8000/calc/ -d '["MUL", 3]'
+# [Expected output]: "15 pizzas please!"
+
+kubectl delete -f https://raw.githubusercontent.com/ray-project/kuberay/release-1.1.0/ray-operator/config/samples/ray-service.sample.yaml
+
+```
+
+kubectl apply -f models/falcon-7b-instruct.yaml
+kubectl apply -f ap_pvc-rayservice.yaml
+kubectl apply -f ap_falcon-7b.yaml
+
+export HEAD_POD=$(kubectl get pods --selector=ray.io/node-type=head \
+    -o custom-columns=POD:metadata.name --no-headers)
+
+watch --color --interval 5 --no-title "kubectl exec -it $HEAD_POD -- serve status | GREP_COLOR='01;92' egrep --color=always -e '^' -e 'RUNNING'"
 
 
 TODO: 

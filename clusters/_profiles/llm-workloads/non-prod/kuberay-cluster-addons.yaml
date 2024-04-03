@@ -6,3 +6,4 @@ metadata:
 spec:
   components:
   - ../enable-image-pull-secret
+  - ../enable-raygcs-external-redis
