@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+components:
+## load _profiles/_base first
+- ../../_base
+## then _profiles/llm-workloads/_base next
+- ../_base
+
+resources:
+- jupyterhub-repo.yaml
+
+patches:
+- path: ingress-nginx-addons.yaml
+- path: kubernetes-dashboard-addons.yaml
+- path: weave-gitops-addons.yaml
+- path: gpu-operator-addons.yaml
+- path: kserve-addons.yaml
+- path: jupyterhub-addons.yaml
+#- path: nai-helm-addons.yaml
+- path: kuberay-cluster-addons.yaml
