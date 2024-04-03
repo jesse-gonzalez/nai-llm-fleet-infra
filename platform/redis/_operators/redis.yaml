@@ -23,12 +23,12 @@ spec:
   targetNamespace: ${namespace_name:=redis}
   chart:
     spec:
-      chart: redis
+      chart: redis-cluster
       interval: 1h
       sourceRef:
         kind: HelmRepository
         name: bitnami
-      version: "18.1.x"
+      version: "10.0.x"
   interval: 1h
   values:
     cluster:
