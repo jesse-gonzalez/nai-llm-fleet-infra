@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: busybox-rwo-pvc
+  labels:
+    appname: busybox-rwo
+spec:
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: nutanix-volume
+  resources:
+    requests:
+      storage: 1Gi

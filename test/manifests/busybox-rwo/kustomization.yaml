@@ -1,0 +1,7 @@
+---
+resources:
+- busybox-ns.yaml
+- busybox-pvc.yaml
+- busybox-deployment.yaml
+- busybox-volume-snapshot.yaml
+

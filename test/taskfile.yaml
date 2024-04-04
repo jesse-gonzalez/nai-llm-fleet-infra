@@ -17,3 +17,6 @@ tasks:
     cmds:
     - for: {var: TASK_FILES}
       task: ':{{.ITEM}}:default'
+
+  ## test nutanix-files
+

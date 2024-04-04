@@ -1,7 +1,16 @@
 {
-  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
-  "name": "Cloud Native Solutions Engineering Devcontainer",
-  "image": "ghcr.io/jesse-gonzalez/nai-llm-fleet-infra/devcontainer:base",
-  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+  "name": "Devbox Remote Container",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": ".."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "jetpack-io.devbox"
+      ]
+    }
+  },
+  "remoteUser": "devbox"
 }

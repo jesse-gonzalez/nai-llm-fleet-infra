@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    appname: busybox-rwx
+  name: busybox-rwx
+  namespace: busybox-rwx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appname: busybox-rwx
+  template:
+    metadata:
+      labels:
+        appname: busybox-rwx
+    spec:
+      containers:
+      - image: quay.io/quay/busybox
+        imagePullPolicy: IfNotPresent
+        name: busybox-rwx
+        command: ['sh', '-c', 'trap exit TERM; while true; do echo $(date) - updates before snapshot | tee -a /mnt/test/outfile; sync; sleep 10 & wait; done']
+        volumeMounts:
+          - name: rwx-volume
+            mountPath: /mnt/test
+      volumes:
+        - name: rwx-volume
+          persistentVolumeClaim:
+            claimName: busybox-rwx-pvc
