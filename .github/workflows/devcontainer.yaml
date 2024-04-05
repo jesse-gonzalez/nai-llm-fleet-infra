@@ -54,5 +54,5 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}/devcontainer
           imageTag: base,latest
           platform: linux/amd64,linux/arm64
-          configFile: .devcontainer/ci/devcontainer.json
+          configFile: .devcontainer/devcontainer.json
           push: ${{ github.event_name == 'pull_request' && 'never' || 'always' }}
