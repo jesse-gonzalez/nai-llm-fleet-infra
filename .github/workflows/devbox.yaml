@@ -1,0 +1,34 @@
+---
+name: "devbox"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: ["./devbox.**"]
+    tags:
+      - v*
+  pull_request:
+    branches: ["main"]
+    paths: ["./devbox.**"]
+  # schedule:
+  #   - cron: "0 0 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install devbox
+        uses: jetpack-io/devbox-install-action@v0.8.0
+
+      - name: Run arbitrary commands
+        run: devbox run -- task
+
+      # - name: Run a script called test
+      #   run: devbox run test

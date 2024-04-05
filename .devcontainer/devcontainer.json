@@ -1,16 +1,30 @@
 {
-  "name": "Devbox Remote Container",
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Cloud Native Solutions Engineering Devcontainer",
   "build": {
     "dockerfile": "./Dockerfile",
     "context": ".."
   },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
   "customizations": {
     "vscode": {
-      "settings": {},
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/usr/bin/bash"
+          }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
       "extensions": [
+        "task.vscode-task",
+        "redhat.vscode-yaml",
         "jetpack-io.devbox"
       ]
     }
   },
-  "remoteUser": "devbox"
+  "remoteUser": "devbox",
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
