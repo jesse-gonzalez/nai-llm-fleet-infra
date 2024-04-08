@@ -4,6 +4,7 @@ version: "3"
 vars:
   BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/Brewfile"
   ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/Arkfile"
+  KREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/Krewfile"
 
 tasks:
 
@@ -25,3 +26,14 @@ tasks:
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
       cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
+  krew:
+    desc: Install Krew dependencies
+    vars:
+      KREW_FILE:
+        sh: cat {{.KREW_FILE}} | xargs | sed 's/ /,/g'
+    cmds:
+    - '[ -n "$(command -v krew)" ] || (arkade get krew)'
+    - for: {var: KREW_FILE, split: ',', as: KREW_FILE}
+      cmd: 'krew update && krew install {{ .KREW_FILE }}'
+    preconditions:
+    - {msg: "Missing Arkade", sh: "command -v arkade"}

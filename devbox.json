@@ -21,24 +21,25 @@
     "kind@0.22.0",
     "clusterctl@1.6.3",
     "stern@1.28.0",
-    "packer@1.10.2",
     "fzf@0.47.0",
     "oh-my-posh@19.18.1",
     "openshift@latest",
-    "terraform@1.7.5"
+    "chezmoi@2.47.3",
+    "k9s@0.32.4",
+    "kubie@0.23.0"
   ],
   "shell": {
     "init_hook": [
       "task --summary bootstrap:silent"
     ],
     "scripts": {
-      "configure-workstation": ["task workstation:arkade"],
-      "download-creds": ["task nke:download-creds"],
-      "bootstrap":      ["task bootstrap:silent"],
-      "reconcile":      ["task flux:reconcile"],
-      "check-gpu":      ["task ts:gpu-collect"],
-      "check-flux":     ["task ts:flux-collect"],
-      "watch":          ["task flux:watch"]  
+      "configure-workstation": ["task workstation:krew"],
+      "download-creds":        ["task nke:download-creds"],
+      "bootstrap":             ["task bootstrap:silent"],
+      "reconcile":             ["task flux:reconcile"],
+      "check-gpu":             ["task ts:gpu-collect"],
+      "check-flux":            ["task ts:flux-collect"],
+      "watch":                 ["task flux:watch"]
     }
   }
 }
