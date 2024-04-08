@@ -14,7 +14,3 @@ RUN devbox shellenv --init-hook >> ~/.profile
 
 ## configure git
 RUN git config --global --add safe.directory /workspaces
-
-RUN chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
-
-RUN devbox run configure-workstation
