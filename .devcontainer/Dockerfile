@@ -12,3 +12,4 @@ RUN devbox shellenv --init-hook >> ~/.profile
 
 ## configure git
 RUN git config --global --add safe.directory /workspaces
+
