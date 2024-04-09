@@ -13,6 +13,7 @@ tasks:
     desc: Check kubectl plugins and if not available, install
     cmds:
     - '[ -n "$(which kubectl-karbon)" ] || task workstation:krew'
+    - echo "export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH""
 
   download-creds:
     deps: [check-krew-plugins]
