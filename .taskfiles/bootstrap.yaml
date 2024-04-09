@@ -5,7 +5,7 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: gum,kubectl,git,envsubst,age,ipcalc,jq,yq,sops,age-keygen
+      REQUIRED_TOOLS_LIST: gum,kubectl,git,envsubst,age,ipcalc,jq,yq,sops,age-keygen,kubectl-karbon
 
   silent:
     silent: true
@@ -22,10 +22,17 @@ tasks:
         mkdir -p .local/${K8S_CLUSTER_NAME}/
         cp ./.config.sample.env .local/${K8S_CLUSTER_NAME}/.config.env
 
-      To set environment variable, simply export as var in shell or pass in during task execution, for example:
+      After updating .local/${K8S_CLUSTER_NAME}/.config.env, verify and initialize local configs
 
-        export K8S_CLUSTER_NAME=nai-llm-prod-mgmt && task bootstrap:silent
-        K8S_CLUSTER_NAME=nai-llm-prod-mgmt task bootstrap:silent
+        task bootstrap:init-local-configs
+
+      Connect to NKE Cluster and download kubeconfig files
+
+        task nke:download-creds
+
+      To initiate fluxcd bootstrap:
+
+        task bootstrap:silent
     cmds:
     - task: init-local-configs
     #  vars:
@@ -124,6 +131,7 @@ tasks:
 
   verify-configs:
     silent: false
+    deps: [default]
     desc: Verifies that .local/{{.K8S_CLUSTER_NAME}}/.config.env configs are set and valid
     preconditions:
     - sh: test -f .local/{{.K8S_CLUSTER_NAME}}/.config.env

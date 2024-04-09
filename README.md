@@ -1,16 +1,8 @@
 - [Nutanix GitOps Examples](#nutanix-gitops-examples)
   - [Directory Structure](#directory-structure)
   - [Getting Started](#getting-started)
-  - [Scripts](#scripts)
-  - [Shell Init Hook](#shell-init-hook)
-  - [Packages](#packages)
-  - [Script Details](#script-details)
-    - [devbox run bootstrap](#devbox-run-bootstrap)
-    - [devbox run check-flux](#devbox-run-check-flux)
-    - [devbox run check-gpu](#devbox-run-check-gpu)
-    - [devbox run download-creds](#devbox-run-download-creds)
-    - [devbox run reconcile](#devbox-run-reconcile)
-    - [devbox run watch](#devbox-run-watch)
+    - [Using Devbox NIX Shell](#using-devbox-nix-shell)
+    - [NIX Packages Installed](#nix-packages-installed)
   - [Appendix](#appendix)
     - [Glossary](#glossary)
       - [Infrastructure Specific](#infrastructure-specific)
@@ -57,40 +49,23 @@
 
 ## Getting Started
 
+### Using Devbox NIX Shell
+
 This project uses [devbox](https://github.com/jetpack-io/devbox) to manage its development environment.
 
-Install devbox:
+Install `devbox` and accept all defaults:
 
 ```sh
 curl -fsSL https://get.jetpack.io/devbox | bash
 ```
 
-Start the devbox shell:
+Start the `devbox shell` and if `nix` isn't available, you will be prompted to install:
 
-```sh 
+```sh
 devbox shell
 ```
 
-Run a script in the devbox environment:
-
-```sh
-devbox run <script>
-```
-
-## Scripts
-
-Scripts are custom commands that can be run using this project's environment. This project has the following scripts:
-
-## Shell Init Hook
-
-The Shell Init Hook is a script that runs whenever the devbox environment is instantiated. It runs 
-on `devbox shell` and on `devbox run`.
-
-```sh
-task
-```
-
-## Packages
+### NIX Packages Installed
 
 - [jq@1.7.1](https://www.nixhub.io/packages/jq)
 - [gum@0.13.0](https://www.nixhub.io/packages/gum)
@@ -105,46 +80,6 @@ task
 - [sops@3.8.1](https://www.nixhub.io/packages/sops)
 - [kubernetes-helm@3.14.3](https://www.nixhub.io/packages/kubernetes-helm)
 - [go-task@3.35.1](https://www.nixhub.io/packages/go-task)
-
-## Script Details
-
-### devbox run bootstrap
-
-```sh
-task bootstrap:silent
-```
-
-### devbox run check-flux
-
-```sh
-task ts:flux-collect
-```
-
-### devbox run check-gpu
-
-```sh
-task ts:gpu-collect
-```
-
-### devbox run download-creds
-
-```sh
-task nke:download-creds
-```
-
-&ensp;
-
-### devbox run reconcile
-
-```sh
-task flux:reconcile
-```
-
-### devbox run watch
-
-```sh
-task flux:watch
-```
 
 ## Appendix
 

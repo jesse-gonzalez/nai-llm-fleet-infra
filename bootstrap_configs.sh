@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -o errexit
-set -o pipefail
+set -eo pipefail
 
 # shellcheck disable=SC2155
 export PROJECT_DIR=$(git rev-parse --show-toplevel)
@@ -183,7 +183,7 @@ generate_age() {
     ## if age key is not in .local/_common path then auto-generate
     if [ ! -f ${SOPS_AGE_KEY_FILE} ]; then
       _log "INFO" "SOPS_AGE_KEY_FILE: ${SOPS_AGE_KEY_FILE} file doesn't exist, generating now."
-      age-keygen -o ${SOPS_AGE_KEY_FILE}
+      mkdir -p .local/_common && age-keygen -o ${SOPS_AGE_KEY_FILE}
     fi
 }
 
@@ -258,21 +258,28 @@ verify_prism() {
     _has_envar "BOOTSTRAP_prism_central_user" "is_secret"
     _has_envar "BOOTSTRAP_prism_central_password" "is_secret"
 
+    _log "INFO" "Verifying Prism Central Endpoint and Credentials are valid"
+
     basic_auth_token=$(echo -n "${BOOTSTRAP_prism_central_user}:${BOOTSTRAP_prism_central_password}" | base64)
 
     # Try to retrieve zone information from Cloudflare's API
-    prism_check=$(curl -s --insecure --request GET "https://${BOOTSTRAP_prism_central_endpoint}:9440/api/nutanix/v3/prism_central" \
-        -H "Authorization: Basic ${basic_auth_token}" \
-        -H "Content-Type: application/json" \
-        -H "Accept: application/json" \
-        --data '{}'
-    )
+    {
+        prism_check=$(curl -c 3 -m 10 -s --insecure --request GET "https://${BOOTSTRAP_prism_central_endpoint}:9440/api/nutanix/v3/prism_central" \
+            -H "Authorization: Basic ${basic_auth_token}" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json" \
+            --data '{}' 
+        )
+    } || { 
+        _log "ERROR" "Attempt to connect to Prism Central timed out trying to reach ${BOOTSTRAP_prism_central_endpoint}"; 
+        exit 1; 
+    }
 
     if [[ "$(echo "${prism_check}" | jq -e ".message | length == 0")" == "true" ]]; then
         _log "INFO" "Verified Prism Central Endpoint and Credentials are valid"
     else
         errors=$(echo -n '${prism_check}')
-        _log "ERROR" "Unable to verify Prism Central connectivity ${errors}"
+        _log "ERROR" "Unable to verify Prism Central Credentials are valid ${errors}"
         exit 1
     fi
 }
