@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
-      version: "4.8.3"
+      version: ${chart_version:=4.8.3}
   interval: 30m
   values:
     controller:
@@ -37,3 +37,5 @@ spec:
         default: true
       replicaCount: 2
       minAvailable: 1
+      service:
+        type: "LoadBalancer"

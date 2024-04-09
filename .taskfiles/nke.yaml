@@ -15,13 +15,14 @@ tasks:
       msg: "${HOME}/.kube doesn't exist, please create and try again."
     desc: Download NKE kubeconfig for specific cluster
     cmds:
-    - 'KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg'
+    - KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg
+    - echo "export KUBECONFIG=${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg" && kubectl config use-context ${K8S_CLUSTER_NAME}-context
     requires:
       vars: [K8S_CLUSTER_NAME, PRISM_CENTRAL_PASS, PRISM_CENTRAL_USER, PRISM_CENTRAL_ENDPOINT]
 
   select-creds:
     deps: [default]
-    silent: true
+    silent: false
     desc: Download NKE kubeconfig for any cluster available on PC.
     vars:
       PRISM_CENTRAL_ENDPOINT:
@@ -30,14 +31,13 @@ tasks:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Username" --placeholder admin'
       PRISM_CENTRAL_PASS:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Password" --placeholder "nutanix/4u" --password'
-      K8S_CLUSTER_NAME:
-        sh: 'KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure | kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}"'
+        #NKE_CLUSTER_NAME:
+        #  sh: 'KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure | kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}"'
     cmds:
+    - KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure --kubeconfig ${HOME}/.kube/tmp-kubeconfig
     - |
-      if [ "$(kubectl config view --raw --minify -o jsonpath='{.clusters[0].name}')" == "{{.K8S_CLUSTER_NAME}}" ]; then
-        kubectl config view --raw --minify | tee ${HOME}/.kube/{{.K8S_CLUSTER_NAME}}.cfg
-      else
-        echo "ERROR: Failed to either connect to Prism Central ( {{.PRISM_CENTRAL_ENDPOINT}} ) and retrieve valid NKE Cluster. Please Try Again."
-        exit 1
-      fi
+      export NKE_CLUSTER_NAME=$(kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}" --kubeconfig ${HOME}/.kube/tmp-kubeconfig) && \
+      kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee ${HOME}/.kube/$NKE_CLUSTER_NAME.cfg && \
+      echo "export KUBECONFIG=${HOME}/.kube/$NKE_CLUSTER_NAME.cfg" && \
+      kubectl config use-context $NKE_CLUSTER_NAME-context
     interactive: true

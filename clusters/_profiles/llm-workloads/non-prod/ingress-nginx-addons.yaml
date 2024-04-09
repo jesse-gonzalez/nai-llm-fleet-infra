@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   components:
-  - ../enable-loadbalancer
+  #- ../enable-loadbalancer
   - ../enable-opentelemetry
   #- ../enable-tcp-services
+  #- ../enable-autoscaling
