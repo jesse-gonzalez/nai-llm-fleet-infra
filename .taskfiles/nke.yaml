@@ -13,7 +13,6 @@ tasks:
     desc: Check kubectl plugins and if not available, install
     cmds:
     - '[ -n "$(which kubectl-karbon)" ] || task workstation:krew'
-    - echo "export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH""
 
   download-creds:
     deps: [check-krew-plugins]
@@ -23,7 +22,9 @@ tasks:
       msg: "${HOME}/.kube doesn't exist, please create and try again."
     desc: Download NKE kubeconfig for specific cluster
     cmds:
-    - KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg
+    - |
+      export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
+      KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg
     - echo "export KUBECONFIG=${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg" && kubectl config use-context ${K8S_CLUSTER_NAME}-context
     requires:
       vars: [K8S_CLUSTER_NAME, PRISM_CENTRAL_PASS, PRISM_CENTRAL_USER, PRISM_CENTRAL_ENDPOINT]
