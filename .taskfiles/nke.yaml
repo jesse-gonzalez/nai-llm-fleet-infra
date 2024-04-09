@@ -5,10 +5,17 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: kubectl,kubectl-karbon
+      REQUIRED_TOOLS_LIST: gum,krew,kubectl
+
+  check-krew-plugins:
+    deps: [default]
+    silent: true
+    desc: Check kubectl plugins and if not available, install
+    cmds:
+    - '[ -n "$(which kubectl-karbon)" ] || task workstation:krew'
 
   download-creds:
-    deps: [default]
+    deps: [check-krew-plugins]
     silent: true
     precondition:
     - sh: test -d ${HOME}/.kube
@@ -20,10 +27,11 @@ tasks:
     requires:
       vars: [K8S_CLUSTER_NAME, PRISM_CENTRAL_PASS, PRISM_CENTRAL_USER, PRISM_CENTRAL_ENDPOINT]
 
-  select-creds:
-    deps: [default]
+  ## prompt for cred, download kubectl config locally and use context on current shell
+  prompt-creds:
+    deps: [check-krew-plugins]
     silent: false
-    desc: Download NKE kubeconfig for any cluster available on PC.
+    desc: Prompt to download NKE kubeconfig for any cluster available on target PC.
     vars:
       PRISM_CENTRAL_ENDPOINT:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Endpoint" --placeholder pc.ntnxlab.local'
@@ -31,13 +39,12 @@ tasks:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Username" --placeholder admin'
       PRISM_CENTRAL_PASS:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Password" --placeholder "nutanix/4u" --password'
-        #NKE_CLUSTER_NAME:
-        #  sh: 'KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure | kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}"'
     cmds:
     - KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure --kubeconfig ${HOME}/.kube/tmp-kubeconfig
     - |
       export NKE_CLUSTER_NAME=$(kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}" --kubeconfig ${HOME}/.kube/tmp-kubeconfig) && \
-      kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee ${HOME}/.kube/$NKE_CLUSTER_NAME.cfg && \
-      echo "export KUBECONFIG=${HOME}/.kube/$NKE_CLUSTER_NAME.cfg" && \
-      kubectl config use-context $NKE_CLUSTER_NAME-context
+      kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee ${HOME}/.kube/${NKE_CLUSTER_NAME}.cfg && \
+      echo "export KUBECONFIG=${HOME}/.kube/${NKE_CLUSTER_NAME}.cfg" && \
+      kubectl config use-context ${NKE_CLUSTER_NAME}-context && \
+      echo "export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME}"
     interactive: true

@@ -16,6 +16,10 @@ tasks:
 
       Requires K8S_CLUSTER_NAME and .local/<K8S_CLUSTER_NAME>/.config.env configuration file
 
+      If new cluster, connect to Prism Central, select NKE cluster and download kubeconfig files
+
+        task nke:prompt-creds
+
       To configure .local/<K8S_CLUSTER_NAME>/.config.env, simply copy ./.config.sample.env and update, for example:
 
         export K8S_CLUSTER_NAME=nai-llm-prod-mgmt
@@ -25,10 +29,6 @@ tasks:
       After updating .local/${K8S_CLUSTER_NAME}/.config.env, verify and initialize local configs
 
         task bootstrap:init-local-configs
-
-      Connect to NKE Cluster and download kubeconfig files
-
-        task nke:download-creds
 
       To initiate fluxcd bootstrap:
 
