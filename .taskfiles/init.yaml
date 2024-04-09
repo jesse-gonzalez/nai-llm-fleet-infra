@@ -14,8 +14,7 @@ tasks:
 
   default:
   - task: :helpers:validate
+    silent: true
     vars:
       REQUIRED_TOOLS_LIST: git
-
-
 

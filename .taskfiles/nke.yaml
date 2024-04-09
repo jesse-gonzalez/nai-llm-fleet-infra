@@ -17,7 +17,7 @@ tasks:
 
   download-creds:
     deps: [check-krew-plugins]
-    silent: true
+    silent: false
     precondition:
     - sh: test -d ${HOME}/.kube
       msg: "${HOME}/.kube doesn't exist, please create and try again."
@@ -49,3 +49,15 @@ tasks:
       kubectl config use-context ${NKE_CLUSTER_NAME}-context && \
       echo "export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME}"
     interactive: true
+
+  load-cluster:
+    silent: false
+    deps: [default]
+    desc: Load Existing Cluster Instance
+    cmds:
+    - |
+      export NKE_CLUSTER_NAME=$(task bootstrap:gum -- choose --header "Select existing K8S instance to load." $(find .local/** -type d -not -name _common -print | cut -d / -f 2)) && \
+      echo "export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME}" && \
+      export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME} && task nke:download-creds
+    interactive: true
+
