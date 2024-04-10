@@ -8,9 +8,9 @@ resources:
 - knative-eventing-repo.yaml
 - otel-collector-daemon-repo.yaml
 - otel-collector-deploy-repo.yaml
-- redis-repo.yaml
+#- redis-repo.yaml
 - kserve-repo.yaml
 - nai-helm-repo.yaml
 - gptnvd-reference-app-repo.yaml
-- kuberay-operator-repo.yaml
-- kuberay-cluster-repo.yaml
+#- kuberay-operator-repo.yaml
+#- kuberay-cluster-repo.yaml

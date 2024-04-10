@@ -15,5 +15,5 @@ patches:
 - path: kafka-addons.yaml
 - path: uptrace-addons.yaml
 - path: milvus-addons.yaml
-- path: elasticsearch-addons.yaml
+#- path: elasticsearch-addons.yaml
 #- path: milvus-operator-addons.yaml
