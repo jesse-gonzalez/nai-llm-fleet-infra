@@ -18,4 +18,4 @@ patches:
 - path: kserve-addons.yaml
 - path: jupyterhub-addons.yaml
 - path: nai-helm-addons.yaml
-- path: kuberay-cluster-addons.yaml
+#- path: kuberay-cluster-addons.yaml
