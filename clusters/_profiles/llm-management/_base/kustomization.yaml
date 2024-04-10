@@ -9,5 +9,4 @@ resources:
 - otel-collector-deploy-repo.yaml
 - otel-collector-daemon-repo.yaml
 - milvus-repo.yaml
-- elasticsearch-repo.yaml
-#- milvus-operator-repo.yaml
+

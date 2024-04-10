@@ -16,9 +16,10 @@ tasks:
 
       Requires K8S_CLUSTER_NAME and .local/<K8S_CLUSTER_NAME>/.config.env configuration file
 
-      If new cluster, connect to Prism Central, select NKE cluster and download kubeconfig files
+      If new cluster, connect to Prism Central, select NKE cluster and validate connectivity
 
         task nke:prompt-creds
+        kubectl get nodes -o wide
 
       To configure .local/<K8S_CLUSTER_NAME>/.config.env, simply copy ./.config.sample.env and update, for example:
 
@@ -35,14 +36,8 @@ tasks:
         task bootstrap:silent
     cmds:
     - task: init-local-configs
-    #  vars:
-    #    K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     - task: :nke:download-creds
-    #  vars:
-    #    K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     - task: :flux:init
-    #   vars:
-    #     K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
     requires:
       vars: [K8S_CLUSTER_NAME]
 
