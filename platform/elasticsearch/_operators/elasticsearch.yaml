@@ -33,7 +33,26 @@ spec:
   values:
     data:
       persistence:
-        size: 5Gi
+        size: 500Gi
+      resources:
+        limits:
+          cpu: 100m
+          ephemeral-storage: 1008Mi
+          memory: 50Mi
+        requests:
+          cpu: 100m
+          ephemeral-storage: 1008Mi
+          memory: 50Mi
     master:
       persistence:
-        size: 5Gi
+        size: 500Gi
+      resources:
+        limits:
+          cpu: 250m
+          ephemeral-storage: 1Gi
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          ephemeral-storage: 1Gi
+          memory: 512Mi
+
