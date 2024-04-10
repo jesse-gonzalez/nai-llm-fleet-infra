@@ -6,4 +6,4 @@ metadata:
 spec:
   components:
   - ../enable-ingress
-  #- ../enable-prometheus
+  - ../enable-prometheus
