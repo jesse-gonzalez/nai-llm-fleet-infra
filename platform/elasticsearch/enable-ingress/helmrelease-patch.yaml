@@ -7,8 +7,15 @@ spec:
   values:
     ingress:
       enabled: true
-      ingressClassName: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
-      hostname: elastic.${wildcard_ingress_subdomain}
-      tls: true
+      className: "nginx"
+      pathtype: ImplementationSpecific
+      hosts:
+      - host: elastic.${wildcard_ingress_subdomain}
+        paths:
+        - path: /
+      tls:
+      - secretName: elastic-wildcard-tls
+        hosts:
+        - elastic.${wildcard_ingress_subdomain}

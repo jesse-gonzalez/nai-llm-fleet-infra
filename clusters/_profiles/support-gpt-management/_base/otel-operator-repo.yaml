@@ -1,0 +1,64 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: opentelemetry
+  namespace: flux-system
+spec:
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+  - name: kyverno
+  - name: cert-manager-resource-configs
+  - name: ingress-nginx
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/opentelemetry/_operators
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: opentelemetry
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: opentelemetry-resource-configs
+  namespace: flux-system
+spec:
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+  - name: opentelemetry
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/opentelemetry/_resource-configs
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: opentelemetry
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+

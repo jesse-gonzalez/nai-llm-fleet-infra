@@ -8,11 +8,11 @@ metadata:
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: bitnami
+  name: elastic
   namespace: flux-system
 spec:
   interval: 4h
-  url: https://charts.bitnami.com/bitnami
+  url: https://helm.elastic.co
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -27,13 +27,32 @@ spec:
       interval: 1h
       sourceRef:
         kind: HelmRepository
-        name: bitnami
-      version: "19.13.10"
+        name: elastic
+      version: "8.5.1"
   interval: 1h
   values:
-    data:
-      persistence:
-        size: 5Gi
-    master:
-      persistence:
-        size: 5Gi
+    resources:
+      limits:
+        cpu: 250m
+        ephemeral-storage: 1Gi
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        ephemeral-storage: 1Gi
+        memory: 512Mi
+    initResources:
+      limits:
+        cpu: 100m
+        ephemeral-storage: 1008Mi
+        memory: 50Mi
+      requests:
+        cpu: 100m
+        ephemeral-storage: 1008Mi
+        memory: 50Mi
+    volumeClaimTemplate:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 500Gi
+
+
