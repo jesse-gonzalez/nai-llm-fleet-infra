@@ -48,12 +48,14 @@ tasks:
     preconditions:
     - {msg: "Missing Arkade", sh: "command -v arkade",}
 
-  install-admin-packages:
+  install-packages:
+    prompt: This will install OS dependent requirements... Do you wish to continue?
     platforms: [darwin, linux, windows]
     desc: Install workstation packages for devops/platform engineers
     env:
       USER_ROLE:
         sh: task bootstrap:gum -- choose --header "Deploy required packages based on user role (scripts/workstation/<user-role)?" $(find scripts/workstation/** -type d -print | cut -d / -f 3)
     cmds:
-    - task: workstation:arkade
-    - task: workstation:krew
+    - '{{if eq OS "darwin"}}task workstation:brew --yes{{end}}'
+    - task workstation:arkade --yes
+    - task workstation:krew --yes

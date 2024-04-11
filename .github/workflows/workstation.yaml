@@ -1,0 +1,25 @@
+name: workstation-builds
+
+on: [push,pull_request]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        #os: [windows-latest, ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Task
+      uses: arduino/setup-task@v2
+      
+    - name: Run Workstation Deployment Minimal Defaults
+      run: task workstation:install-packages --yes
+
+    - name: Run Workstation Deployment for Platform Engineering Role
+      run: task workstation:install-packages --yes USER_ROLE="devops-role"
