@@ -14,26 +14,22 @@ tasks:
     summary: |
       Silently initializes cluster configs, git local/remote & fluxcd
 
-      Requires K8S_CLUSTER_NAME and .local/<K8S_CLUSTER_NAME>/.config.env configuration file
+      Requires K8S_CLUSTER_NAME environment variable and .local/<K8S_CLUSTER_NAME>/.env configuration file
 
       If new cluster, connect to Prism Central, select NKE cluster and validate connectivity
+      - task nke:prompt-creds && task kubectl:nodes
 
-        task nke:prompt-creds
-        kubectl get nodes -o wide
-
-      To configure .local/<K8S_CLUSTER_NAME>/.config.env, simply copy ./.config.sample.env and update, for example:
+      To configure .local/<K8S_CLUSTER_NAME>/.env, simply copy ./.config.sample.env and update, for example:
 
         export K8S_CLUSTER_NAME=nai-llm-prod-mgmt
         mkdir -p .local/${K8S_CLUSTER_NAME}/
-        cp ./.config.sample.env .local/${K8S_CLUSTER_NAME}/.config.env
+        cp ./.config.sample.env .local/${K8S_CLUSTER_NAME}/.env
 
-      After updating .local/${K8S_CLUSTER_NAME}/.config.env, verify and initialize local configs
-
-        task bootstrap:init-local-configs
+      After updating .local/${K8S_CLUSTER_NAME}/.env, verify and initialize local configs
+      - task bootstrap:init-local-configs
 
       To initiate fluxcd bootstrap:
-
-        task bootstrap:silent
+      - task bootstrap:silent
     cmds:
     - task: init-local-configs
     - task: :nke:download-creds
@@ -127,10 +123,10 @@ tasks:
   verify-configs:
     silent: false
     deps: [default]
-    desc: Verifies that .local/{{.K8S_CLUSTER_NAME}}/.config.env configs are set and valid
+    desc: Verifies that .local/<K8S_CLUSTER_NAME>/.env configs are set and valid
     preconditions:
-    - sh: test -f .local/{{.K8S_CLUSTER_NAME}}/.config.env
-      msg: '.local/{{.K8S_CLUSTER_NAME}}/.config.env not found, please copy ./.config.sample.env and update manually'
+    - sh: test -f .local/{{.K8S_CLUSTER_NAME}}/.env
+      msg: '.local/{{.K8S_CLUSTER_NAME}}/.env not found, please copy ./.config.sample.env and update manually'
     cmds:
     - ./bootstrap_configs.sh --cluster_name {{.K8S_CLUSTER_NAME}} --verify
     requires:

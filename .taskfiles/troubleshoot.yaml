@@ -18,6 +18,7 @@ tasks:
     - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
     - kubectl get pod -n gpu-operator
     - kubectl get events -n gpu-operator --sort-by='.lastTimestamp'
+    - kubectl get node -o json | jq '.items[].metadata.labels'
     - kubectl get pod -n gpu-operator -o name -l app=nvidia-driver-daemonset | xargs -I {} kubectl exec -n gpu-operator -i {} -c nvidia-driver-ctr -- nvidia-smi
 
   kyverno-collect:

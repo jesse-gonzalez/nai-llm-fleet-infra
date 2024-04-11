@@ -1,23 +1,30 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+env:
+  USER_ROLE: '{{default "minimalist-role" .USER_ROLE}}'
+
 vars:
-  BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/Brewfile"
-  ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/Arkfile"
-  KREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/Krewfile"
+  BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Brewfile"
+  ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Arkfile"
+  KREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Krewfile"
 
 tasks:
 
   brew:
+    prompt: This will install Brew (if not exists) and dependent packages... Do you wish to continue?
     platforms: [darwin]
-    desc: Install workstation dependencies with Brew
-    cmd: brew bundle --file {{.BREW_FILE}}
+    desc: Install Brew and dependent packages. Only support on MacOS.
+    cmds:
+    - '[ -n "$(command -v brew)" ] || (NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")'
+    - brew bundle --file {{.BREW_FILE}}
     preconditions:
-    - {msg: "Missing Homebrew", sh: "command -v brew"}
     - {msg: "Missing Brewfile", sh: "test -f {{.BREW_FILE}}",}
 
   arkade:
-    desc: Install Arkade dependencies
+    prompt: This will install Arkade and dependent packages... Do you wish to continue?
+    platforms: [darwin, linux, windows]
+    desc: Install Arkade and dependent packages. Arkade is useful for cross-platform package management.
     vars:
       ARKADE_PACKAGES:
         sh: cat {{.ARKADE_FILE}} | xargs | sed 's/ /,/g'
@@ -27,7 +34,10 @@ tasks:
       cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
   krew:
-    desc: Install Krew dependencies
+    prompt: This will install Krew and dependent kubectl plugins... Do you wish to continue?
+    platforms: [darwin, linux, windows]
+    deps: [arkade]
+    desc: Install Krew dependencies and dependent packages. Kubectl plugins are useful for managing multiple k8s clusters.
     vars:
       KREW_FILE:
         sh: cat {{.KREW_FILE}} | xargs | sed 's/ /,/g'
@@ -36,4 +46,14 @@ tasks:
     - for: {var: KREW_FILE, split: ',', as: KREW_FILE}
       cmd: 'krew update && krew install {{ .KREW_FILE }}'
     preconditions:
-    - {msg: "Missing Arkade", sh: "command -v arkade"}
+    - {msg: "Missing Arkade", sh: "command -v arkade",}
+
+  install-admin-packages:
+    platforms: [darwin, linux, windows]
+    desc: Install workstation packages for devops/platform engineers
+    env:
+      USER_ROLE:
+        sh: task bootstrap:gum -- choose --header "Deploy required packages based on user role (scripts/workstation/<user-role)?" $(find scripts/workstation/** -type d -print | cut -d / -f 3)
+    cmds:
+    - task: workstation:arkade
+    - task: workstation:krew

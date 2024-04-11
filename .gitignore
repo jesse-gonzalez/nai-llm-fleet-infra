@@ -1,8 +1,8 @@
 # ignore anything under configs that's not templates
 .config.env
-config/*
-!config/templates
-!config/_common
+configs/*
+!configs/templates
+!_common
 
 # ignore local secrets dir
 .local/*
@@ -38,6 +38,8 @@ tmp
 .lock
 .cache
 
+# Brew
+Brewfile.lock.json
 
 ## Ignore python generated stuff
 __pycache__

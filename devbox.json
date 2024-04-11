@@ -26,7 +26,8 @@
     "openshift@latest",
     "chezmoi@2.47.3",
     "k9s@0.32.4",
-    "kubie@0.23.0"
+    "kubie@0.23.0",
+    "gomplate@3.11.7"
   ],
   "shell": {
     "init_hook": [

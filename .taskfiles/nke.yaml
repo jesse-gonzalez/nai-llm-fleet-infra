@@ -12,54 +12,97 @@ tasks:
     silent: true
     desc: Check kubectl plugins and if not available, install
     cmds:
-    - '[ -n "$(which kubectl-karbon)" ] || task workstation:krew'
-    - echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
+    - '[ -n "$(which kubectl-karbon)" ] || task bootstrap:gum -- spin --title="updating krew plugins" task workstation:krew'
 
   download-creds:
-    deps: [check-krew-plugins]
-    silent: false
+    deps: [default]
+    silent: true
     precondition:
     - sh: test -d ${HOME}/.kube
       msg: "${HOME}/.kube doesn't exist, please create and try again."
     desc: Download NKE kubeconfig for specific cluster
     cmds:
-    - |
-      export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
-      KARBON_PASSWORD="${PRISM_CENTRAL_PASS}" kubectl karbon login -u ${PRISM_CENTRAL_USER} --server ${PRISM_CENTRAL_ENDPOINT} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg
+    - task nke:check-krew-plugins
+    - KARBON_PASSWORD="${BOOTSTRAP_prism_central_password}" kubectl karbon login -u ${BOOTSTRAP_prism_central_user} --server ${BOOTSTRAP_prism_central_endpoint} --cluster ${K8S_CLUSTER_NAME} --force --insecure --kubeconfig ${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg
     - echo "export KUBECONFIG=${HOME}/.kube/${K8S_CLUSTER_NAME}.cfg" && kubectl config use-context ${K8S_CLUSTER_NAME}-context
     requires:
       vars: [K8S_CLUSTER_NAME, PRISM_CENTRAL_PASS, PRISM_CENTRAL_USER, PRISM_CENTRAL_ENDPOINT]
 
   ## prompt for cred, download kubectl config locally and use context on current shell
   prompt-creds:
-    deps: [check-krew-plugins]
+    deps: [default]
     silent: false
-    desc: Prompt to download NKE kubeconfig for any cluster available on target PC.
+    desc: Prompt to download NKE kubeconfig from any Prism Central Cluster.
     vars:
-      PRISM_CENTRAL_ENDPOINT:
+      PC_ENDPOINT:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Endpoint" --placeholder pc.ntnxlab.local'
-      PRISM_CENTRAL_USER:
+      PC_USERNAME:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Username" --placeholder admin'
-      PRISM_CENTRAL_PASS:
+      PC_PASSWORD:
         sh: 'task bootstrap:gum -- input --header "What is your Prism Central Password" --placeholder "nutanix/4u" --password'
+      NKE_SELECT:
+        sh: |
+          task nke:check-krew-plugins
+          KARBON_PASSWORD="{{.PC_PASSWORD}}" kubectl karbon login -u {{.PC_USERNAME}} --server {{.PC_ENDPOINT}} --force --insecure --kubeconfig ${HOME}/.kube/tmp-kubeconfig
+      NKE_CLUSTER_NAME:
+        sh: kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}" --kubeconfig ${HOME}/.kube/tmp-kubeconfig
     cmds:
-    - KARBON_PASSWORD="{{.PRISM_CENTRAL_PASS}}" kubectl karbon login -u {{.PRISM_CENTRAL_USER}} --server {{.PRISM_CENTRAL_ENDPOINT}} --force --insecure --kubeconfig ${HOME}/.kube/tmp-kubeconfig
+    - kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee "${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg"
     - |
-      export NKE_CLUSTER_NAME=$(kubectl config view --raw --minify -o jsonpath="{.clusters[0].name}" --kubeconfig ${HOME}/.kube/tmp-kubeconfig) && \
-      kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee ${HOME}/.kube/${NKE_CLUSTER_NAME}.cfg && \
-      echo "export KUBECONFIG=${HOME}/.kube/${NKE_CLUSTER_NAME}.cfg" && \
-      kubectl config use-context ${NKE_CLUSTER_NAME}-context && \
-      echo "export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME}"
+      echo "export KUBECONFIG=${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg" && \
+      kubectl config use-context {{.NKE_CLUSTER_NAME}}-context
     interactive: true
 
-  load-cluster:
-    silent: false
-    deps: [default]
-    desc: Load Existing Cluster Instance
+  switch-cluster:
+    silent: true
+    desc: Prompt to Load Existing NKE Cluster Creds
+    vars:
+      NKE_CLUSTER_NAME:
+        sh: task bootstrap:gum -- choose --header "Select existing cluster instance to load from .local/ directory." $(find .local/** -type d -not -name _common -print | cut -d / -f 2)
+    env:
+      K8S_CLUSTER_NAME: "{{.NKE_CLUSTER_NAME}}"
     cmds:
-    - |
-      export NKE_CLUSTER_NAME=$(task bootstrap:gum -- choose --header "Select existing K8S instance to load." $(find .local/** -type d -not -name _common -print | cut -d / -f 2)) && \
-      echo "export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME}" && \
-      export K8S_CLUSTER_NAME=${NKE_CLUSTER_NAME} && task nke:download-creds
+    - task nke:download-creds K8S_CLUSTER_NAME=${K8S_CLUSTER_NAME}
+    - echo "export K8S_CLUSTER_NAME=${K8S_CLUSTER_NAME}"
+    interactive: true
+
+  switch-shell-env:
+    silent: true
+    desc: Prompt for Existing Cluster Instance in Local Shell. ex. eval $(task nke:switch-shell-env)
+    vars:
+      NKE_CLUSTER_NAME:
+        sh: task bootstrap:gum -- choose --header "Select existing cluster instance to load from .local/ directory." $(find .local/** -type d -not -name _common -print | cut -d / -f 2)
+    cmds:
+    - echo "export K8S_CLUSTER_NAME={{.NKE_CLUSTER_NAME}}"
+    - echo "export KUBECONFIG=${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg"
+    interactive: true
+    precondition:
+    - sh: test -d .local
+      msg: ".local directory doesn't exist, please configure new cluster instance. ex. eval $(task nke:new-shell-env)"
+
+  new-cluster:
+    silent: true
+    desc: Prompt to create new K8S cluster instance within .local directory.
+    vars:
+      K8S_CLUSTER_CONTEXT:
+        sh: kubectl config view -o jsonpath='{range .contexts[*]}{.name}{"\n"}{end}' | gum filter --placeholder "Select Target Kubernetes Cluster Context..."
+      NKE_CLUSTER_NAME:
+        sh: kubectl config view -o jsonpath='{.contexts[?(@.name == "{{.K8S_CLUSTER_CONTEXT}}")].context.cluster}'
+      #NKE_CLUSTER_NAME:
+      #  sh: 'task bootstrap:gum -- input --header "What would you like to set as K8S_CLUSTER_NAME? (hint: should be same name as cluster)" --placeholder nai-llm-k8s-cluster'
+      CLUSTER_PROFILE:
+        sh: task bootstrap:gum -- choose --header "Select available cluster profile type." $(find clusters/_profiles/** -type d -not -name _base -print | cut -d / -f 3 | uniq)
+      ENVIRONMENT:
+        sh: task bootstrap:gum -- choose --header "Select supported environment types from {{.CLUSTER_PROFILE}} profile." $(find clusters/_profiles/{{.CLUSTER_PROFILE}}/** -type d -not -name _base -print | cut -d / -f 4 | uniq)
+    env:
+      K8S_CLUSTER_NAME: "{{.NKE_CLUSTER_NAME}}"
+      CLUSTER_PROFILE: "{{.CLUSTER_PROFILE}}"
+      ENVIRONMENT: "{{.ENVIRONMENT}}"
+    cmds:
+    - mkdir -p .local/${K8S_CLUSTER_NAME}
+    - envsubst < "tmpl/.common.sample.env" > ".local/${K8S_CLUSTER_NAME}/.common.env"
+    - echo "export K8S_CLUSTER_NAME={{.NKE_CLUSTER_NAME}}"
+    - echo "export CLUSTER_PROFILE={{.CLUSTER_PROFILE}}"
+    - echo "export ENVIRONMENT={{.ENVIRONMENT}}"
     interactive: true
 

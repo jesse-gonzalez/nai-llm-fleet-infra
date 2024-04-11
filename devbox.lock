@@ -525,6 +525,54 @@
         }
       }
     },
+    "gomplate@3.11.7": {
+      "last_modified": "2024-03-22T11:26:23Z",
+      "resolved": "github:NixOS/nixpkgs/a3ed7406349a9335cb4c2a71369b697cecd9d351#gomplate",
+      "source": "devbox-search",
+      "version": "3.11.7",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0q5f69q896cxv0nm7w2zv4kr7qmgxl33-gomplate-3.11.7",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/0q5f69q896cxv0nm7w2zv4kr7qmgxl33-gomplate-3.11.7"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/dwx86xs6w4k55s9h58jjqmwryhnbzmqp-gomplate-3.11.7",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/dwx86xs6w4k55s9h58jjqmwryhnbzmqp-gomplate-3.11.7"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fiys7c3zw8r6469nfs369zkjiw34gb9p-gomplate-3.11.7",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fiys7c3zw8r6469nfs369zkjiw34gb9p-gomplate-3.11.7"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hya29vsr9dmmxx8m05mip441qlfyyaq6-gomplate-3.11.7",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hya29vsr9dmmxx8m05mip441qlfyyaq6-gomplate-3.11.7"
+        }
+      }
+    },
     "gum@0.13.0": {
       "last_modified": "2024-03-22T11:26:23Z",
       "resolved": "github:NixOS/nixpkgs/a3ed7406349a9335cb4c2a71369b697cecd9d351#gum",

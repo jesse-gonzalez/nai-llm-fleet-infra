@@ -14,7 +14,7 @@ cat << EOF
 Usage: $(basename "$0") <options>
     -h, --help      Display help
     --cluster_name  Kubernetes Cluster Name 
-    --verify        Verify .config.env settings within .local/cluster_name/
+    --verify        Verify .env settings within .local/cluster_name/
 Examples:
   # Verify that all configs have been set and are correct
   ./$(basename "$0") --cluster_name nai-llm-prod-mgmt --verify
@@ -39,10 +39,10 @@ main() {
     TEMPLATES_DIR="${PROJECT_DIR}/tmpl/cluster"
 
     # shellcheck disable=SC1091
-    if [ ! -f .local/${K8S_CLUSTER_NAME}/.config.env ]; then
-      _log "ERROR" ".local/${K8S_CLUSTER_NAME}/.config.env doesn't exist."
+    if [ ! -f .local/${K8S_CLUSTER_NAME}/.env ]; then
+      _log "ERROR" ".local/${K8S_CLUSTER_NAME}/.env doesn't exist."
       _log "INFO" "This can be done by initially running the command below and making sure all the variables prefixed with 'BOOTSTRAP_' are updated accordingly:"
-      _log "INFO" "  mkdir -p .local/${K8S_CLUSTER_NAME} && cp ./config.sample.env .local/${K8S_CLUSTER_NAME}/.config.env"
+      _log "INFO" "  mkdir -p .local/${K8S_CLUSTER_NAME} && cp ./config.sample.env .local/${K8S_CLUSTER_NAME}/.env"
       exit
     fi
 
@@ -53,7 +53,7 @@ main() {
 
     export AGE_PUBLIC_KEY=$(age-keygen -y ${SOPS_AGE_KEY_FILE})
 
-    source "${PROJECT_DIR}/.local/${K8S_CLUSTER_NAME}/.config.env"
+    source "${PROJECT_DIR}/.local/${K8S_CLUSTER_NAME}/.env"
 
     ## only run if verify option has been passed in. otherwise, generate template configs
     if [[ "${verify}" == 1 ]]; then
