@@ -8,4 +8,16 @@ flux
 gh
 task
 gomplate
-
+kustomize
+kubectx
+kubens
+krew
+stern
+oh-my-posh
+flux
+fzf
+gh
+clusterctl
+kind
+trivy
+kubestr

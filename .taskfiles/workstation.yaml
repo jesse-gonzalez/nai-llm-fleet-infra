@@ -48,14 +48,21 @@ tasks:
     preconditions:
     - {msg: "Missing Arkade", sh: "command -v arkade",}
 
+  install-linux-packages:
+    prompt: This will install OS dependent requirements... Do you wish to continue?
+    silent: true
+    desc: Check kubectl plugins and if not available, install
+    cmds:
+    - '[ -n "$(command -v gum)" ] || ./scripts/common/install_gum.sh'
+    - '[ -n "$(command -v age)" ] || ./scripts/common/install_age.sh'
+    - '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_ipcalc.sh'
+
   install-packages:
     prompt: This will install OS dependent requirements... Do you wish to continue?
     platforms: [darwin, linux, windows]
-    desc: Install workstation packages for devops/platform engineers
-    env:
-      USER_ROLE:
-        sh: task bootstrap:gum -- choose --header "Deploy required packages based on user role (scripts/workstation/<user-role)?" $(find scripts/workstation/** -type d -print | cut -d / -f 3)
+    desc: Install workstation packages. For devops/platform engineers, set USER_ROLE=devops-role. i.e., task workstation:install-packages USER_ROLE=devops-role
     cmds:
     - '{{if eq OS "darwin"}}task workstation:brew --yes{{end}}'
+    - '{{if eq OS "linux"}}task workstation:install-linux-packages --yes{{end}}'
     - task workstation:arkade --yes
     - task workstation:krew --yes

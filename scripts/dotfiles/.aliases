@@ -1,0 +1,29 @@
+# General
+alias grep='grep --color'
+alias rm='rm -i'
+alias ..="cd .."
+
+# kubectl aliases
+alias k='kubectl'
+alias kgw='watch -n 1 kubectl get'
+alias ke="kubectl explain"
+alias ker="kubectl explain --recursive"
+alias kns='kubens'
+alias kctx='kubectx'
+alias stern="stern --tail 10 --since 5m"
+
+# bash completion stuff
+complete -F __start_kubectl k
+complete -F __start_kubectl kg
+complete -F __start_kubectl kgw
+complete -F __start_kubectl krm
+complete -F __start_kubectl ke
+complete -F __start_kubectl ker
+complete -F __start_kubectl kns
+complete -F __start_kubectl kctx
+
+# general alias definitions
+alias ll='ls -althrF'
+alias la='ls -A'
+alias l='ls -lFha'
+alias h='history'
