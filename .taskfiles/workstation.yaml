@@ -2,7 +2,7 @@
 version: "3"
 
 env:
-  USER_ROLE: '{{default "minimalist-role" .USER_ROLE}}'
+  USER_ROLE: '{{default "minimal-role" .USER_ROLE}}'
 
 vars:
   BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Brewfile"
