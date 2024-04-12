@@ -4,13 +4,21 @@ name: "devbox"
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
-    paths: ["./devbox.**"]
+    branches:
+    - main
+    - feat**
+    - bug**
+    - task**
+    paths:
+    - '.github/workflows/devbox.yml'
+    - './devbox.**'
     tags:
       - v*
   pull_request:
     branches: ["main"]
-    paths: ["./devbox.**"]
+    paths:
+    - '.github/workflows/devbox.yml'
+    - './devbox.**'
   # schedule:
   #   - cron: "0 0 * * 1"
 

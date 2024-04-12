@@ -5,14 +5,24 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: [".devcontainer/**"]
+    paths:
+    - '.github/workflows/devcontainer.yml'
+    - '.devcontainer/**/*'
     tags:
       - v*
   pull_request:
-    branches: ["main"]
-    paths: [".devcontainer/**"]
-  # schedule:
-  #   - cron: "0 0 * * 1"
+    branches:
+    - main
+    - feat**
+    - bug**
+    - task**
+    paths:
+    - '.github/workflows/devcontainer.yml'
+    - '.devcontainer/**/*'
+
+permissions:
+  contents: read
+  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
