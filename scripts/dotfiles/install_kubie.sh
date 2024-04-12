@@ -1,5 +1,6 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+
+set -ex
 set -o pipefail
 
 KUBIE_VERSION=v0.22.0

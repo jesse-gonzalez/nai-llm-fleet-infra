@@ -1,5 +1,6 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+
+set -ex
 set -o pipefail
 
 [[ -d /opt/kube-ps1 ]] || mkdir -p /opt/kube-ps1
