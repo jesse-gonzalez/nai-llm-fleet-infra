@@ -29,11 +29,12 @@ jobs:
       - name: Install kustomize
         uses: fluxcd/pkg/actions/kustomize@main
 
-      # - name: Lint Kubernetes/Flux Manifests
-      #   run: ./scripts/validate.sh
-
       - name: Lint Dockerfile
-        run: task test:hadolint
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: ".devcontainer/Dockerfile"
 
-      - name: Lint Shellcheck
-        run: task test:shellcheck
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './scripts/**/**/*.sh'
