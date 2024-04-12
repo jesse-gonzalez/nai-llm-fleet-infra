@@ -3,11 +3,12 @@ kind: Component
 
 components:
 ## load _profiles/_base first
-- ../../_base
+- ../../_base/cert-manager-repo.yaml
+- ../../_base/weave-gitops-repo.yaml
 ## then _profiles/llm-management/_base next
 #- ../_base
 
-patches:
-- path: ingress-nginx-addons.yaml
-- path: kubernetes-dashboard-addons.yaml
-- path: weave-gitops-addons.yaml
+# patches:
+# - path: ingress-nginx-addons.yaml
+# - path: kubernetes-dashboard-addons.yaml
+# - path: weave-gitops-addons.yaml

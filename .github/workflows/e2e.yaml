@@ -30,14 +30,13 @@ jobs:
           --ignore-paths="clusters/**/flux-system/"
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/_profiles/llm-management/non-prod
+          --path=./clusters/_profiles/minimalist/kind
       - name: Verify cluster reconciliation
         run: |
-          kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-          kubectl -n flux-system wait kustomization/workloads --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/weave-gitops --for=condition=ready --timeout=5m
       - name: Verify helm reconciliation
         run: |
-          kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait helmrelease/weave-gitops --for=condition=ready --timeout=5m
       - name: Debug failure
         if: failure()
         run: |
