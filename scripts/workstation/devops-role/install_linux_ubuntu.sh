@@ -11,5 +11,6 @@ if [  -n "$(cat /etc/lsb-release | grep -i ubuntu)" ]; then
     tree \
     vim \
     bash-completion \
-    python3
+    python3 \
+    shellcheck
 fi

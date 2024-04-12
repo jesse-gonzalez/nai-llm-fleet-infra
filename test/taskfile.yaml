@@ -18,5 +18,19 @@ tasks:
     - for: {var: TASK_FILES}
       task: ':{{.ITEM}}:default'
 
-  ## test nutanix-files
+  ## static analysis tools
 
+  ## bash file checks
+  shellcheck:
+    cmds:
+    - shellcheck scripts/**/*.sh
+
+  ## dockerfile check
+  hadolint:
+    cmds:
+    - hadolint .devcontainer/Dockerfile -v
+
+  static-all:
+    cmds:
+    - task: :test:shellcheck
+    - task: :test:hadolint

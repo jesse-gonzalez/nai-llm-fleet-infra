@@ -1,3 +1,4 @@
 brew "age"
 brew "gum"
 brew "ipcalc"
+brew "shellcheck"
