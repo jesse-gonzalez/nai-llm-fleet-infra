@@ -50,13 +50,14 @@ tasks:
 
   install-linux-packages:
     platforms: [linux]
+    dir: '{{.USER_WORKING_DIR}}'
     prompt: This will install OS dependent requirements... Do you wish to continue?
     silent: true
     desc: Check kubectl plugins and if not available, install
     cmds:
-    - '[ -n "$(command -v gum)" ] || ./{{.ROOT_DIR}}/scripts/common/install_gum.sh'
-    - '[ -n "$(command -v age)" ] || ./{{.ROOT_DIR}}/scripts/common/install_age.sh'
-    - '[ -n "$(command -v ipcalc)" ] || ./{{.ROOT_DIR}}/scripts/common/install_ipcalc.sh'
+    - '[ -n "$(command -v gum)" ] || ./scripts/common/install_linux_gum.sh'
+    - '[ -n "$(command -v age)" ] || ./scripts/common/install_linux_age.sh'
+    - '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
 
   install-packages:
     prompt: This will install OS dependent requirements... Do you wish to continue?
