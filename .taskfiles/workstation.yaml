@@ -31,7 +31,7 @@ tasks:
     cmds:
     - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
-      cmd: 'arkade get {{ .ARKADE_PACKAGE }} --arch amd64 --arch arm64 && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
+      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
   krew:
     prompt: This will install Krew and dependent kubectl plugins... Do you wish to continue?
