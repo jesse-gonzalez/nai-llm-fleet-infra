@@ -23,7 +23,7 @@ tasks:
   ## bash file checks
   shellcheck:
     cmds:
-    - shellcheck scripts/**/*.sh
+    - shellcheck scripts/**/**/*.sh
 
   ## dockerfile check
   hadolint:
