@@ -30,6 +30,11 @@ tasks:
     cmds:
     - hadolint .devcontainer/Dockerfile -v
 
+  ## kubeconform linter check
+  kubeconform:
+    cmds:
+    - ./scripts/validate.sh
+
   static-all:
     cmds:
     - task: :test:shellcheck
