@@ -12,7 +12,6 @@ kustomize
 kubectx
 kubens
 krew
-stern
 oh-my-posh
 flux
 fzf
