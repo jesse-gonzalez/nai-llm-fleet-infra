@@ -58,7 +58,7 @@ tasks:
     - '[ -n "$(command -v gum)" ] || ./scripts/common/install_linux_gum.sh'
     - '[ -n "$(command -v age)" ] || ./scripts/common/install_linux_age.sh'
     - '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
-    - './{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh'
+    - './scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh'
 
   install-packages:
     prompt: This will install all required packages locally... Are you certain you wish to continue?
