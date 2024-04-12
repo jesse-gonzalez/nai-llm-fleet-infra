@@ -13,7 +13,7 @@ tasks:
 
   brew:
     prompt: This will install Brew (if not exists) and dependent packages... Do you wish to continue?
-    platforms: [darwin]
+    platforms: [darwin/amd64]
     desc: Install Brew and dependent packages. Only support on MacOS.
     cmds:
     - '[ -n "$(command -v brew)" ] || (NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")'
@@ -23,7 +23,7 @@ tasks:
 
   arkade:
     prompt: This will install Arkade and dependent packages... Do you wish to continue?
-    platforms: [darwin, linux, windows]
+    platforms: [darwin/amd64, linux/amd64, windows/amd64]
     desc: Install Arkade and dependent packages. Arkade is useful for cross-platform package management.
     vars:
       ARKADE_PACKAGES:
@@ -31,11 +31,11 @@ tasks:
     cmds:
     - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
-      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
+      cmd: 'arkade get {{ .ARKADE_PACKAGE }} --arch amd64 && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
   krew:
     prompt: This will install Krew and dependent kubectl plugins... Do you wish to continue?
-    platforms: [darwin, linux, windows]
+    platforms: [darwin/amd64, linux/amd64, windows/amd64]
     deps: [arkade]
     desc: Install Krew dependencies and dependent packages. Kubectl plugins are useful for managing multiple k8s clusters.
     vars:
@@ -49,7 +49,7 @@ tasks:
     - {msg: "Missing Arkade", sh: "command -v arkade",}
 
   install-linux-packages:
-    platforms: [linux]
+    platforms: [linux/amd64]
     dir: '{{.USER_WORKING_DIR}}'
     prompt: This will install linux minimal dependent pre-reqs... Do you wish to continue?
     silent: true
