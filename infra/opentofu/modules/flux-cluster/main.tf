@@ -20,7 +20,7 @@ resource "flux_bootstrap_git" "this" {
 # Custom profile management
 locals {
   flux_platform_path = "clusters/${var.cluster_name}/platform"
-  flux_apps_path = "clusters/${var.cluster_name}/apps"
+  #flux_apps_path = "clusters/${var.cluster_name}/apps"
 }
 
 resource "github_repository_file" "kustomization" {
@@ -60,7 +60,7 @@ resource "github_repository_file" "config" {
   overwrite_on_create = var.overwrite_files_on_create
   file                = "${local.flux_platform_path}/cluster-configs.yaml"
   content             = templatefile(
-    "${path.module}/templates/config.sample.yaml", 
+    "${path.module}/templates/configs.sample.yaml", 
     {
       cluster_name = var.cluster_name,
       data = [ for key, val in var.cluster_config : "${key}: ${val}"]

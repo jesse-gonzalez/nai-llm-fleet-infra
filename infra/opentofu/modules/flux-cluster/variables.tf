@@ -7,7 +7,7 @@ variable "github_org" {
 
 variable "github_repository" {
   description = "Name of the Github repository where the flux bootstrap will happen"
-  default = "gitops-nai-llm"
+  default = "nai-llm-fleet-infra"
   type = string 
 }
 
@@ -25,19 +25,19 @@ variable "public_key_openssh" {
 ## Cluster specific configs
 variable "cluster_name" {
   description = "Name of Kubernetes Cluster"
-  default = "kind-llm-management"
+  default = "kind-minimalist"
   type = string
 }
 
 variable "profile_name" {
   description = "Profile name to use from flux bootstrap repository"
-  default = "llm-management"
+  default = "minimalist"
   type = string
 }
 
 variable "environment_type" {
   description = "Environment Type"
-  default = "non-prod"
+  default = "kind"
   type = string
 }
 
