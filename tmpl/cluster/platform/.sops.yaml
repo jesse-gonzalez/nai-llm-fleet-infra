@@ -1,3 +1,0 @@
-creation_rules:
-- encrypted_regex: "^(data|stringData|auth)$"
-  age: ${AGE_PUBLIC_KEY}
