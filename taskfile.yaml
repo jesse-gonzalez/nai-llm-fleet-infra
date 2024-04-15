@@ -23,7 +23,6 @@ tasks:
   default:
     silent: true
     cmds:
-    - task --summary bootstrap:silent
     - task -l
 
   test:
