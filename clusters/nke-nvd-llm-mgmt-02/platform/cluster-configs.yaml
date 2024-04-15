@@ -5,9 +5,7 @@ metadata:
 data:
   cluster_name: "nke-nvd-llm-mgmt-02"
   environment: "prod"
-  cluster_profile: "llm-management"
-  gpu_cuda_toolkit_version: "v1.14.3-centos7"
-  gpu_time_slicing_replica_count: "2"  
+  cluster_profile: "llm-management"  
   kube_vip_ipam_range: "10.50.119.52-10.50.119.53"
   kube_vip_nginx_ingress_ipam: "10.50.119.50/32"
   wildcard_ingress_subdomain: "nke-nvd-llm-mgmt-02.cloudnative.nvdlab.net"
