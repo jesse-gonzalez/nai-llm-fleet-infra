@@ -38,11 +38,11 @@ main() {
     CLUSTER_PLATFORM_DIR="${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/platform"
     TEMPLATES_DIR="${PROJECT_DIR}/tmpl/cluster"
 
-    # shellcheck disable=SC1091
     if [ ! -f .local/${K8S_CLUSTER_NAME}/.env ]; then
       _log "ERROR" ".local/${K8S_CLUSTER_NAME}/.env doesn't exist."
       _log "INFO" "This can be done by initially running the command below and making sure all the variables prefixed with 'BOOTSTRAP_' are updated accordingly:"
-      _log "INFO" "  mkdir -p .local/${K8S_CLUSTER_NAME} && cp ./config.sample.env .local/${K8S_CLUSTER_NAME}/.env"
+      _log "INFO" "  cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml"
+      _log "INFO" "  after updating ./.env.${K8S_CLUSTER_NAME}.yaml"
       exit
     fi
 
@@ -61,33 +61,34 @@ main() {
         verify_success
     else
         # generate cluster directories
-        mkdir -p "$CLUSTER_PLATFORM_DIR"
+        task bootstrap:generate_local_configs
+        #mkdir -p "$CLUSTER_PLATFORM_DIR"
         # copy over flux-system bootstrap configs
-        cp -rf "$TEMPLATES_DIR/flux-system" "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}"
+        #cp -rf "$TEMPLATES_DIR/flux-system" "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}"
         # touch gotk-components.yaml and gotk-sync.yaml files. These are managed by completely managed by flux bootstrap process.
-        touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-components.yaml"
-        touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-sync.yaml"
+        #touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-components.yaml"
+        #touch "${PROJECT_DIR}/clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-sync.yaml"
         # generate cluster settings
-        envsubst < "$TEMPLATES_DIR/platform/cluster-configs.yaml" \
-            > "$CLUSTER_PLATFORM_DIR/cluster-configs.yaml"
+        #envsubst < "$TEMPLATES_DIR/platform/cluster-configs.yaml" \
+        #    > "$CLUSTER_PLATFORM_DIR/cluster-configs.yaml"
         # generate cluster secrets
-        envsubst < "$TEMPLATES_DIR/platform/cluster-secrets.sops.yaml" \
-            > "$CLUSTER_PLATFORM_DIR/cluster-secrets.sops.yaml"
+        #envsubst < "$TEMPLATES_DIR/platform/cluster-secrets.sops.yaml" \
+        #    > "$CLUSTER_PLATFORM_DIR/cluster-secrets.sops.yaml"
         # generate .sops.yaml file
-        envsubst < "$TEMPLATES_DIR/platform/.sops.yaml" \
-            > "$CLUSTER_PLATFORM_DIR/.sops.yaml"
+        #envsubst < "$TEMPLATES_DIR/platform/.sops.yaml" \
+        #    > "$CLUSTER_PLATFORM_DIR/.sops.yaml"
         # encrypt cluster secrets
-        sops --encrypt --in-place "$CLUSTER_PLATFORM_DIR/cluster-secrets.sops.yaml"
+        #sops --encrypt --in-place "$CLUSTER_PLATFORM_DIR/cluster-secrets.sops.yaml"
         # generate kustomization file
-        envsubst < "$TEMPLATES_DIR/platform/kustomization.yaml" \
-            > "$CLUSTER_PLATFORM_DIR/kustomization.yaml"
+        #envsubst < "$TEMPLATES_DIR/platform/kustomization.yaml" \
+        #    > "$CLUSTER_PLATFORM_DIR/kustomization.yaml"
         ## generating .dockerconfig jsonfile and then encrypting as per these flux instructions: https://fluxcd.io/flux/components/kustomize/kustomizations/#kustomize-secretgenerator
         ## There is known bug when trying to generate that doesn't seem to be resolved - https://github.com/kubernetes-sigs/kustomize/issues/4653
-        envsubst < "$TEMPLATES_DIR/platform/hub.dockerconfig.json.encrypted" \
-            > "$CLUSTER_PLATFORM_DIR/hub.dockerconfig.json.encrypted"
+        #envsubst < "$TEMPLATES_DIR/platform/hub.dockerconfig.json.encrypted" \
+        #    > "$CLUSTER_PLATFORM_DIR/hub.dockerconfig.json.encrypted"
         ## encrypt docker config needed for image pull secrets
-        sops --encrypt --input-type=json --output-type=json --in-place --age $AGE_PUBLIC_KEY $CLUSTER_PLATFORM_DIR/hub.dockerconfig.json.encrypted
-        success
+        #sops --encrypt --input-type=json --output-type=json --in-place --age $AGE_PUBLIC_KEY $CLUSTER_PLATFORM_DIR/hub.dockerconfig.json.encrypted
+        #success
     fi
 }
 
@@ -217,36 +218,34 @@ verify_vars(){
     _has_envar "BOOTSTRAP_cluster_name"
     _has_envar "BOOTSTRAP_environment"
     _has_envar "BOOTSTRAP_cluster_profile"
-    _has_envar "BOOTSTRAP_kube_vip_ipam_range"
-    _has_envar "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
-    _has_envar "BOOTSTRAP_kube_vip_istio_system_ipam"
-    _has_envar "BOOTSTRAP_wildcard_ingress_subdomain"
-    _has_envar "BOOTSTRAP_objects_host"
-    _has_envar "BOOTSTRAP_prism_central_endpoint"
-    _has_envar "BOOTSTRAP_prism_central_user"
-    _has_envar "BOOTSTRAP_prism_central_password" "is_secret"
-    _has_envar "BOOTSTRAP_prism_element_user"
-    _has_envar "BOOTSTRAP_prism_element_password" "is_secret"
-    _has_envar "BOOTSTRAP_objects_access_key" "is_secret"
-    _has_envar "BOOTSTRAP_objects_secret_key" "is_secret"
     _has_envar "BOOTSTRAP_github_repo_url"
     _has_envar "BOOTSTRAP_github_user" "is_secret"
     _has_envar "BOOTSTRAP_github_api_token" "is_secret"
     _has_envar "BOOTSTRAP_docker_hub_user" "is_secret"
     _has_envar "BOOTSTRAP_docker_hub_password" "is_secret"
-    _has_envar "BOOTSTRAP_aws_route53_dns_zone"
-    _has_envar "BOOTSTRAP_aws_route53_region"
-    _has_envar "BOOTSTRAP_aws_access_key_id" "is_secret"
-    _has_envar "BOOTSTRAP_aws_access_key_secret" "is_secret"
-    _has_envar "BOOTSTRAP_management_cluster_ingress_subdomain"
-    _has_envar "BOOTSTRAP_model"
-    _has_envar "BOOTSTRAP_revision"
-    _has_envar "BOOTSTRAP_nfs_export"
-    _has_envar "BOOTSTRAP_nfs_server"
 
     _log "INFO" "Validating all OPTIONAL environment variables"
     _has_optional_envar "BOOTSTRAP_github_app_id" "is_secret"
     _has_optional_envar "BOOTSTRAP_github_app_installation_id" "is_secret"
+    _has_optional_envar "BOOTSTRAP_kube_vip_ipam_range"
+    _has_optional_envar "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    _has_optional_envar "BOOTSTRAP_kube_vip_istio_system_ipam"
+    _has_optional_envar "BOOTSTRAP_wildcard_ingress_subdomain"
+    _has_optional_envar "BOOTSTRAP_objects_host"
+    _has_optional_envar "BOOTSTRAP_objects_access_key" "is_secret"
+    _has_optional_envar "BOOTSTRAP_objects_secret_key" "is_secret"
+    _has_optional_envar "BOOTSTRAP_prism_central_endpoint"
+    _has_optional_envar "BOOTSTRAP_prism_central_user"
+    _has_optional_envar "BOOTSTRAP_prism_central_password" "is_secret"
+    _has_optional_envar "BOOTSTRAP_aws_route53_dns_zone"
+    _has_optional_envar "BOOTSTRAP_aws_route53_region"
+    _has_optional_envar "BOOTSTRAP_aws_access_key_id" "is_secret"
+    _has_optional_envar "BOOTSTRAP_aws_access_key_secret" "is_secret"
+    _has_optional_envar "BOOTSTRAP_management_cluster_ingress_subdomain"
+    _has_optional_envar "BOOTSTRAP_model"
+    _has_optional_envar "BOOTSTRAP_revision"
+    _has_optional_envar "BOOTSTRAP_nfs_export"
+    _has_optional_envar "BOOTSTRAP_nfs_server"
 }
 
 

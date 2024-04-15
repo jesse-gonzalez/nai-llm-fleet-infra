@@ -19,25 +19,27 @@ tasks:
       If new cluster, connect to Prism Central, select NKE cluster and validate connectivity
       - task nke:prompt-creds && task kubectl:nodes
 
-      To configure .local/<K8S_CLUSTER_NAME>/.env, simply copy ./.config.sample.env and update, for example:
+      To configure .local/<K8S_CLUSTER_NAME>/.env, simply copy .env.sample.yaml and update, for example:
 
         export K8S_CLUSTER_NAME=nai-llm-prod-mgmt
-        mkdir -p .local/${K8S_CLUSTER_NAME}/
-        cp ./.config.sample.env .local/${K8S_CLUSTER_NAME}/.env
+        cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml
 
-      After updating .local/${K8S_CLUSTER_NAME}/.env, verify and initialize local configs
-      - task bootstrap:init-local-configs
+      After updating ./.env.${K8S_CLUSTER_NAME}.yaml, verify and initialize local configs
+      - task bootstrap:generate_local_configs
 
       To initiate fluxcd bootstrap:
       - task bootstrap:silent
     cmds:
-    - task: init-local-configs
+    - task: generate_local_configs
+    - task: verify-configs
+    - task: generate_cluster_configs
     - task: :nke:download-creds
     - task: :flux:init
     requires:
       vars: [K8S_CLUSTER_NAME]
 
   full:
+    internal: true
     silent: false
     deps: [default]
     desc: Initializes cluster configs, commits and pushes remotely & bootstraps FluxCD
@@ -62,6 +64,7 @@ tasks:
         K8S_CLUSTER_NAME: "{{.K8S_CLUSTER_NAME}}"
 
   nke-prompt:
+    internal: true
     silent: true
     deps: [default]
     vars:
@@ -73,6 +76,7 @@ tasks:
     - '{{if eq .NKE_PROMPT "yes"}} task nke:select-creds {{end}}'
 
   init-configs:
+    internal: true
     silent: true
     deps: [default]
     desc: Initializes Cluster Configs based on Cluster Profile and Target K8s Cluster
@@ -109,6 +113,7 @@ tasks:
         #     CLUSTER_ADDONS: "{{.CLUSTER_ADDONS}}"
 
   print-vars:
+    internal: true
     silent: true
     deps: [default]
     cmds:
@@ -133,6 +138,7 @@ tasks:
       vars: [K8S_CLUSTER_NAME]
 
   init-local-configs:
+    internal: true
     silent: false
     desc: Runs ./bootstrap_configs.sh script to configure cluster configs and encrypt secrets with sops
     deps: [verify-configs]
@@ -150,14 +156,31 @@ tasks:
 
   generate_local_configs:
     silent: false
-    desc: Create .local/<K8S_CLUSTER_NAME/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
+    desc: Stages .local/<K8S_CLUSTER_NAME/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
     cmds:
     - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
+    - task: :bootstrap:verify-configs
+    preconditions:
+    - sh: test -f .env.${K8S_CLUSTER_NAME}.yaml
+      msg: '.env.{{.K8S_CLUSTER_NAME}}.yaml not found, please copy .env.sample.yaml and update manually'
     requires:
       vars: [K8S_CLUSTER_NAME]
 
-  bootstrap_local_configs:
+  generate_cluster_configs:
+    silent: false
+    deps: [generate_local_configs]
+    desc: Stages clusters/<K8S_CLUSTER_NAME/**.yaml configs from tmpl/cluster/*.tmpl templates
     cmds:
-    - ./bootstrap_configs.sh --cluster_name ${K8S_CLUSTER_NAME}
+    - task: :sops:age-keygen
+    - |
+      export AGE_PUBLIC_KEY={{.AGE_PUBLIC_KEY}} && \
+      gomplate --config=.gotemplate.yaml --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
+    - touch "clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-components.yaml"
+    - touch "clusters/${K8S_CLUSTER_NAME}/flux-system/gotk-sync.yaml"
+    - task: :sops:encrypt
+    preconditions:
+    - sh: test -f .env.${K8S_CLUSTER_NAME}.yaml
+      msg: '.env.{{.K8S_CLUSTER_NAME}}.yaml not found, please copy .env.sample.yaml and update manually'
     requires:
       vars: [K8S_CLUSTER_NAME]
+

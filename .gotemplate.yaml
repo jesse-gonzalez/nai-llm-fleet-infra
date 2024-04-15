@@ -1,0 +1,10 @@
+inputDir: tmpl/cluster
+outputMap: |
+  clusters/{{ .Env.K8S_CLUSTER_NAME }}/{{ .in | strings.ReplaceAll ".yaml.tmpl" ".yaml" }}
+
+# plugins:
+#   echo:
+#     cmd: echo
+
+# context:
+#   config: .{{ .Env.K8S_CLUSTER_NAME }}.env.yaml

@@ -10,6 +10,23 @@ tasks:
   decrypt:
     desc: decrypts sops file located in clusters/$K8S_CLUSTER_NAME/platform/cluster-secrets.sops.yaml
     cmds:
-    - sops --decrypt clusters/{{.K8S_CLUSTER_NAME}}/platform/cluster-secrets.sops.yaml
+    - sops --decrypt clusters/${K8S_CLUSTER_NAME}/platform/cluster-secrets.sops.yaml
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  age-keygen:
+    desc: Initialize Age Key for Sops
+    cmds:
+    - mkdir -p .local/_common && age-keygen --output {{.SOPS_AGE_KEY_FILE}}
+    status:
+    - test -f "{{.SOPS_AGE_KEY_FILE}}"
+
+  encrypt:
+    vars:
+      CLUSTER_PLATFORM_DIR: "{{.ROOT_DIR}}/clusters/${K8S_CLUSTER_NAME}/platform"
+    cmd: sops --encrypt --in-place {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+    deps: [age-keygen]
+    preconditions:
+    - {msg: "Missing Sops Age key file", sh: "test -f {{.SOPS_AGE_KEY_FILE}}"}
     requires:
       vars: [K8S_CLUSTER_NAME]

@@ -1,8 +1,9 @@
+{{ $cluster := (ds "config").k8s_cluster -}}
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 components:
-- ../../_profiles/llm-management/prod
+- ../../_profiles/{{ $cluster.profile | required }}/{{ $cluster.environment | required }}
 resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml

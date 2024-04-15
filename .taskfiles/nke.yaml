@@ -53,19 +53,6 @@ tasks:
       kubectl config use-context {{.NKE_CLUSTER_NAME}}-context
     interactive: true
 
-  switch-cluster:
-    silent: true
-    desc: Prompt to Load Existing NKE Cluster Creds
-    vars:
-      NKE_CLUSTER_NAME:
-        sh: task bootstrap:gum -- choose --header "Select existing cluster instance to load from .local/ directory." $(find .local/** -type d -not -name _common -print | cut -d / -f 2)
-    env:
-      K8S_CLUSTER_NAME: "{{.NKE_CLUSTER_NAME}}"
-    cmds:
-    - task nke:download-creds K8S_CLUSTER_NAME=${K8S_CLUSTER_NAME}
-    - echo "export K8S_CLUSTER_NAME=${K8S_CLUSTER_NAME}"
-    interactive: true
-
   switch-shell-env:
     silent: true
     desc: Prompt for Existing Cluster Instance in Local Shell. ex. eval $(task nke:switch-shell-env)
@@ -79,29 +66,4 @@ tasks:
     - sh: test -d .local
       msg: ".local directory doesn't exist, please configure new cluster instance. ex. eval $(task nke:new-shell-env)"
 
-  new-cluster:
-    silent: true
-    desc: DoNotUSE - Prompt to create new K8S cluster instance within .local directory.
-    vars:
-      K8S_CLUSTER_CONTEXT:
-        sh: kubectl config view -o jsonpath='{range .contexts[*]}{.name}{"\n"}{end}' | gum filter --placeholder "Select Target Kubernetes Cluster Context..."
-      NKE_CLUSTER_NAME:
-        sh: kubectl config view -o jsonpath='{.contexts[?(@.name == "{{.K8S_CLUSTER_CONTEXT}}")].context.cluster}'
-      #NKE_CLUSTER_NAME:
-      #  sh: 'task bootstrap:gum -- input --header "What would you like to set as K8S_CLUSTER_NAME? (hint: should be same name as cluster)" --placeholder nai-llm-k8s-cluster'
-      CLUSTER_PROFILE:
-        sh: task bootstrap:gum -- choose --header "Select available cluster profile type." $(find clusters/_profiles/** -type d -not -name _base -print | cut -d / -f 3 | uniq)
-      ENVIRONMENT:
-        sh: task bootstrap:gum -- choose --header "Select supported environment types from {{.CLUSTER_PROFILE}} profile." $(find clusters/_profiles/{{.CLUSTER_PROFILE}}/** -type d -not -name _base -print | cut -d / -f 4 | uniq)
-    env:
-      K8S_CLUSTER_NAME: "{{.NKE_CLUSTER_NAME}}"
-      CLUSTER_PROFILE: "{{.CLUSTER_PROFILE}}"
-      ENVIRONMENT: "{{.ENVIRONMENT}}"
-    cmds:
-    - mkdir -p .local/${K8S_CLUSTER_NAME}
-    - envsubst < "tmpl/.common.sample.env" > ".local/${K8S_CLUSTER_NAME}/.common.env"
-    - echo "export K8S_CLUSTER_NAME={{.NKE_CLUSTER_NAME}}"
-    - echo "export CLUSTER_PROFILE={{.CLUSTER_PROFILE}}"
-    - echo "export ENVIRONMENT={{.ENVIRONMENT}}"
-    interactive: true
 

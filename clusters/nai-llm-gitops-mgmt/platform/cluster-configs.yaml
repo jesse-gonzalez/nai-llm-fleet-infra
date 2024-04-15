@@ -3,39 +3,30 @@ apiVersion: v1
 metadata:
   name: cluster-configs
 data:
-  cluster_name: ""
-  environment: ""
-  cluster_profile: ""
-  kube_vip_ipam_range: ""
-  kube_vip_nginx_ingress_ipam: ""
-  kube_vip_istio_system_ipam: ""
-  wildcard_ingress_subdomain: ""
-  management_cluster_ingress_subdomain: ""
-  milvus_objects_bucket_name: ""
-  documents_objects_bucket_name: ""
-  objects_host: ""
-  objects_port: ""
-  objects_region: ""
-  objects_use_ssl: ""
-  gpu_cuda_toolkit_version: ""
-  gpu_time_slicing_replica_count: ""
-  aws_route53_dns_zone: ""
-  aws_route53_region: ""
-  model: ""
-  revision: ""
-  nfs_export: ""
-  nfs_server: ""
-  useExistingNFS: ""
-  maxTokens: ""
-  repPenalty: ""
-  temperature: ""
-  topP: ""
-
-
-
-
-
-
-
-
-
+  cluster_name: "nai-llm-gitops-mgmt"
+  environment: "prod"
+  cluster_profile: "llm-management"
+  gpu_cuda_toolkit_version: "v1.14.3-centos7"
+  gpu_time_slicing_replica_count: "2"  
+  kube_vip_ipam_range: "10.38.110.7-10.38.110.8"
+  kube_vip_nginx_ingress_ipam: "10.38.110.5/32"
+  wildcard_ingress_subdomain: "nai-llm-gitops-mgmt.ncnlabs.ninja"
+  management_cluster_ingress_subdomain: "nai-llm-gitops-mgmt.ncnlabs.ninja"
+  kube_vip_istio_system_ipam: "10.38.110.6/32"
+  aws_route53_dns_zone: "ncnlabs.ninja"
+  aws_route53_region: "us-east-2"
+  objects_host: "10.38.110.18"
+  objects_port: "80"
+  objects_region: "us-east-1"
+  objects_use_ssl: "true"
+  milvus_objects_bucket_name: "nai-llm-gitops-mgmt-milvus"
+  documents_objects_bucket_name: "documents01"
+  model: "llama2_7b_chat"
+  revision: "94b07a6e30c3292b8265ed32ffdeccfdadf434a8"
+  maxTokens: "llama2_7b_chat"
+  repPenalty: "llama2_7b_chat"
+  temperature: "llama2_7b_chat"
+  topP: "llama2_7b_chat"
+  useExistingNFS: "true"
+  nfs_export: "/llm-model-store"
+  nfs_server: "10.38.110.47"
