@@ -4,6 +4,10 @@ configs/*
 !configs/templates
 !_common
 
+.env.*
+!.env.sample.yaml
+!.env.tmpl
+
 # ignore local secrets dir
 .local/*
 .hidden/**

@@ -75,14 +75,13 @@ tasks:
     cmds:
     - echo "export K8S_CLUSTER_NAME={{.NKE_CLUSTER_NAME}}"
     - echo "export KUBECONFIG=${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg"
-    interactive: true
     precondition:
     - sh: test -d .local
       msg: ".local directory doesn't exist, please configure new cluster instance. ex. eval $(task nke:new-shell-env)"
 
   new-cluster:
     silent: true
-    desc: Prompt to create new K8S cluster instance within .local directory.
+    desc: DoNotUSE - Prompt to create new K8S cluster instance within .local directory.
     vars:
       K8S_CLUSTER_CONTEXT:
         sh: kubectl config view -o jsonpath='{range .contexts[*]}{.name}{"\n"}{end}' | gum filter --placeholder "Select Target Kubernetes Cluster Context..."

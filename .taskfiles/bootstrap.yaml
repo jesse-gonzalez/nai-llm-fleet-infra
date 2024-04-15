@@ -5,7 +5,7 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: gum,kubectl,git,envsubst,age,ipcalc,jq,yq,sops,age-keygen,kubectl-karbon
+      REQUIRED_TOOLS_LIST: gum,kubectl,git,envsubst,age,ipcalc,jq,yq,sops,age-keygen,kubectl-karbon,gomplate
 
   silent:
     silent: true
@@ -147,3 +147,17 @@ tasks:
     - gum {{.CLI_ARGS}}
     silent: true
     interactive: true
+
+  generate_local_configs:
+    silent: false
+    desc: Create .local/<K8S_CLUSTER_NAME/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
+    cmds:
+    - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  bootstrap_local_configs:
+    cmds:
+    - ./bootstrap_configs.sh --cluster_name ${K8S_CLUSTER_NAME}
+    requires:
+      vars: [K8S_CLUSTER_NAME]

@@ -36,3 +36,4 @@ tasks:
     - echo "$PRISM_CENTRAL_USER"
     requires:
       vars: [K8S_CLUSTER_NAME]
+

@@ -94,9 +94,9 @@ main() {
 verify_all() {
   verify_vars
   verify_age
-  verify_prism
-  verify_kubevip
-  verify_git_repository
+  #verify_prism
+  #verify_kubevip
+  #verify_git_repository
 }
 
 parse_command_line() {

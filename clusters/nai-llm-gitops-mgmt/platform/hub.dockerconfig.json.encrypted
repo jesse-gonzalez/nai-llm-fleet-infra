@@ -1,9 +1,9 @@
 {
 	"auths": {
 		"http://docker-registry/v2/": {
-			"username": "ENC[AES256_GCM,data:LVw88g4+22s=,iv:nwgny6vO53SB42RLsdvG0eEBhPzu52JTooEroSs9PHY=,tag:tyYz13LTvK6Dn5PMP1caXw==,type:str]",
-			"password": "ENC[AES256_GCM,data:YrmmjkEg7RY2TylIyR5OizrBw2CQrJOCguzKCba2ngWvNG20,iv:PEC/qLFabPu0hi/QZnLtXXjNlEJNBnOHDA79KON1Ka8=,tag:Ylsf4ZNfgzpQ4ioBSWg1eQ==,type:str]",
-			"auth": "ENC[AES256_GCM,data:k8CCnjEpLFLSyXfb7hI1YZNXB5t9GRvzN7on+82gnVkHsRe4vaCZMIAsyu9VMtzWTYIFR/q2R8sU3z1FQL4e1g==,iv:Rn5QqexsRF7B1HvcAJhI4SiWTuc74F2DfP/pEzrdFSk=,tag:RPXw0RXaJRNM3Hc1wTO/UQ==,type:str]"
+			"username": "",
+			"password": "",
+			"auth": ""
 		}
 	},
 	"sops": {
@@ -14,11 +14,11 @@
 		"age": [
 			{
 				"recipient": "age1apnz8w62yg00n3lux9ys8w59e5pxqqrg28dgzy6ajkr82aeq09gslhhm3n",
-				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTZjZNN0c4SDkwekZnWEhm\nS3p0bTRaNjFHbWpkTVh5UUdsZGhiTVI0bkQ0Cnd4b1hLWEV3cDZxdEJKR2dhcVZ0\nM29ONzhBWVR5SU1ocWNpVFRwOGFxQUUKLS0tIDZUc0dvTGJGUFRMU3FyVkw4T0Vq\nd3RKWFVCN0dlSUN6MVVEdzQ5TGNHVXcK5i422fVJX4IlH0x3EJrajqTsfQ1gS+uF\nDUIun8M5Dpoxj+F8n7503IjjUkqzLz/uUeU2s9+x7nRUI1x2Mn9Y9w==\n-----END AGE ENCRYPTED FILE-----\n"
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6UWtrc2x2c0pzY1ZGSTFP\nR3QzekJrQmNIRDN5WmlaODZMMVhVV3FRRkFnCjVwV1RYZmZZcGNFdnlZVSs3K3Rv\nU2gySDFXWjU3NEFoQjF3a0FqaDJIRHMKLS0tIEQwdVVvT2JWbWV5ejFteEJob3Av\nV2RjREZUdEt6YkZzTHhtcTFvZGI5WTQKY71GjfiBjMrzCmkM0m1HwLLu+3xKFKfI\n005PhfAOWhPTHtGRbW/8vPIAQLxxiHz0UO0ARPhokGPeNEpM018SPQ==\n-----END AGE ENCRYPTED FILE-----\n"
 			}
 		],
-		"lastmodified": "2024-04-11T18:43:48Z",
-		"mac": "ENC[AES256_GCM,data:hayFrdJzrXTpqNRgWj06+gZfL2KvH7tO/tof5ocu35SrEdNTiRH7PGgl5RAyR7uJs8iaYe/CjNLftv+4+UgNeLcTuEvhs5v+QCX7v3zafYmAL8tTQiGpliN9wp8fTuETWRo9t3/CLmq2frzPPPptaGpzgFaFrUMt1iIdGb5SBZs=,iv:JMQ5rYC+jQMsD8kmWldYnlpg7wr7sSduLF2TJUhi4hw=,tag:8H1jsRfzp5wfB/7sSZd3Gg==,type:str]",
+		"lastmodified": "2024-04-15T17:02:23Z",
+		"mac": "ENC[AES256_GCM,data:P7Wr9Qbhd0mO7KjYKfH8FW7NvAnINCXUb81O7oPyBDXfN6H7dg3ivGbgpYp7wIQ1EjPliN7OrI2ue5J2pfdqiDR+T3VuImJH9NKN13GzIiaZH7+/bsq7HB8aGzLt2dfLzFnS609O2fBFboVgefVtiZ7Y+NgAKWOjCgYhRZIG6Po=,iv:bGFhKIJqiVYUfl7EYkRR8rkUBTCne279xIKGzg8XGts=,tag:BA2T5ngJlXrGBCTrVVH4XA==,type:str]",
 		"pgp": null,
 		"encrypted_regex": "^(data|stringData|auths)$",
 		"version": "3.8.1"
