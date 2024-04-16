@@ -81,7 +81,14 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     task bootstrap:silent
     ```
 
-7. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
+7. Monitor on New Terminal
+
+    ```bash
+    eval $(task nke:switch-shell-env) && \
+    task flux:watch
+    ```
+
+8. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
 
     >  if undesired workloads already running on gpu nodepools, drain nodes using `task kubectl:drain_gpu_nodes`
 
