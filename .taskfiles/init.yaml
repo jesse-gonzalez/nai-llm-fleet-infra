@@ -8,7 +8,7 @@ vars:
   GITHUB_REPO:
     sh: 'basename $(git rev-parse --show-toplevel)'
   GITHUB_BRANCH:
-    sh: 'git rev-parse --abbrev-ref HEAD | cut -d / -f2 | head -c14'
+    sh: 'git rev-parse --abbrev-ref HEAD'
   SOPS_CONFIG_FILE: "{{.ROOT_DIR}}/.sops.yaml"
   SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/.local/_common/age.agekey"
   TEMPLATES_DIR: "{{.ROOT_DIR}}/tmpl/cluster"

@@ -80,7 +80,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     ```bash
     task bootstrap:silent
     ```
-  
+
 7. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
 
     >  if undesired workloads already running on gpu nodepools, drain nodes using `task kubectl:drain_gpu_nodes`
