@@ -67,7 +67,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     task sops:decrypt
     ```
 
-5. Select New Cluster and Download NKE Creds
+5. Select New (or Switching to Existing) Cluster and Download NKE Creds
 
     ```bash
     eval $(task nke:switch-shell-env) && \

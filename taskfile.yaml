@@ -23,16 +23,4 @@ tasks:
   default:
     silent: true
     cmds:
-    - task -l
-
-  test:
-    cmds:
-    - 'echo $K8S_CLUSTER_NAME'
-    - 'echo {{.K8S_CLUSTER_NAME}}'
-    - echo "$BOOTSTRAP_prism_central_user"
-    - echo "$BOOTSTRAP_prism_central_password"
-    - echo "{{.PRISM_CENTRAL_USER}}"
-    - echo "$PRISM_CENTRAL_USER"
-    requires:
-      vars: [K8S_CLUSTER_NAME]
-
+    - task --summary bootstrap:silent

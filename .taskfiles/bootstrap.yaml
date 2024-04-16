@@ -14,21 +14,9 @@ tasks:
     summary: |
       Silently initializes cluster configs, git local/remote & fluxcd
 
-      Requires K8S_CLUSTER_NAME environment variable and .local/<K8S_CLUSTER_NAME>/.env configuration file
+      See README.md for additional details on Getting Started
 
-      If new cluster, connect to Prism Central, select NKE cluster and validate connectivity
-      - task nke:prompt-creds && task kubectl:nodes
-
-      To configure .local/<K8S_CLUSTER_NAME>/.env, simply copy .env.sample.yaml and update, for example:
-
-        export K8S_CLUSTER_NAME=nai-llm-prod-mgmt
-        cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml
-
-      After updating ./.env.${K8S_CLUSTER_NAME}.yaml, verify and initialize local configs
-      - task bootstrap:generate_local_configs
-
-      To initiate fluxcd bootstrap:
-      - task bootstrap:silent
+      To see list of tasks, run `task --list` or `task --list-all`
     cmds:
     - task: generate_local_configs
     - task: verify-configs

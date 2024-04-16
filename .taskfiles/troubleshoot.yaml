@@ -12,14 +12,14 @@ tasks:
     deps: [default]
     desc: Gather common nvidia gpu resources in your cluster
     cmds:
-    - kubectl get nodes -l nvidia.com/gpu.present=true
-    - kubectl describe nodes -l nvidia.com/gpu.present=true | egrep -i "nvidia.com|kubernetes.io"
+    - kubectl get nodes -o='custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect'
     - kubectl get cm time-slicing-config -n gpu-operator --ignore-not-found
     - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
     - kubectl get pod -n gpu-operator
-    - kubectl get events -n gpu-operator --sort-by='.lastTimestamp'
-    - kubectl get node -o json | jq '.items[].metadata.labels'
+    - kubectl get node -o json -l nvidia.com/gpu.present=true | jq '.items[].metadata.labels'
     - kubectl get pod -n gpu-operator -o name -l app=nvidia-driver-daemonset | xargs -I {} kubectl exec -n gpu-operator -i {} -c nvidia-driver-ctr -- nvidia-smi
+    - kubectl top nodes -l nvidia.com/gpu.present=true --show-capacity
+    #- kubectl get events -n gpu-operator --sort-by='.lastTimestamp'
 
   kyverno-collect:
     silent: true
