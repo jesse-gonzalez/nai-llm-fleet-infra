@@ -8,7 +8,7 @@ tasks:
       REQUIRED_TOOLS_LIST: sops,age-keygen
 
   decrypt:
-    desc: decrypts sops file located in clusters/$K8S_CLUSTER_NAME/platform/cluster-secrets.sops.yaml
+    desc: decrypts sops file located in clusters/<K8S_CLUSTER_NAME>/platform/cluster-secrets.sops.yaml
     cmds:
     - sops --decrypt clusters/${K8S_CLUSTER_NAME}/platform/cluster-secrets.sops.yaml
     requires:

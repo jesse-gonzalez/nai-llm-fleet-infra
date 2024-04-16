@@ -43,18 +43,22 @@ data:
   objects_use_ssl: "{{with $nutanix.objects.use_ssl | default "false" }}{{.}}{{end}}"
 {{- end }}
 {{- end }}
-{{- if $apps.reference_app.enabled }}
+{{- if $apps.gptnvd_reference_app.enabled }}
 {{- if $nutanix.objects.enabled }}
-  milvus_objects_bucket_name: "{{with $apps.reference_app.rag_config.milvus_bucket_name | required }}{{.}}{{end}}"
-  documents_objects_bucket_name: "{{with $apps.reference_app.rag_config.documents_bucket_name | required }}{{.}}{{end}}"
+  milvus_objects_bucket_name: "{{with $apps.gptnvd_reference_app.milvus_bucket_name | required }}{{.}}{{end}}"
+  documents_objects_bucket_name: "{{with $apps.gptnvd_reference_app.documents_bucket_name | required }}{{.}}{{end}}"
 {{- end }}
-  model: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  revision: "{{with $apps.reference_app.llm_config.revision | required }}{{.}}{{end}}"
-  maxTokens: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  repPenalty: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  temperature: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  topP: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  useExistingNFS: "{{with $apps.reference_app.llm_config.useExistingNFS | default "false" }}{{.}}{{end}}"
-  nfs_export: "{{with $apps.reference_app.llm_config.nfs_export | required }}{{.}}{{end}}"
-  nfs_server: "{{with $apps.reference_app.llm_config.nfs_server | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $apps.nai_helm.enabled }}
+  model: "{{with $apps.nai_helm.model | required }}{{.}}{{end}}"
+  revision: "{{with $apps.nai_helm.revision | required }}{{.}}{{end}}"
+  maxTokens: "{{with $apps.nai_helm.maxTokens | required }}{{.}}{{end}}"
+  repPenalty: "{{with $apps.nai_helm.repPenalty | required }}{{.}}{{end}}"
+  temperature: "{{with $apps.nai_helm.temperature | required }}{{.}}{{end}}"
+  topP: "{{with $apps.nai_helm.topP | required }}{{.}}{{end}}"
+  useExistingNFS: "{{with $apps.nai_helm.useExistingNFS | default "false" }}{{.}}{{end}}"
+{{- if $apps.nai_helm.useExistingNFS }}
+  nfs_export: "{{with $apps.nai_helm.nfs_export | required }}{{.}}{{end}}"
+  nfs_server: "{{with $apps.nai_helm.nfs_server | required }}{{.}}{{end}}"
+{{- end }}
 {{- end }}

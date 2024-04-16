@@ -156,7 +156,7 @@ tasks:
 
   generate_local_configs:
     silent: false
-    desc: Stages .local/<K8S_CLUSTER_NAME/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
+    desc: Stages .local/<K8S_CLUSTER_NAME>/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
     cmds:
     - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
     - task: :bootstrap:verify-configs
@@ -169,7 +169,7 @@ tasks:
   generate_cluster_configs:
     silent: false
     deps: [generate_local_configs]
-    desc: Stages clusters/<K8S_CLUSTER_NAME/**.yaml configs from tmpl/cluster/*.tmpl templates
+    desc: Stages clusters/<K8S_CLUSTER_NAME>/**.yaml configs from tmpl/cluster/*.tmpl templates
     cmds:
     - task: :sops:age-keygen
     - |
