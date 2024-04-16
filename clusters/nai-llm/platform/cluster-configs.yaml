@@ -1,0 +1,24 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "nai-llm"
+  environment: "non-prod"
+  cluster_profile: "nai-llm-k8s"
+  gpu_cuda_toolkit_version: "v1.14.3-centos7"
+  gpu_time_slicing_replica_count: "2"  
+  kube_vip_ipam_range: "10.54.77.22-10.54.77.23"
+  kube_vip_nginx_ingress_ipam: "10.54.77.20/32"
+  wildcard_ingress_subdomain: "nai-llm.cloudnative.nvdlab.net"
+  management_cluster_ingress_subdomain: "nai-llm.cloudnative.nvdlab.net"
+  kube_vip_istio_system_ipam: "10.54.77.21/32"
+  aws_route53_dns_zone: "cloudnative.nvdlab.net"
+  aws_route53_region: "us-east-1"
+  model: "llama-2-13b-chat"
+  revision: "c2f3ec81aac798ae26dcc57799a994dfbf521496"
+  maxTokens: "4000"
+  repPenalty: "1.2"
+  temperature: "0.2"
+  topP: "0.9"
+  useExistingNFS: "false"

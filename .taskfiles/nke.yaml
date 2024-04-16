@@ -65,5 +65,3 @@ tasks:
     precondition:
     - sh: test -d .local
       msg: ".local directory doesn't exist, please configure new cluster instance. ex. eval $(task nke:new-shell-env)"
-
-

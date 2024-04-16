@@ -53,9 +53,45 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
         ipam_range: required
     ```
 
-3. Validate Configurations -  `task bootstrap:generate_local_configs`
+3. [Optional] Generate and Validate Configurations
+  
+    ```bash
+    task bootstrap:generate_cluster_configs
+    cat .local/${K8S_CLUSTER_NAME}/.env
+    cat clusters/${K8S_CLUSTER_NAME}/platform/cluster-configs.yaml
+    ```
 
-4. Run Flux Bootstrapping - `task bootstrap:silent`
+4. [Optional] Validate Encrypted Secrets
+
+    ```bash
+    task sops:decrypt
+    ```
+
+5. Select New Cluster and Download NKE Creds
+
+    ```bash
+    eval $(task nke:switch-shell-env) && \
+    task nke:download-creds && \
+    kubectl get nodes -o wide
+    ```
+
+6. Run Flux Bootstrapping - `task bootstrap:silent`
+
+    ```bash
+    task bootstrap:silent
+    ```
+  
+7. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
+
+    >  if undesired workloads already running on gpu nodepools, drain nodes using `task kubectl:drain_gpu_nodes`
+
+    ```bash
+    ## taint gpu nodes with label nvidia.com/gpu.present=true
+    task kubectl:taint_gpu_nodes
+
+    ## view taint configurations on all nodes
+    kubectl get nodes -o='custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect'
+    ```
 
 ## Appendix
 

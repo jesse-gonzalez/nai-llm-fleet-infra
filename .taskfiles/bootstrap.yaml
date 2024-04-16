@@ -183,4 +183,3 @@ tasks:
       msg: '.env.{{.K8S_CLUSTER_NAME}}.yaml not found, please copy .env.sample.yaml and update manually'
     requires:
       vars: [K8S_CLUSTER_NAME]
-
