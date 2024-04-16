@@ -81,12 +81,16 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     task bootstrap:silent
     ```
 
+    > NOTE: if there are any issues, troubleshot using `task ts:flux-collect`. You can re-run task `bootstrap:silent` as many times needed
+
 7. Monitor on New Terminal
 
     ```bash
     eval $(task nke:switch-shell-env) && \
     task flux:watch
     ```
+
+    > NOTE: if there are any issues, update local git repo, push up changes and run `task flux:reconcile`
 
 8. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
 
