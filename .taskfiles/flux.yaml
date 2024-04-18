@@ -128,7 +128,52 @@ tasks:
   tree:
     silent: true
     deps: [default]
-    desc: The flux tree command shows the list of resources reconciled by a Flux object.
+    desc: Show list of resources reconciled by a Flux object using the flux tree command.
     cmds:
     - flux tree kustomization {{.CLI_ARGS | default "flux-system"}}
+
+  cleanup:
+    silent: false
+    deps: [default]
+    desc: Cleanup flux resources from K8s Cluster
+    cmds:
+    - flux uninstall --dry-run
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  trace-namespace:
+    aliases: [tns]
+    silent: false
+    deps: [default]
+    desc: Trace flux resources for given namespace
+    vars:
+      TARGET_NAMESPACE:
+        sh: task bootstrap:gum -- choose --header "Which Namespace would you like to trace using flux?" $(kubectl get ns -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+    cmds:
+    - flux trace namespace {{.TARGET_NAMESPACE}}
+    interactive: true
+
+  trace-kustomize:
+    aliases: [tks]
+    silent: false
+    deps: [default]
+    desc: Trace flux resources for given kustomization
+    vars:
+      TARGET_KUSTOMIZATION:
+        sh: task bootstrap:gum -- choose --header "Which Namespace would you like to trace using flux?" $(kubectl get ks -n flux-system -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+    cmds:
+    - flux trace kustomization {{.TARGET_KUSTOMIZATION}}
+    interactive: true
+
+  trace-helmrelease:
+    aliases: [thr]
+    silent: false
+    deps: [default]
+    desc: Trace flux resources for given kustomization
+    vars:
+      TARGET_HELMRELEASE:
+        sh: task bootstrap:gum -- choose --header "Which Namespace would you like to trace using flux?" $(kubectl get ks -n flux-system -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}')
+    cmds:
+    - flux trace helmrelease {{.TARGET_HELMRELEASE}}
+    interactive: true
 

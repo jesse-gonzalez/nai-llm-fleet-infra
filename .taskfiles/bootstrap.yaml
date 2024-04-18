@@ -17,11 +17,13 @@ tasks:
       See README.md for additional details on Getting Started
 
       To see list of tasks, run `task --list` or `task --list-all`
+    vars:
+      IS_KIND_CLUSTER: test -n "$(kubectl get ds -l app=kindnet -n kube-system --ignore-not-found)"
     cmds:
     - task: generate_local_configs
     - task: verify-configs
     - task: generate_cluster_configs
-    - task: :nke:download-creds
+    - '{{if .IS_KIND_CLUSTER}} task kind:get-kubeconfig {{else}} task nke:download-creds {{end}}'
     - task: :flux:init
     requires:
       vars: [K8S_CLUSTER_NAME]

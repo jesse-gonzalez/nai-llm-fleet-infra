@@ -9,14 +9,19 @@ includes:
   helpers: ./.taskfiles/helpers.yaml
   init: ./.taskfiles/init.yaml
   bootstrap: ./.taskfiles/bootstrap.yaml
-  kubectl: ./.taskfiles/kubectl.yaml
+  kubectl:
+    taskfile: ./.taskfiles/kubectl.yaml
+    aliases: [k]
   nke: ./.taskfiles/nke.yaml
   flux: ./.taskfiles/flux.yaml
   tofu: ./.taskfiles/tofu.yaml
   sops: ./.taskfiles/sops.yaml
   test: ./test
   workstation: ./.taskfiles/workstation.yaml
-  ts: ./.taskfiles/troubleshoot.yaml
+  troubleshoot:
+    taskfile: ./.taskfiles/troubleshoot.yaml
+    aliases: [ts]
+  kind: ./.taskfiles/kind.yaml
 
 tasks:
 
