@@ -5,6 +5,8 @@ components:
 ## load _profiles/_base first
 - ../../_base/cert-manager-repo.yaml
 - ../../_base/weave-gitops-repo.yaml
+
+resources:
 ## then _profiles/<profile>/_base next
 #- ../_base
 - knative-istio-repo.yaml
