@@ -82,7 +82,7 @@ terraform/**-config
 opentofu/**-config
 
 # kind
-kind-**
+#kind-**
 
 # ignore secrets / sops yaml file
 config/**/cluster-secrets.sops.yaml.dec

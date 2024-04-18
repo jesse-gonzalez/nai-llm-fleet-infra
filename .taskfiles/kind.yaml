@@ -1,0 +1,50 @@
+version: '3'
+
+env:
+  KIND_CLUSTER_NAME: flux-kind-local
+  KIND_NODE_IMAGE: kindest/node:v1.25.16@sha256:e8b50f8e06b44bb65a93678a65a26248fae585b3d3c2a669e5ca6c90c69dc519
+  KIND_CONFIG_FILE: "{{.ROOT_DIR}}/infra/kind/multi-node-config.yaml"
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    silent: true
+    vars:
+      REQUIRED_TOOLS_LIST: kind
+
+  create:
+    desc: Creates local kind cluster (default "flux-kind-local")
+    silent: true
+    cmds:
+    - kind create cluster --name ${KIND_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
+    - kubectl cluster-info
+    preconditions:
+    - sh: test ! -n "$(kind get clusters | grep -i ${KIND_CLUSTER_NAME})"
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create."'
+
+  delete:
+    desc: Deletes local kind cluster (default "flux-kind-local")
+    silent: true
+    cmd: kind delete cluster --name ${KIND_CLUSTER_NAME}
+    preconditions:
+    - sh: kind get clusters | grep -i {{.KIND_CLUSTER_NAME}}
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+
+  validate:
+    desc: Validates local kind cluster (default "flux-kind-local")
+    silent: true
+    cmds:
+    - task: :kind:get-kubeconfig
+    - kubectl get nodes
+    preconditions:
+    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+
+  get-kubeconfig:
+    silent: true
+    desc: Get local kind cluster kubeconfig (default "flux-kind-local")
+    cmd: kind export kubeconfig --name ${KIND_CLUSTER_NAME}
+    preconditions:
+    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'

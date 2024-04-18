@@ -38,7 +38,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
 1. Set K8S_CLUSTER_NAME environment variable and copy `./.env.sample.yaml` to `./.env.${K8S_CLUSTER_NAME}.yaml`
 
     ```bash
-    export K8S_CLUSTER_NAME=nai-kind-local
+    export K8S_CLUSTER_NAME=flux-kind-local
     cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml
     ```
 

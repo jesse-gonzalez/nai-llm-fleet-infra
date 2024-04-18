@@ -17,7 +17,7 @@ jobs:
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.7.0
         with:
-          cluster_name: flux
+          cluster_name: flux-kind-local
       - name: Install Flux in Kubernetes Kind
         run: flux install
       - name: Setup cluster reconciliation
@@ -30,7 +30,7 @@ jobs:
           --ignore-paths="clusters/**/flux-system/"
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/_profiles/minimalist/kind
+          --path=./clusters/_profiles/kind-stacks/kserve
       - name: Verify cluster reconciliation
         run: |
           kubectl -n flux-system wait kustomization/weave-gitops --for=condition=ready --timeout=5m
