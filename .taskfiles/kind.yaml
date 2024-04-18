@@ -4,6 +4,7 @@ env:
   KIND_CLUSTER_NAME: flux-kind-local
   KIND_NODE_IMAGE: kindest/node:v1.25.16@sha256:e8b50f8e06b44bb65a93678a65a26248fae585b3d3c2a669e5ca6c90c69dc519
   KIND_CONFIG_FILE: "{{.ROOT_DIR}}/infra/kind/multi-node-config.yaml"
+  KIND_INGRESS_DEPLOY_FILE: "{{.ROOT_DIR}}/infra/kind/ingress-nginx-kind-deploy.yaml"
 
 tasks:
 
@@ -20,6 +21,7 @@ tasks:
     cmds:
     - kind create cluster --name ${KIND_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
     - kubectl cluster-info
+    - task: :kind:deploy-kind-ingress
     preconditions:
     - sh: test ! -n "$(kind get clusters | grep -i ${KIND_CLUSTER_NAME})"
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create."'
@@ -61,3 +63,18 @@ tasks:
     preconditions:
     - sh: docker network ls | grep -i kind
       msg: 'echo "docker network "kind" does not exist. create kind cluster to configure"'
+
+  deploy-kind-ingress:
+    desc: Deploys custom nginx-ingress for kind cluster
+    deps: [default]
+    silent: true
+    cmds:
+    - kubectl apply -f {{.KIND_INGRESS_DEPLOY_FILE}}
+    - |
+      kubectl wait --namespace ingress-nginx \
+        --for=condition=ready pod \
+        --selector=app.kubernetes.io/component=controller \
+        --timeout=90s
+    preconditions:
+    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
