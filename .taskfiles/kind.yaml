@@ -11,10 +11,11 @@ tasks:
   - task: :helpers:validate
     silent: true
     vars:
-      REQUIRED_TOOLS_LIST: kind
+      REQUIRED_TOOLS_LIST: kind,docker
 
   create:
     desc: Creates local kind cluster (default "flux-kind-local")
+    deps: [default]
     silent: true
     cmds:
     - kind create cluster --name ${KIND_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
@@ -25,6 +26,7 @@ tasks:
 
   delete:
     desc: Deletes local kind cluster (default "flux-kind-local")
+    deps: [default]
     silent: true
     cmd: kind delete cluster --name ${KIND_CLUSTER_NAME}
     preconditions:
@@ -33,6 +35,7 @@ tasks:
 
   validate:
     desc: Validates local kind cluster (default "flux-kind-local")
+    deps: [default]
     silent: true
     cmds:
     - task: :kind:get-kubeconfig
@@ -42,9 +45,19 @@ tasks:
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
 
   get-kubeconfig:
-    silent: true
     desc: Get local kind cluster kubeconfig (default "flux-kind-local")
+    deps: [default]
+    silent: true
     cmd: kind export kubeconfig --name ${KIND_CLUSTER_NAME}
     preconditions:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+
+  get-docker-net:
+    desc: Get local kind cluster network for kube-vip
+    deps: [default]
+    silent: true
+    cmd: docker network inspect kind | jq .[].IPAM.Config[0].Subnet -r
+    preconditions:
+    - sh: docker network ls | grep -i kind
+      msg: 'echo "docker network "kind" does not exist. create kind cluster to configure"'
