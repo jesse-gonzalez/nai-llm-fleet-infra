@@ -90,3 +90,11 @@ tasks:
     - task: :kind:validate
     - task: :kind:deploy-nginx-ingress
     - task: :bootstrap:silent
+
+  watch:
+    desc: On another terminal, watch kubectl progress
+    deps: [default]
+    silent: true
+    cmds:
+    - watch "kubectl get pods,svc,ingress -A"
+    interactive: true
