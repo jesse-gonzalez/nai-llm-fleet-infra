@@ -88,5 +88,5 @@ tasks:
     - task: :kind:create
     - task: :kind:get-kubeconfig
     - task: :kind:validate
-    - task: :kind:deploy-kind-ingress
+    - task: :kind:deploy-nginx-ingress
     - task: :bootstrap:silent
