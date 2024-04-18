@@ -5,4 +5,7 @@ metadata:
 data:
   cluster_name: "flux-kind-local"
   environment: "kserve"
-  cluster_profile: "kind-stacks"
+  cluster_profile: "kind-stacks"  
+  kube_vip_ipam_range: "172.20.0.22-172.20.0.23"
+  kube_vip_istio_system_ipam: "172.20.0.21/32"
+  cert_manager_issuer_name: "selfsigned-cluster-issuer"
