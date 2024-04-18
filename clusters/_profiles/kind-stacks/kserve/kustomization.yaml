@@ -5,7 +5,7 @@ resources:
 - ../../_base/kube-vip-repo.yaml
 - ../../_base/cert-manager-repo.yaml
 ## custom ingress nginx deploy for kind clusters
-- ../_base
+- ingress-nginx-kind-deploy.yaml
 - knative-istio-repo.yaml
 - knative-serving-repo.yaml
 - knative-eventing-repo.yaml
