@@ -15,7 +15,7 @@ tasks:
       REQUIRED_TOOLS_LIST: kind,docker
 
   create:
-    desc: Creates local kind cluster (default "flux-kind-local")
+    desc: Creates local kind cluster (default "flux-kind-local") with 3 worker nodes
     deps: [default]
     silent: true
     cmds:
@@ -24,7 +24,7 @@ tasks:
     - task: :kind:deploy-kind-ingress
     preconditions:
     - sh: test ! -n "$(kind get clusters | grep -i ${KIND_CLUSTER_NAME})"
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create."'
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create. fix: task kind:delete-cluster"'
 
   delete:
     desc: Deletes local kind cluster (default "flux-kind-local")
@@ -33,7 +33,7 @@ tasks:
     cmd: kind delete cluster --name ${KIND_CLUSTER_NAME}
     preconditions:
     - sh: kind get clusters | grep -i {{.KIND_CLUSTER_NAME}}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   validate:
     desc: Validates local kind cluster (default "flux-kind-local")
@@ -44,7 +44,7 @@ tasks:
     - kubectl get nodes
     preconditions:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   get-kubeconfig:
     desc: Get local kind cluster kubeconfig (default "flux-kind-local")
@@ -53,18 +53,19 @@ tasks:
     cmd: kind export kubeconfig --name ${KIND_CLUSTER_NAME}
     preconditions:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   get-docker-net:
-    desc: Get local kind cluster network for kube-vip
+    desc: Get local kind cluster network IPAM used for kube-vip in .env.<KIND_CLUSTER_NAME>.yaml
     deps: [default]
     silent: true
-    cmd: docker network inspect kind | jq .[].IPAM.Config[0].Subnet -r
+    cmds:
+    - docker network inspect kind | jq .[].IPAM.Config[0].Subnet -r
     preconditions:
     - sh: docker network ls | grep -i kind
-      msg: 'echo "docker network "kind" does not exist. create kind cluster to configure"'
+      msg: 'echo "docker network "kind" does not exist. fix: task kind:create-cluster"'
 
-  deploy-kind-ingress:
+  deploy-nginx-ingress:
     desc: Deploys custom nginx-ingress for kind cluster
     deps: [default]
     silent: true
@@ -74,7 +75,18 @@ tasks:
       kubectl wait --namespace ingress-nginx \
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
-        --timeout=90s
+        --timeout=120s
     preconditions:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist"'
+      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+
+  full:
+    desc: Deploys kind cluster end to end
+    deps: [default]
+    silent: true
+    cmds:
+    - task: :kind:create
+    - task: :kind:get-kubeconfig
+    - task: :kind:validate
+    - task: :kind:deploy-kind-ingress
+    - task: :bootstrap:silent
