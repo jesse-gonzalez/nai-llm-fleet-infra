@@ -13,5 +13,5 @@ spec:
         ingressClassName: nginx
         secretName: kubernetes-dashboard-certs
         issuer:
-          name: letsencrypt
+          name: ${cert_manager_issuer_name}
           scope: cluster

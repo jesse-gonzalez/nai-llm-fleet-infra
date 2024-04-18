@@ -9,6 +9,6 @@ spec:
       enabled: true
       ingressClassName: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
       hostname: elastic.${wildcard_ingress_subdomain}
       tls: true

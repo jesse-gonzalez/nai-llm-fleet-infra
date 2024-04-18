@@ -33,6 +33,9 @@ data:
 {{- if $services.cert_manager.aws_route53_acme_dns.enabled }}
   aws_route53_dns_zone: "{{with $services.cert_manager.aws_route53_acme_dns.zone | required }}{{.}}{{end}}"
   aws_route53_region: "{{with $services.cert_manager.aws_route53_acme_dns.region | required }}{{.}}{{end}}"
+  cert_manager_issuer_name: "letsencrypt-issuer"
+{{- else }}
+  cert_manager_issuer_name: "selfsigned-cluster-issuer"
 {{- end }}
 {{- end }}
 {{- if $nutanix.prism_central.enabled }}  

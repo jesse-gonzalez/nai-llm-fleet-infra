@@ -63,7 +63,7 @@ spec:
         enabled: true
         className: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt
+          cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
           nginx.ingress.kubernetes.io/proxy-body-size: 500M
         hosts:
         - host: frontend.${wildcard_ingress_subdomain}

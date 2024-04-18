@@ -9,11 +9,11 @@ spec:
       ingress:
         enabled: true
         annotations:
-          cert-manager.io/cluster-issuer: letsencrypt
+          cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
         hosts:
         - gitops.${wildcard_ingress_subdomain}
         className: nginx
         secretName: weave-gitops-certs
         issuer:
-          name: letsencrypt
+          name: ${cert_manager_issuer_name}
           scope: cluster

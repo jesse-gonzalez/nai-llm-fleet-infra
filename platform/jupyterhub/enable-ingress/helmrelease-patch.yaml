@@ -12,7 +12,7 @@ spec:
       - jupyter.${wildcard_ingress_subdomain}
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: 900m
-        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
       tls:
       - hosts:
         - jupyter.${wildcard_ingress_subdomain}

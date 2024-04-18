@@ -10,7 +10,7 @@ spec:
         ingress:
           enabled: true
             annotations:
-              cert-manager.io/cluster-issuer: letsencrypt
+              cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
           ingressClassName: nginx
           hosts:
             - host: otel-demo.${wildcard_ingress_subdomain}
