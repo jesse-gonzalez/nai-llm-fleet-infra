@@ -12,10 +12,7 @@ resources:
 
 patches:
 - path: ingress-nginx-addons.yaml
-- path: kubernetes-dashboard-addons.yaml
 - path: weave-gitops-addons.yaml
 - path: gpu-operator-addons.yaml
-- path: kserve-addons.yaml
 - path: jupyterhub-addons.yaml
-#- path: nai-helm-addons.yaml
-- path: kuberay-cluster-addons.yaml
+#- path: kuberay-cluster-addons.yaml

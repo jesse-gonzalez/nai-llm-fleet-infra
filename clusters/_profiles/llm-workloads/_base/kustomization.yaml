@@ -3,7 +3,6 @@ kind: Component
 resources:
 - gpu-operator-repo.yaml
 - knative-istio-repo.yaml
-#- knative-operator-repo.yaml
 - knative-serving-repo.yaml
 - knative-eventing-repo.yaml
 - otel-collector-daemon-repo.yaml

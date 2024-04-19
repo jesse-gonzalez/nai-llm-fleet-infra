@@ -14,6 +14,37 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
+  path: ./platform/knative-eventing/_crds
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: knative-eventing
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-eventing-operators
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: knative-eventing
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   path: ./platform/knative-eventing/_operators
   prune: true
   wait: true
@@ -36,7 +67,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-eventing
+  - name: knative-eventing-operators
   interval: 15m
   sourceRef:
     kind: GitRepository

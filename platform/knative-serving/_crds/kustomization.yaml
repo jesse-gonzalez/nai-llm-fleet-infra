@@ -5,4 +5,5 @@ resources:
 #- serving-crds.yaml
 #- serving-core.yaml
 #- release.yaml
+- https://github.com/knative/serving/releases/download/${knative_serving_version}/serving-crds.yaml
 - https://github.com/knative/serving/releases/download/${knative_serving_version}/serving-core.yaml

@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
 #- eventing-crds.yaml
-- eventing-core.yaml
+#- eventing-core.yaml
+- https://github.com/knative/eventing/releases/download/${knative_eventing_version}/eventing-core.yaml
