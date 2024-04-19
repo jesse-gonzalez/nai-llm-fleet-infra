@@ -3,11 +3,11 @@ apiVersion: v1
 metadata:
   name: cluster-configs
 data:
-  ISTIO_VERSION: 1.17.2
-  KNATIVE_SERVING_VERSION: knative-v1.10.1
-  KNATIVE_ISTIO_VERSION: knative-v1.10.0
-  KSERVE_VERSION: v0.11.2
-  CERT_MANAGER_VERSION: v1.3.0
+  ISTIO_VERSION: "1.17.2"
+  KNATIVE_SERVING_VERSION: "knative-v1.10.1"
+  KNATIVE_ISTIO_VERSION: "knative-v1.10.0"
+  KSERVE_VERSION: "v0.11.2"
+  CERT_MANAGER_VERSION: "v1.3.0"
   cluster_name: "flux-kind-local"
   environment: "kserve"
   cluster_profile: "kind-stacks"  
