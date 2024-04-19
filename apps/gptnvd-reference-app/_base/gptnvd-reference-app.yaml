@@ -95,7 +95,7 @@ spec:
       port: "19530"
       collection: "${documents_objects_bucket_name}"
     inference:
-      endpoint: http://llm-llm.llm.${wildcard_ingress_subdomain}
+      endpoint: http://llm-llm.${istio_wildcard_ingress_subdomain}
     s3:
       ## need way to handle https use cases
       endpoint: http://${objects_host}
