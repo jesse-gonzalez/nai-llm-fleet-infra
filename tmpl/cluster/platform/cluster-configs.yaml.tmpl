@@ -66,9 +66,9 @@ data:
   nfs_server: "{{with $apps.nai_helm.nfs_server | required }}{{.}}{{end}}"
 {{- end }}
 {{- end }}
-  istio_version: "{{with $services.istio.version | default .Env.ISTIO_VERSION }}{{.}}{{end}}"
-  knative_serving_version: "{{with $services.knative_serving.version | default .Env.KNATIVE_SERVING_VERSION }}{{.}}{{end}}"
-  knative_istio_version: "{{with $services.knative_istio.version | default .Env.KNATIVE_ISTIO_VERSION }}{{.}}{{end}}"
+  istio_version: "{{with $services.istio.vip | default (getenv "ISTIO_VERSION") }}{{.}}{{end}}"
+  knative_serving_version: "{{with $services.knative_serving.version | default (getenv "KNATIVE_SERVING_VERSION") }}{{.}}{{end}}"
+  knative_istio_version: "{{with $services.knative_istio.version | default (getenv "KNATIVE_ISTIO_VERSION") }}{{.}}{{end}}"
   kserve_version: "{{with $services.kserve.version | default .Env.KSERVE_VERSION }}{{.}}{{end}}"
   cert_manager_version: "{{with $services.cert_manager.version | default .Env.CERT_MANAGER_VERSION }}{{.}}{{end}}"
   kafka_version: "{{with $services.kafka.version | default .Env.KAFKA_VERSION }}{{.}}{{end}}"
