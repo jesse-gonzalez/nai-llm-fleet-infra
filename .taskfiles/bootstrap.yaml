@@ -23,7 +23,8 @@ tasks:
     - task: generate_local_configs
     - task: verify-configs
     - task: generate_cluster_configs
-    - '{{if .IS_KIND_CLUSTER}} task kind:get-kubeconfig {{else}} task nke:download-creds {{end}}'
+    #- '{{if .IS_KIND_CLUSTER}} task kind:get-kubeconfig {{else}} task nke:download-creds {{end}}'
+    - task: :nke:download-creds
     - task: :flux:init
     requires:
       vars: [K8S_CLUSTER_NAME]

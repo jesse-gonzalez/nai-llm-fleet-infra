@@ -67,6 +67,16 @@ tasks:
     - task: :kubectl:pods
     - task: :flux:summary
 
+  cert-manager-collect:
+    silent: false
+    deps: [default]
+    desc: Gather common flux resources in your cluster
+    cmds:
+    - kubectl get certificates {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificatesrequests {{.CLI_ARGS | default "-A"}}
+    - kubectl get secrets {{.CLI_ARGS | default "-A"}} | grep -i tls
+    - kubectl get clusterissuers letsencrypt -o json | jq .spec
+    - kubectl get issuers -A
 
   kuberay-collect:
     silent: false
