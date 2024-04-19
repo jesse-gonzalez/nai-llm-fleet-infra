@@ -22,6 +22,7 @@ includes:
     taskfile: ./.taskfiles/troubleshoot.yaml
     aliases: [ts]
   kind: ./.taskfiles/kind.yaml
+  aws: ./.taskfiles/aws.yaml
 
 tasks:
 
@@ -32,8 +33,13 @@ tasks:
 
   print-versions:
     cmds:
-    - echo "KSERVE_VERSION=${KSERVE_VERSION}"
-    - echo "ISTIO_VERSION=${ISTIO_VERSION}"
-    - echo "KNATIVE_SERVING_VERSION=${KNATIVE_SERVING_VERSION}"
-    - echo "KNATIVE_ISTIO_VERSION=${KNATIVE_ISTIO_VERSION}"
-    - echo "CERT_MANAGER_VERSION=${CERT_MANAGER_VERSION}"
+    - env | grep _VERSION
+
+  print-vars:
+    cmds:
+    - env | grep {{.CLI_ARGS | default "BOOTSTRAP_"}}
+    - echo ${GIT_REPO_URL}
+    - echo {{ env "$GITHUB_REPO_TEST" }}
+    - echo {{ expandenv "$GITHUB_REPO_TEST" }}
+    - echo $(basename $(git rev-parse --show-toplevel))
+    - echo {{exec "ls"}}

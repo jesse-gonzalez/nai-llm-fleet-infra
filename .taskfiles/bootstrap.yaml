@@ -149,7 +149,7 @@ tasks:
     silent: false
     desc: Stages .local/<K8S_CLUSTER_NAME>/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
     cmds:
-    - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
+    - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --config=.gotemplate.yaml --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
     - task: :bootstrap:verify-configs
     preconditions:
     - sh: test -f .env.${K8S_CLUSTER_NAME}.yaml

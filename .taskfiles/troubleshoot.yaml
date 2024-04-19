@@ -72,11 +72,13 @@ tasks:
     deps: [default]
     desc: Gather common flux resources in your cluster
     cmds:
-    - kubectl get certificates {{.CLI_ARGS | default "-A"}}
-    - kubectl get certificatesrequests {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificates.cert-manager.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificaterequests.cert-manager.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get clusterissuers.cert-manager.io
+    - kubectl get issuers.cert-manager.io -A
+    - kubectl get orders.acme.cert-manager.io -A
+    - kubectl get challenges.acme.cert-manager.io -A
     - kubectl get secrets {{.CLI_ARGS | default "-A"}} | grep -i tls
-    - kubectl get clusterissuers letsencrypt -o json | jq .spec
-    - kubectl get issuers -A
 
   kuberay-collect:
     silent: false

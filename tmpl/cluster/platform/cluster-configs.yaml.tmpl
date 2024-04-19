@@ -69,18 +69,48 @@ data:
   nfs_server: "{{with $apps.nai_helm.nfs_server | required }}{{.}}{{end}}"
 {{- end }}
 {{- end }}
-  knative_serving_version: "{{with $services.knative_serving.version | default (getenv "KNATIVE_SERVING_VERSION") }}{{.}}{{end}}"
-  knative_istio_version: "{{with $services.knative_istio.version | default (getenv "KNATIVE_ISTIO_VERSION") }}{{.}}{{end}}"
-  kserve_version: "{{with $services.kserve.version | default .Env.KSERVE_VERSION }}{{.}}{{end}}"
-  kafka_version: "{{with $services.kafka.version | default .Env.KAFKA_VERSION }}{{.}}{{end}}"
-  kubernetes_dashboard_version: "{{with $services.kubernetes_dashboard.version | default .Env.KUBERNETES_DASHBOARD_VERSION }}{{.}}{{end}}"
-  kyverno_version: "{{with $services.kyverno.version | default .Env.KYVERNO_VERSION }}{{.}}{{end}}"
-  milvus_version: "{{with $services.milvus.version | default .Env.MILVUS_VERSION }}{{.}}{{end}}"
-  opentelemetry_collector_version: "{{with $services.opentelemetry_collector.version | default .Env.OPENTELEMETRY_COLLECTOR_VERSION }}{{.}}{{end}}"
-  opentelemetry_operator_version: "{{with $services.opentelemetry_operator.version | default .Env.OPENTELEMETRY_OPERATOR_VERSION }}{{.}}{{end}}"
-  uptrace_version: "{{with $services.uptrace.version | default .Env.UPTRACE_VERSION }}{{.}}{{end}}"
-  weave_gitops_version: "{{with $services.weave_gitops.version | default .Env.WEAVE_GITOPS_VERSION }}{{.}}{{end}}"
-  jupyterhub_version: "{{with $services.jupyterhub.version | default .Env.JUPYTERHUB_VERSION }}{{.}}{{end}}"
-  nginx_ingress_version: "{{with $services.nginx_ingress.version | default .Env.NGINX_INGRESS_VERSION }}{{.}}{{end}}"
-  elasticsearch_version: "{{with $services.elasticsearch.version | default .Env.ELASTICSEARCH_VERSION }}{{.}}{{end}}"
-  redis_version: "{{with $services.redis.version | default .Env.REDIS_VERSION }}{{.}}{{end}}"
+{{- if $services.kserve.enabled }}
+  kserve_version: "{{with $services.kserve.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.knative_serving.enabled }}
+  knative_serving_version: "{{with $services.knative_serving.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.knative_istio.enabled }}
+  knative_istio_version: "{{with $services.knative_istio.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.kafka.enabled }}
+  kafka_version: "{{with $services.kafka.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.kubernetes_dashboard.enabled }}
+  kubernetes_dashboard_version: "{{with $services.kubernetes_dashboard.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.kyverno.enabled }}
+  kyverno_version: "{{with $services.kyverno.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.milvus.enabled }}
+  milvus_version: "{{with $services.milvus.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.opentelemetry_collector.enabled }}
+  opentelemetry_collector_version: "{{with $services.opentelemetry_collector.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.opentelemetry_operator.enabled }}
+  opentelemetry_operator_version: "{{with $services.opentelemetry_operator.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.uptrace.enabled }}
+  uptrace_version: "{{with $services.uptrace.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.weave_gitops.enabled }}
+  weave_gitops_version: "{{with $services.weave_gitops.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.jupyterhub.enabled }}
+  jupyterhub_version: "{{with $services.jupyterhub.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.nginx_ingress.enabled }}
+  nginx_ingress_version: "{{with $services.nginx_ingress.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.elasticsearch.enabled }}
+  elasticsearch_version: "{{with $services.elasticsearch.version | required }}{{.}}{{end}}"
+{{- end }}
+{{- if $services.redis.enabled }}
+  redis_version: "{{with $services.redis.version | required }}{{.}}{{end}}"
+{{- end }}

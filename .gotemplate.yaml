@@ -8,3 +8,6 @@ outputMap: |
 
 # context:
 #   config: .{{ .Env.K8S_CLUSTER_NAME }}.env.yaml
+
+## this feature not available until 3.12 gomplate, which isn't available yet
+# missingKey: default
