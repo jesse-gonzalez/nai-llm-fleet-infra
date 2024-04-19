@@ -28,9 +28,11 @@ data:
 {{- if $services.istio.enabled }}
   kube_vip_istio_system_ipam: "{{with $services.istio.vip | required }}{{.}}/32{{end}}"
   istio_wildcard_ingress_subdomain: "{{with $services.istio.wildcard_ingress_subdomain | required }}{{.}}{{end}}"
+  istio_version: "{{with $services.istio.vip | default (getenv "ISTIO_VERSION") }}{{.}}{{end}}"
 {{- end }}
 {{- end }}
 {{- if $services.cert_manager.enabled }}
+  cert_manager_version: "{{with $services.cert_manager.version | default .Env.CERT_MANAGER_VERSION }}{{.}}{{end}}"
 {{- if $services.cert_manager.aws_route53_acme_dns.enabled }}
   aws_route53_dns_zone: "{{with $services.cert_manager.aws_route53_acme_dns.zone | required }}{{.}}{{end}}"
   aws_route53_region: "{{with $services.cert_manager.aws_route53_acme_dns.region | required }}{{.}}{{end}}"
@@ -66,11 +68,9 @@ data:
   nfs_server: "{{with $apps.nai_helm.nfs_server | required }}{{.}}{{end}}"
 {{- end }}
 {{- end }}
-  istio_version: "{{with $services.istio.vip | default (getenv "ISTIO_VERSION") }}{{.}}{{end}}"
   knative_serving_version: "{{with $services.knative_serving.version | default (getenv "KNATIVE_SERVING_VERSION") }}{{.}}{{end}}"
   knative_istio_version: "{{with $services.knative_istio.version | default (getenv "KNATIVE_ISTIO_VERSION") }}{{.}}{{end}}"
   kserve_version: "{{with $services.kserve.version | default .Env.KSERVE_VERSION }}{{.}}{{end}}"
-  cert_manager_version: "{{with $services.cert_manager.version | default .Env.CERT_MANAGER_VERSION }}{{.}}{{end}}"
   kafka_version: "{{with $services.kafka.version | default .Env.KAFKA_VERSION }}{{.}}{{end}}"
   kubernetes_dashboard_version: "{{with $services.kubernetes_dashboard.version | default .Env.KUBERNETES_DASHBOARD_VERSION }}{{.}}{{end}}"
   kyverno_version: "{{with $services.kyverno.version | default .Env.KYVERNO_VERSION }}{{.}}{{end}}"
