@@ -12,7 +12,7 @@ data:
   kube_vip_nginx_ingress_ipam: "10.50.126.136/32"
   wildcard_ingress_subdomain: "supportgpt-prod-k8.saas.nutanix.com"
   management_cluster_ingress_subdomain: "supportgpt-prod-k8.saas.nutanix.com"
-  cert_manager_version: "v1.3.0"
+  cert_manager_version: "v1.9.1"
   aws_route53_dns_zone: "saas.nutanix.com"
   aws_route53_region: "us-east-1"
   cert_manager_issuer_name: "letsencrypt-issuer"
