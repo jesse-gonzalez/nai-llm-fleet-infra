@@ -21,7 +21,7 @@ tasks:
     cmds:
     - kind create cluster --name ${KIND_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
     - kubectl cluster-info
-    - task: :kind:deploy-kind-ingress
+    - task: :kind:deploy-nginx-ingress
     preconditions:
     - sh: test ! -n "$(kind get clusters | grep -i ${KIND_CLUSTER_NAME})"
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create. fix: task kind:delete-cluster"'
