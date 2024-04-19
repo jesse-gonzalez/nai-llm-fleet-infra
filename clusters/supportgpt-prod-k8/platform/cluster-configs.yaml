@@ -27,7 +27,4 @@ data:
   uptrace_version: "1.5.7"
   weave_gitops_version: "4.0.36"
   jupyterhub_version: "3.1.0"
-  gpu_operator_version: "3.1.0"
-  nginx_ingress_version: "3.1.0"
-  elasticsearch_version: "19.13.10"
-  redis_version: "18.1.6"
+  gpu_operator_version: "

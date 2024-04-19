@@ -14,6 +14,7 @@ data:
   cluster_profile: "{{ $cluster.profile | required }}"
 {{- if $cluster.gpu_operator.enabled }}
   gpu_cuda_toolkit_version: "{{ $cluster.gpu_operator.cuda_toolkit_version | default "v1.14.3-centos7" }}"
+  gpu_operator_version: "{{with $cluster.gpu_operator.version | default .Env.GPU_OPERATOR_VERSION }}{{.}}{{end}}"
 {{- if $cluster.gpu_operator.time_slicing.enabled }}
   gpu_time_slicing_replica_count: "{{ $cluster.gpu_operator.time_slicing.replica_count | default "2" }}"
 {{- end }}
@@ -80,7 +81,6 @@ data:
   uptrace_version: "{{with $services.uptrace.version | default .Env.UPTRACE_VERSION }}{{.}}{{end}}"
   weave_gitops_version: "{{with $services.weave_gitops.version | default .Env.WEAVE_GITOPS_VERSION }}{{.}}{{end}}"
   jupyterhub_version: "{{with $services.jupyterhub.version | default .Env.JUPYTERHUB_VERSION }}{{.}}{{end}}"
-  gpu_operator_version: "{{with $services.gpu_operator.version | default .Env.GPU_OPERATOR_VERSION }}{{.}}{{end}}"
   nginx_ingress_version: "{{with $services.nginx_ingress.version | default .Env.NGINX_INGRESS_VERSION }}{{.}}{{end}}"
   elasticsearch_version: "{{with $services.elasticsearch.version | default .Env.ELASTICSEARCH_VERSION }}{{.}}{{end}}"
   redis_version: "{{with $services.redis.version | default .Env.REDIS_VERSION }}{{.}}{{end}}"
