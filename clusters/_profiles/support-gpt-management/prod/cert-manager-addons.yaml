@@ -6,4 +6,4 @@ metadata:
 spec:
   components:
   - ../enable-prometheus
-  - ../enable-letsencrypt-aws-issuer
+  #- ../enable-letsencrypt-aws-issuer
