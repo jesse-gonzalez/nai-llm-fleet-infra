@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: bitnami
-      version: "18.1.x"
+      version: ${redis_version}
   interval: 1h
   values:
     global:

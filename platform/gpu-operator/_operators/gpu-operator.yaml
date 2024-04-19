@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: gpu-operator
-      version: "23.9.0"
+      version: ${gpu_operator_version}
   interval: 1h
   values:
     toolkit:

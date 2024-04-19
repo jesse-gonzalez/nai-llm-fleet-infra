@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
-      version: ${chart_version:=4.8.3}
+      version: ${nginx_ingress_version}
   interval: 30m
   values:
     controller:

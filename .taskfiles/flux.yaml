@@ -5,7 +5,7 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: kubectl,flux,git,helm
+      REQUIRED_TOOLS_LIST: kubectl,flux,git,helm,jq,base64
 
   verify:
     silent: true
@@ -134,12 +134,27 @@ tasks:
 
   cleanup:
     silent: false
+    prompt: "Are you sure you wish to uninstall all resources managed by flux?"
     deps: [default]
     desc: Cleanup flux resources from K8s Cluster
     cmds:
-    - flux uninstall --dry-run
+    - flux uninstall
     requires:
       vars: [K8S_CLUSTER_NAME]
+
+  get-cluster-configs:
+    silent: true
+    deps: [default]
+    desc: Get generated cluster-configs ConfigMap from flux-system namespace
+    cmds:
+    - kubectl get cm -n flux-system cluster-configs -o json | jq .data
+
+  get-cluster-secrets:
+    silent: true
+    deps: [default]
+    desc: Get generated cluster-secrets Secret from flux-system namespace
+    cmds:
+    - kubectl get secret -n flux-system cluster-secrets -o json | jq .data
 
   trace-namespace:
     aliases: [tns]

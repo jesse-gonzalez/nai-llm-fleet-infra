@@ -29,3 +29,11 @@ tasks:
     silent: true
     cmds:
     - task --summary bootstrap:silent
+
+  print-versions:
+    cmds:
+    - echo "KSERVE_VERSION=${KSERVE_VERSION}"
+    - echo "ISTIO_VERSION=${ISTIO_VERSION}"
+    - echo "KNATIVE_SERVING_VERSION=${KNATIVE_SERVING_VERSION}"
+    - echo "KNATIVE_ISTIO_VERSION=${KNATIVE_ISTIO_VERSION}"
+    - echo "CERT_MANAGER_VERSION=${CERT_MANAGER_VERSION}"

@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager
-      version: ${CERT_MANAGER_VERSION}
+      version: ${cert_manager_version}
   interval: 1h
   values:
     installCRDs: true
