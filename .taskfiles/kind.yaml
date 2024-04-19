@@ -80,7 +80,7 @@ tasks:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
-  full:
+  e2e:
     desc: Deploys kind cluster end to end
     deps: [default]
     silent: true
@@ -90,6 +90,9 @@ tasks:
     - task: :kind:validate
     - task: :kind:deploy-nginx-ingress
     - task: :bootstrap:silent
+    preconditions:
+    - sh: test -f ./.env.{{.KIND_CLUSTER_NAME}}.yaml
+      msg: 'echo "local environment config file (./.env.{{.KIND_CLUSTER_NAME}}.yaml) not found"'
 
   watch:
     desc: On another terminal, watch kubectl progress
