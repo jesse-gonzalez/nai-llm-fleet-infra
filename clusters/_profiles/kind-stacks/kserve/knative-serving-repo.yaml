@@ -14,7 +14,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_pre-deploy
+  path: ./platform/knative-serving/knative-v1.10.1/_pre-deploy
   prune: true
   wait: true
   timeout: 15m
@@ -45,7 +45,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_deploy
+  path: ./platform/knative-serving/knative-v1.10.1/_deploy
   prune: true
   wait: true
   timeout: 15m
@@ -84,7 +84,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_post-deploy
+  path: ./platform/knative-serving/knative-v1.10.1/_post-deploy
   prune: true
   wait: true
   timeout: 15m

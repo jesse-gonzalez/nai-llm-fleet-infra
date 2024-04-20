@@ -15,7 +15,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/kserve/_deploy
+  path: ./platform/kserve/v0.11.2/_deploy
   prune: true
   wait: true
   timeout: 15m
@@ -55,7 +55,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/kserve/_post-deploy
+  path: ./platform/kserve/v0.11.2/_post-deploy
   prune: true
   wait: true
   timeout: 15m
