@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-istio
+  name: knative-istio-pre-deploy
   namespace: flux-system
 spec:
   dependsOn:
@@ -15,7 +15,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-istio/_crds
+  path: ./platform/knative-istio/_pre-deploy
   prune: true
   wait: true
   timeout: 15m
@@ -33,11 +33,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-istio-operators
+  name: knative-istio-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-istio
+  - name: knative-istio-pre-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -46,7 +46,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-istio/_operators
+  path: ./platform/knative-istio/_deploy
   prune: true
   wait: true
   timeout: 15m
@@ -64,11 +64,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-istio-resource-configs
+  name: knative-istio-post-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-istio-operators
+  - name: knative-istio-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -77,7 +77,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-istio/_resource-configs
+  path: ./platform/knative-istio/_post-deploy
   prune: true
   wait: true
   timeout: 5m

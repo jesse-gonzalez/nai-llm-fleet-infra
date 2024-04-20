@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-serving
+  name: knative-serving-pre-deploy
   namespace: flux-system
 spec:
   dependsOn:
@@ -14,7 +14,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_crds
+  path: ./platform/knative-serving/_pre-deploy
   prune: true
   wait: true
   timeout: 15m
@@ -32,11 +32,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-serving-operators
+  name: knative-serving-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-serving
+  - name: knative-serving-pre-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_operators
+  path: ./platform/knative-serving/_deploy
   prune: true
   wait: true
   timeout: 15m
@@ -71,11 +71,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: knative-serving-resource-configs
+  name: knative-serving-post-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-serving-operators
+  - name: knative-serving-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -84,7 +84,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/knative-serving/_resource-configs
+  path: ./platform/knative-serving/_post-deploy
   prune: true
   wait: true
   timeout: 15m
