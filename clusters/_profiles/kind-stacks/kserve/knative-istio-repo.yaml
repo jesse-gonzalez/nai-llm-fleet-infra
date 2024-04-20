@@ -37,6 +37,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+  - name: knative-serving-post-deploy
   - name: knative-istio-pre-deploy
   interval: 15m
   sourceRef:
