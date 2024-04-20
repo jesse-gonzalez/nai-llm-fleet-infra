@@ -71,11 +71,6 @@ tasks:
     silent: true
     cmds:
     - kubectl apply -f {{.KIND_INGRESS_DEPLOY_FILE}}
-    - |
-      kubectl wait --namespace ingress-nginx \
-        --for=condition=ready pod \
-        --selector=app.kubernetes.io/component=controller \
-        --timeout=120s
     preconditions:
     - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
       msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
