@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-istio
+  - name: knative-istio-post-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
