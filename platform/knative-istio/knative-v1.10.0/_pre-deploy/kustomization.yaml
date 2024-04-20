@@ -7,4 +7,4 @@ commonLabels:
 resources:
 #- istio-crds.yaml
 #- istio.yaml
-- https://github.com/knative/net-istio/releases/download/${knative_istio_version}/istio.yaml
+- https://github.com/knative/net-istio/releases/download/knative-v1.10.0/istio.yaml

@@ -2,4 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- https://github.com/kserve/kserve/releases/download/${kserve_version}/kserve-runtimes.yaml
+- https://github.com/kserve/kserve/releases/download/v0.11.2/kserve-runtimes.yaml
