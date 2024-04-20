@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@no-reply.com
+    email: ${aws_route53_email}
     # This key doesn't exist, cert-manager creates it
     privateKeySecretRef:
       name: letsencrypt-aws-issuer
@@ -16,6 +16,7 @@ spec:
       dns01:
         route53:
           region: "${aws_route53_region}"
+          hostedZoneID: "${aws_route53_hosted_zone_id}"
           secretAccessKeySecretRef:
             name: letsencrypt-aws-secret
             key: secret-access-key

@@ -35,8 +35,10 @@ data:
 {{- if $services.cert_manager.enabled }}
   cert_manager_version: "{{with $services.cert_manager.version | default .Env.CERT_MANAGER_VERSION }}{{.}}{{end}}"
 {{- if $services.cert_manager.aws_route53_acme_dns.enabled }}
+  aws_route53_email: "{{with $services.cert_manager.aws_route53_acme_dns.email | default "admin@no-reply.com" }}{{.}}{{end}}"
   aws_route53_dns_zone: "{{with $services.cert_manager.aws_route53_acme_dns.zone | required }}{{.}}{{end}}"
   aws_route53_region: "{{with $services.cert_manager.aws_route53_acme_dns.region | required }}{{.}}{{end}}"
+  aws_route53_hosted_zone_id: "{{with $services.cert_manager.aws_route53_acme_dns.hosted_zone_id | required }}{{.}}{{end}}"
   cert_manager_issuer_name: "letsencrypt-issuer"
 {{- else }}
   cert_manager_issuer_name: "selfsigned-cluster-issuer"
