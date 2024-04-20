@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: config-features
-  annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
-  namespace: knative-serving
-data:
-  kubernetes.podspec-tolerations: "enabled"
