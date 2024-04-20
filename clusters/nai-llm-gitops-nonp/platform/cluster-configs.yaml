@@ -21,7 +21,7 @@ data:
   repPenalty: "1.2"
   temperature: "0.2"
   topP: "0.9"
-  useExistingNFS: "false"
+  useExistingNFS: false
   kserve_version: "v0.11.2"
   knative_serving_version: "knative-v1.10.1"
   knative_istio_version: "knative-v1.10.0"
