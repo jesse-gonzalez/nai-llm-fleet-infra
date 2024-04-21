@@ -46,7 +46,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: kserve-post-deploy
+  - name: kserve-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
