@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-istio-post-deploy
+  - name: cert-manager-resource-configs
   interval: 15m
   sourceRef:
     kind: GitRepository
