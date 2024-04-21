@@ -24,9 +24,28 @@ tasks:
   encrypt:
     vars:
       CLUSTER_PLATFORM_DIR: "{{.ROOT_DIR}}/clusters/${K8S_CLUSTER_NAME}/platform"
-    cmd: sops --encrypt --in-place {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+    cmds:
+    - sops --encrypt --in-place {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+    - task: :sops:check-encrypted-file
     deps: [age-keygen]
     preconditions:
     - {msg: "Missing Sops Age key file", sh: "test -f {{.SOPS_AGE_KEY_FILE}}"}
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  check-encrypted-file:
+    internal: true
+    silent: true
+    cmds:
+    - |
+      if grep -q -i sops {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml; then
+        echo "Cluster Secrets have been successully encrypted"
+      else
+        echo "Cluster Secrets failed to be properly encrypted, see {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml to troubleshoot"
+        exit 1
+      fi
+    preconditions:
+    - sh: test -f {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+      msg: "Missing {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml"
     requires:
       vars: [K8S_CLUSTER_NAME]
