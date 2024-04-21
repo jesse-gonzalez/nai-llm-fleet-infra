@@ -11,7 +11,7 @@ data:
   gpu_time_slicing_replica_count: "2"
   nginx_ingress_version: "4.8.3"
   istio_version: "10.50.119.55"
-  cert_manager_version: "v1.3.0"
+  cert_manager_version: "v1.9.1"
   cert_manager_issuer_name: "letsencrypt-issuer"
   documents_objects_bucket_name: "documents01"
   milvus_version: "4.1.13"
