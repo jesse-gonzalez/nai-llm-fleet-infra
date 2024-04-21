@@ -93,10 +93,10 @@ tasks:
     - kubectl get secret cluster-secrets -n flux-system -o yaml | grep -i aws
     - kubectl get clusterissuer letsencrypt-issuer -o yaml | yq .spec
     - kubectl get clusterissuer letsencrypt-issuer -o yaml | yq .status
-    - kubectl get helmrelease cert-manager -o yaml | yq .spec
-    - kubectl get helmrelease cert-manager -o yaml | yq .status
-    - kubectl get kustomization cert-manager -o yaml | yq .spec
-    - kubectl get kustomization cert-manager -o yaml | yq .status.conditions
+    - kubectl get helmrelease cert-manager -n flux-system -o yaml | yq .spec
+    - kubectl get helmrelease cert-manager -n flux-system -o yaml | yq .status
+    - kubectl get kustomization cert-manager -n flux-system -o yaml | yq .spec
+    - kubectl get kustomization cert-manager -n flux-system -o yaml | yq .status.conditions
 
   kuberay-collect:
     silent: false
