@@ -15,7 +15,7 @@ tasks:
       REQUIRED_TOOLS_LIST: kind,docker
 
   create:
-    desc: Creates local kind cluster (default "flux-kind-local") with 3 worker nodes
+    desc: Creates local kind cluster (default "flux-kind-local") with 3 worker nodes.
     deps: [default]
     silent: true
     cmds:

@@ -6,37 +6,60 @@ on:
     branches: [ '*' ]
     tags-ignore: [ '*' ]
 
+env:
+  ### Default environment to deploy and configure calm and karbon.
+  K8S_CLUSTER_NAME: 'flux-kind-cicd'
+
 jobs:
   kubernetes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Setup Flux
         uses: fluxcd/flux2/action@main
+
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.7.0
         with:
-          cluster_name: flux-kind-local
+          cluster_name: $K8S_CLUSTER_NAME
+
       - name: Install Flux in Kubernetes Kind
         run: flux install
-      - name: Setup cluster reconciliation
+      
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ github.token }}
+      
+      - name: Run Workstation Deployment Minimal Defaults
+        run: task workstation:install-packages --yes
+
+      - name: Create Flux Source GitRepository
         run: |
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --username=${GITHUB_ACTOR} \
-          --password=${{ secrets.GITHUB_TOKEN }} \
+          --username=${{ github.actor }} \
+          --password=${{ github.token }} \
           --ignore-paths="clusters/**/flux-system/"
+
+      - name: Create Flux Source GitRepository
+        run: |
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/_profiles/kind-stacks/kserve
+          --path=./clusters/$K8S_CLUSTER_NAME 
+
       - name: Verify cluster reconciliation
         run: |
           kubectl -n flux-system wait kustomization/weave-gitops --for=condition=ready --timeout=5m
+
       - name: Verify helm reconciliation
         run: |
           kubectl -n flux-system wait helmrelease/weave-gitops --for=condition=ready --timeout=5m
+
       - name: Debug failure
         if: failure()
         run: |
