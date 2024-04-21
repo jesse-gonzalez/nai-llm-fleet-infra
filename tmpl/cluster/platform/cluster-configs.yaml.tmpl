@@ -40,7 +40,12 @@ data:
 {{- end }}
 {{- if $services.milvus.enabled }}
   milvus_version: {{with $services.milvus.version | quote | required }}{{.}}{{end}}
+{{- if $nutanix.objects.enabled }}
   milvus_objects_bucket_name: {{with $services.milvus.milvus_bucket_name | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.kafka.enabled }}
+  kafka_version: {{with $services.kafka.version | quote | required }}{{.}}{{end}}
+{{- end }}
 {{- end }}
 {{- if $apps.nai_helm.enabled }}
   model: {{with $apps.nai_helm.model | quote | required }}{{.}}{{end}}
@@ -59,9 +64,6 @@ data:
 {{- end }}
 {{- if $services.knative_istio.enabled }}
   knative_istio_version: {{with $services.knative_istio.version | quote | required }}{{.}}{{end}}
-{{- end }}
-{{- if $services.kafka.enabled }}
-  kafka_version: {{with $services.kafka.version | quote | required }}{{.}}{{end}}
 {{- end }}
 {{- if $services.kubernetes_dashboard.enabled }}
   kubernetes_dashboard_version: {{with $services.kubernetes_dashboard.version | quote | required }}{{.}}{{end}}
