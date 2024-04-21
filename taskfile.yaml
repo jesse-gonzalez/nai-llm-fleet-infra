@@ -17,7 +17,9 @@ includes:
   tofu: ./.taskfiles/tofu.yaml
   sops: ./.taskfiles/sops.yaml
   test: ./test
-  workstation: ./.taskfiles/workstation.yaml
+  workstation:
+    taskfile: ./.taskfiles/workstation.yaml
+    aliases: [ws]
   troubleshoot:
     taskfile: ./.taskfiles/troubleshoot.yaml
     aliases: [ts]
