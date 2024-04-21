@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  KIND_CLUSTER_NAME: flux-kind-local
+  K8S_CLUSTER_NAME: flux-kind-local
   KIND_NODE_IMAGE: kindest/node:v1.25.16@sha256:e8b50f8e06b44bb65a93678a65a26248fae585b3d3c2a669e5ca6c90c69dc519
   KIND_CONFIG_FILE: "{{.ROOT_DIR}}/infra/kind/multi-node-config.yaml"
   KIND_INGRESS_DEPLOY_FILE: "{{.ROOT_DIR}}/infra/kind/ingress-nginx-kind-deploy.yaml"
@@ -19,21 +19,21 @@ tasks:
     deps: [default]
     silent: true
     cmds:
-    - kind create cluster --name ${KIND_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
+    - kind create cluster --name ${K8S_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
     - kubectl cluster-info
     - task: :kind:deploy-nginx-ingress
     preconditions:
-    - sh: test ! -n "$(kind get clusters | grep -i ${KIND_CLUSTER_NAME})"
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) already exists, nothing to create. fix: task kind:delete-cluster"'
+    - sh: test ! -n "$(kind get clusters | grep -i ${K8S_CLUSTER_NAME})"
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) already exists, nothing to create. fix: task kind:delete-cluster"'
 
   delete:
     desc: Deletes local kind cluster (default "flux-kind-local")
     deps: [default]
     silent: true
-    cmd: kind delete cluster --name ${KIND_CLUSTER_NAME}
+    cmd: kind delete cluster --name ${K8S_CLUSTER_NAME}
     preconditions:
-    - sh: kind get clusters | grep -i {{.KIND_CLUSTER_NAME}}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    - sh: kind get clusters | grep -i {{.K8S_CLUSTER_NAME}}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   validate:
     desc: Validates local kind cluster (default "flux-kind-local")
@@ -43,20 +43,20 @@ tasks:
     - task: :kind:get-kubeconfig
     - kubectl get nodes
     preconditions:
-    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   get-kubeconfig:
     desc: Get local kind cluster kubeconfig (default "flux-kind-local")
     deps: [default]
     silent: true
-    cmd: kind export kubeconfig --name ${KIND_CLUSTER_NAME}
+    cmd: kind export kubeconfig --name ${K8S_CLUSTER_NAME}
     preconditions:
-    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   get-docker-net:
-    desc: Get local kind cluster network IPAM used for kube-vip in .env.<KIND_CLUSTER_NAME>.yaml
+    desc: Get local kind cluster network IPAM used for kube-vip in .env.<K8S_CLUSTER_NAME>.yaml
     deps: [default]
     silent: true
     cmds:
@@ -72,8 +72,8 @@ tasks:
     cmds:
     - kubectl apply -f {{.KIND_INGRESS_DEPLOY_FILE}}
     preconditions:
-    - sh: kind get clusters | grep -i ${KIND_CLUSTER_NAME}
-      msg: 'echo "kind cluster ({{.KIND_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
 
   e2e:
     desc: Deploys kind cluster end to end
@@ -86,8 +86,8 @@ tasks:
     - task: :kind:deploy-nginx-ingress
     - task: :bootstrap:silent
     preconditions:
-    - sh: test -f ./.env.{{.KIND_CLUSTER_NAME}}.yaml
-      msg: 'echo "local environment config file (./.env.{{.KIND_CLUSTER_NAME}}.yaml) not found"'
+    - sh: test -f ./.env.{{.K8S_CLUSTER_NAME}}.yaml
+      msg: 'echo "local environment config file (./.env.{{.K8S_CLUSTER_NAME}}.yaml) not found"'
 
   watch:
     desc: On another terminal, watch kubectl progress

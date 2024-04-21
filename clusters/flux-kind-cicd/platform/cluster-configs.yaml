@@ -4,8 +4,8 @@ metadata:
   name: cluster-configs
 data:
   cluster_name: "flux-kind-cicd"
-  environment: "non-prod"
-  cluster_profile: "minimal"
+  environment: "minimal"
+  cluster_profile: "kind-stacks"
   nginx_ingress_version: "4.8.3"
   istio_version: "172.20.0.21"
   cert_manager_version: "v1.3.0"
