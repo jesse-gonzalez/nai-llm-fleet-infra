@@ -75,21 +75,28 @@ tasks:
     - kubectl get certificates.cert-manager.io {{.CLI_ARGS | default "-A"}}
     - kubectl get certificaterequests.cert-manager.io {{.CLI_ARGS | default "-A"}}
     - kubectl get clusterissuers.cert-manager.io
-    - kubectl get issuers.cert-manager.io -A
     - kubectl get orders.acme.cert-manager.io -A
     - kubectl get challenges.acme.cert-manager.io -A
     - kubectl get secrets {{.CLI_ARGS | default "-A"}} | grep -i tls
+    - flux events --for Kustomization/cert-manager
+    - flux events --for Kustomization/cert-manager-resource-configs
+    - flux events --for HelmRelease/cert-manager
+    - flux logs --kind=Kustomization --name=cert-manager --tail 10
+    - flux logs --kind=HelmRelease --name=cert-manager --tail 10
 
   lets-encrypt-aws-collect:
     silent: false
     deps: [default]
     desc: Gather resources managed by lets-encrypt
     cmds:
-    - kubectl get clusterissuer letsencrypt-issuer -o yaml
-    - kubectl get secret letsencrypt-aws-issuer -n cert-manager -o yaml
-    - kubectl get secret letsencrypt-aws-secret -n cert-manager -o yaml
+    - kubectl get secret letsencrypt-aws-secret -n cert-manager -o yaml | yq .data
     - kubectl get secret cluster-secrets -n flux-system -o yaml | grep -i aws
     - kubectl get clusterissuer letsencrypt-issuer -o yaml | yq .spec
+    - kubectl get clusterissuer letsencrypt-issuer -o yaml | yq .status
+    - kubectl get helmrelease cert-manager -o yaml | yq .spec
+    - kubectl get helmrelease cert-manager -o yaml | yq .status
+    - kubectl get kustomization cert-manager -o yaml | yq .spec
+    - kubectl get kustomization cert-manager -o yaml | yq .status.conditions
 
   kuberay-collect:
     silent: false
