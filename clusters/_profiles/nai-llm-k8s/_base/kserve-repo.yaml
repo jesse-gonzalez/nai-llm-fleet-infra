@@ -1,12 +1,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kserve
+  name: kserve-post-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-serving-resource-configs
-  - name: knative-eventing-resource-configs
+  - name: knative-serving-post-deploy
+  - name: knative-eventing-post-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -15,7 +15,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/kserve/_operators
+  path: ./platform/kserve/v0.11.2/_deploy
   prune: true
   wait: true
   timeout: 15m
@@ -42,11 +42,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kserve-resource-configs
+  name: kserve-post-deploy
   namespace: flux-system
 spec:
   dependsOn:
-  - name: kserve
+  - name: kserve-post-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -55,7 +55,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  path: ./platform/kserve/_resource-configs
+  path: ./platform/kserve/v0.11.2/_post-deploy
   prune: true
   wait: true
   timeout: 15m
