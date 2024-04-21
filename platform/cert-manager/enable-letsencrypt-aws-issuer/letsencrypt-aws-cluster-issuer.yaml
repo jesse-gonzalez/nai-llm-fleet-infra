@@ -2,6 +2,8 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-issuer
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory

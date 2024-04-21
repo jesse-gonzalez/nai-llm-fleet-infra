@@ -5,7 +5,7 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: kubectl,flux
+      REQUIRED_TOOLS_LIST: kubectl,flux,jq,yq
 
   gpu-collect:
     silent: false
@@ -70,7 +70,7 @@ tasks:
   cert-manager-collect:
     silent: false
     deps: [default]
-    desc: Gather common flux resources in your cluster
+    desc: Gather resources managed by cert-maanger
     cmds:
     - kubectl get certificates.cert-manager.io {{.CLI_ARGS | default "-A"}}
     - kubectl get certificaterequests.cert-manager.io {{.CLI_ARGS | default "-A"}}
@@ -79,6 +79,17 @@ tasks:
     - kubectl get orders.acme.cert-manager.io -A
     - kubectl get challenges.acme.cert-manager.io -A
     - kubectl get secrets {{.CLI_ARGS | default "-A"}} | grep -i tls
+
+  lets-encrypt-aws-collect:
+    silent: false
+    deps: [default]
+    desc: Gather resources managed by lets-encrypt
+    cmds:
+    - kubectl get clusterissuer letsencrypt-issuer -o yaml
+    - kubectl get secret letsencrypt-aws-issuer -n cert-manager -o yaml
+    - kubectl get secret letsencrypt-aws-secret -n cert-manager -o yaml
+    - kubectl get secret cluster-secrets -n flux-system -o yaml | grep -i aws
+    - kubectl get clusterissuer letsencrypt-issuer -o yaml | yq .spec
 
   kuberay-collect:
     silent: false
