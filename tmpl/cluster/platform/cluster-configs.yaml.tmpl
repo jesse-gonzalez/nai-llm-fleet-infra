@@ -46,7 +46,7 @@ data:
   repPenalty: {{with $apps.nai_helm.repPenalty | quote | required }}{{.}}{{end}}
   temperature: {{with $apps.nai_helm.temperature | quote | required }}{{.}}{{end}}
   topP: {{with $apps.nai_helm.topP | quote | required }}{{.}}{{end}}
-  useExistingNFS: {{with $apps.nai_helm.useExistingNFS | default "false" }}{{.}}{{end}}
+  useExistingNFS: {{with $apps.nai_helm.useExistingNFS | quote | default "false" }}{{.}}{{end}}
 {{- end }}
 {{- if $services.kserve.enabled }}
   kserve_version: {{with $services.kserve.version | quote | required }}{{.}}{{end}}
