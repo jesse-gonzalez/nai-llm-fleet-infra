@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
 - self-signed-cluster-issuer.yaml
+- letsencrypt-aws-secret.yaml
