@@ -9,5 +9,5 @@ resources:
 - knative-eventing-repo.yaml
 - kserve-repo.yaml
 
-#patches:
-#- path: kserve-addons.yaml
+patches:
+- path: kserve-addons.yaml
