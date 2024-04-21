@@ -88,6 +88,7 @@ spec:
   prune: true
   wait: true
   timeout: 15m
+  force: true
   postBuild:
     substitute:
       namespace_name: knative-serving
