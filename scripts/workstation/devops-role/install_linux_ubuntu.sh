@@ -13,5 +13,6 @@ if grep -q -i ubuntu /etc/os-release; then
     bash-completion \
     python3 \
     shellcheck \
-    fzf
+    fzf \
+    tmux
 fi
