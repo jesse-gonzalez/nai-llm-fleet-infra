@@ -76,7 +76,21 @@ tasks:
     dir: '{{.USER_WORKING_DIR}}'
     desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
     cmds:
-    - cp -r scripts/dotfiles/. $HOME
     - ./scripts/dotfiles/install_kube-ps1.sh
+    - cp -r scripts/dotfiles/. $HOME
+
+  install-zsh:
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Installs zsh and configures oh-my-zsh interactively
+    cmds:
     - ./scripts/dotfiles/install_zsh.sh
+    interactive: true
+
+  install-devbox:
+    prompt: Install devbox interactively
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Installs devbox interactively
+    cmd: curl -fsSL https://get.jetify.com/devbox | bash
+    interactive: true
+
 
