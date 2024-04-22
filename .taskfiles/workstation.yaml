@@ -80,6 +80,7 @@ tasks:
     - cp -r scripts/dotfiles/. $HOME
 
   install-zsh:
+    prompt: This will install zsh on local machine, interactively...Would you like to proceed?
     dir: '{{.USER_WORKING_DIR}}'
     desc: Installs zsh and configures oh-my-zsh interactively
     cmds:
@@ -87,7 +88,7 @@ tasks:
     interactive: true
 
   install-devbox:
-    prompt: Install devbox interactively
+    prompt: This will install Devbox on local machine, interactively...Would you like to proceed?
     dir: '{{.USER_WORKING_DIR}}'
     desc: Installs devbox interactively
     cmd: curl -fsSL https://get.jetify.com/devbox | bash
