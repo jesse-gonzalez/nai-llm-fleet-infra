@@ -5,6 +5,7 @@ configs/*
 !_common
 
 .env.*
+!infra/kind/examples/.env.flux-kind-local.yaml
 !.env.sample.yaml
 !.env.tmpl
 
