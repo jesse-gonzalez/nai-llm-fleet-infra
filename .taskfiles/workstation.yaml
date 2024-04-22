@@ -71,7 +71,7 @@ tasks:
     - task workstation:krew --yes
 
   load-dotfiles:
-    prompt: WARNING!! This will load scripts/dotfiles into {{ getenv "$HOME"}} directory... Are you certain you wish to continue?
+    prompt: WARNING!! This will load scripts/dotfiles into ${HOME} directory... Are you certain you wish to continue?
     platforms: [linux]
     dir: '{{.USER_WORKING_DIR}}'
     desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
