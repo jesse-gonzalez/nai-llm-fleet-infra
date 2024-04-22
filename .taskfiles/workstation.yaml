@@ -76,7 +76,7 @@ tasks:
     dir: '{{.USER_WORKING_DIR}}'
     desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
     cmds:
-    - cp ./scripts/dotfiles/ ${HOME}
-    - ./install_kube-ps1.sh
-    - ./install_zsh.sh
+    - cp -r scripts/dotfiles/. $HOME
+    - ./scripts/dotfiles/install_kube-ps1.sh
+    - ./scripts/dotfiles/install_zsh.sh
 
