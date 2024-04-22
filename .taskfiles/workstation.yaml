@@ -69,3 +69,14 @@ tasks:
     - '{{if eq OS "linux"}}task workstation:install-linux-packages --yes{{end}}'
     - task workstation:arkade --yes
     - task workstation:krew --yes
+
+  load-dotfiles:
+    prompt: WARNING!! This will load scripts/dotfiles into {{ getenv "$HOME"}} directory... Are you certain you wish to continue?
+    platforms: [linux]
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
+    cmds:
+    - cp ./scripts/dotfiles/ ${HOME}
+    - ./install_kube-ps1.sh
+    - ./install_zsh.sh
+
