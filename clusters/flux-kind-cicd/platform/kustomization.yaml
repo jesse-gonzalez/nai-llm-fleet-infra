@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: flux-system
 components:
 - ../../_profiles/kind-stacks/minimal
-#resources:
+resources:
 #- cluster-secrets.sops.yaml
-#- cluster-configs.yaml
+- cluster-configs.yaml
