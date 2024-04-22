@@ -39,7 +39,7 @@ jobs:
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.7.0
         with:
-          cluster_name: $K8S_CLUSTER_NAME
+          cluster_name: flux-kind-cicd
 
       - name: Install Flux in Kubernetes Kind
         run: flux install
