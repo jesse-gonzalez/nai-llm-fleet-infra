@@ -9,11 +9,6 @@ components:
 
 patches:
 - path: ingress-nginx-addons.yaml
-- path: kubernetes-dashboard-addons.yaml
 - path: weave-gitops-addons.yaml
-#- path: kafka-addons.yaml
-#- path: lets-encrypt-staging-issuer-patch.yaml
 - path: uptrace-addons.yaml
-#- path: milvus-addons.yaml
 - path: elasticsearch-addons.yaml
-#- path: milvus-operator-addons.yaml

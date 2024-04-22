@@ -6,12 +6,3 @@ components:
 resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml
-
-# generatorOptions:
-#   disableNameSuffixHash: true
-
-# secretGenerator:
-# - name: docker-hub-regcred
-#   type: kubernetes.io/dockerconfigjson
-#   files:
-#   - .dockerconfigjson=hub.dockerconfig.json.encrypted

@@ -29,7 +29,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: weave-gitops
-      version: "*"
+      version: ${weave_gitops_version}
   interval: 30m
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
   values:

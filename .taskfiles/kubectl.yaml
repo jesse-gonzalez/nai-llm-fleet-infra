@@ -77,3 +77,22 @@ tasks:
     #desc: List all the services in your cluster
     cmds:
     - kubectl get services {{.CLI_ARGS | default "-A"}}
+
+  taint_gpu_nodes:
+    silent: false
+    desc: Taints GPU Nodes (i.e., nvidia.com/gpu.present=true label) with dedicated=gpu:NoSchedule Taint. Override ex. `task kubectl:taint_gpu_nodes -- ray.io/node-type=worker:NoSchedule`
+    cmds:
+    - kubectl taint node -l nvidia.com/gpu.present=true {{.CLI_ARGS | default "dedicated=gpu:NoSchedule"}}
+
+  untaint_gpu_nodes:
+    silent: false
+    desc: Removes Taints on GPU Nodes (i.e., nvidia.com/gpu.present=true label) with existing dedicated=gpu:NoSchedule Taint. Override ex. `task kubectl:untaint_gpu_nodes -- ray.io/node-type=worker:NoSchedule`
+    cmds:
+    - kubectl taint node -l nvidia.com/gpu.present=true {{.CLI_ARGS | default "dedicated:NoSchedule-"}}
+
+  drain_gpu_nodes:
+    silent: false
+    prompt: "Are you sure you want to drain all gpu nodes of current workloads?"
+    desc: Drains/Deschedules workloads that have already been schedule on GPU nodes (i.e., with nvidia.com/gpu.present=true label). Uncordon on competion.
+    cmds:
+    - kubectl get node -l nvidia.com/gpu.present=true -o name | cut -d/ -f2 | xargs -I {} sh -c "kubectl drain {} --delete-emptydir-data --ignore-daemonsets --disable-eviction && kubectl uncordon {}"

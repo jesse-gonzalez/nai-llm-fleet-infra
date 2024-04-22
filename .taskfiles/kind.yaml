@@ -1,0 +1,109 @@
+version: '3'
+
+env:
+  K8S_CLUSTER_NAME: '{{default "flux-kind-local" .K8S_CLUSTER_NAME}}'
+  KIND_NODE_IMAGE: kindest/node:v1.25.16@sha256:e8b50f8e06b44bb65a93678a65a26248fae585b3d3c2a669e5ca6c90c69dc519
+  KIND_CONFIG_FILE: "{{.ROOT_DIR}}/infra/kind/multi-node-config.yaml"
+  KIND_INGRESS_DEPLOY_FILE: "{{.ROOT_DIR}}/infra/kind/ingress-nginx-kind-deploy.yaml"
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    silent: true
+    vars:
+      REQUIRED_TOOLS_LIST: kind,docker
+
+  create:
+    desc: Creates local kind cluster (default "flux-kind-local") with 3 worker nodes.
+    deps: [default]
+    silent: true
+    cmds:
+    - kind create cluster --name ${K8S_CLUSTER_NAME} --config ${KIND_CONFIG_FILE} --image ${KIND_NODE_IMAGE}
+    - kubectl cluster-info
+    preconditions:
+    - sh: test ! -n "$(kind get clusters | grep -i ${K8S_CLUSTER_NAME})"
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) already exists, nothing to create. fix: task kind:delete-cluster"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  delete:
+    desc: Deletes local kind cluster (default "flux-kind-local")
+    deps: [default]
+    silent: true
+    cmd: kind delete cluster --name ${K8S_CLUSTER_NAME}
+    preconditions:
+    - sh: kind get clusters | grep -i {{.K8S_CLUSTER_NAME}}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  validate:
+    desc: Validates local kind cluster (default "flux-kind-local")
+    deps: [default]
+    silent: true
+    cmds:
+    - task: :kind:get-kubeconfig
+    - kubectl get nodes
+    preconditions:
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  get-kubeconfig:
+    desc: Get local kind cluster kubeconfig (default "flux-kind-local")
+    deps: [default]
+    silent: true
+    cmd: kind export kubeconfig --name ${K8S_CLUSTER_NAME}
+    preconditions:
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  get-docker-net:
+    desc: Get local kind cluster network IPAM used for kube-vip in .env.<K8S_CLUSTER_NAME>.yaml
+    deps: [default]
+    silent: true
+    cmds:
+    - docker network inspect kind | jq .[].IPAM.Config[0].Subnet -r
+    preconditions:
+    - sh: docker network ls | grep -i kind
+      msg: 'echo "docker network "kind" does not exist. fix: task kind:create-cluster"'
+
+  deploy-nginx-ingress:
+    desc: Deploys custom nginx-ingress for kind cluster
+    deps: [default]
+    silent: true
+    cmds:
+    - kubectl apply -f {{.KIND_INGRESS_DEPLOY_FILE}}
+    preconditions:
+    - sh: kind get clusters | grep -i ${K8S_CLUSTER_NAME}
+      msg: 'echo "kind cluster ({{.K8S_CLUSTER_NAME}}) does not exist. fix: task kind:create-cluster"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  bootstrap:
+    desc: Boostraps kind cluster and deploys flux end to end
+    deps: [default]
+    silent: true
+    cmds:
+    - task: :kind:create
+    - task: :kind:get-kubeconfig
+    - task: :kind:validate
+    - task: :kind:deploy-nginx-ingress
+    - task: :bootstrap:silent
+    preconditions:
+    - sh: test -f ./.env.{{.K8S_CLUSTER_NAME}}.yaml
+      msg: 'echo "local environment config file (./.env.{{.K8S_CLUSTER_NAME}}.yaml) not found"'
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  watch:
+    desc: On another terminal, watch kubectl progress
+    deps: [default]
+    silent: true
+    cmds:
+    - watch "kubectl get pods,svc,ingress -A"
+    interactive: true

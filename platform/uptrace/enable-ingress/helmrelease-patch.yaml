@@ -9,7 +9,7 @@ spec:
       enabled: true
       className: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
       hosts:
       - host: uptrace.${wildcard_ingress_subdomain}
         paths:

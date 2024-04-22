@@ -8,9 +8,12 @@ tasks:
       REQUIRED_TOOLS_LIST: sops,age-keygen
 
   decrypt:
-    desc: decrypts sops file located in clusters/$K8S_CLUSTER_NAME/platform/cluster-secrets.sops.yaml
+    desc: decrypts sops file located in clusters/<K8S_CLUSTER_NAME>/platform/cluster-secrets.sops.yaml
+    vars:
+      AGE_PUBLIC_KEY:
+        sh: age-keygen -y {{.SOPS_AGE_KEY_FILE}}
     cmds:
-    - sops --decrypt clusters/${K8S_CLUSTER_NAME}/platform/cluster-secrets.sops.yaml
+    - sops --decrypt --age {{.AGE_PUBLIC_KEY}} clusters/${K8S_CLUSTER_NAME}/platform/cluster-secrets.sops.yaml
     requires:
       vars: [K8S_CLUSTER_NAME]
 
@@ -24,9 +27,30 @@ tasks:
   encrypt:
     vars:
       CLUSTER_PLATFORM_DIR: "{{.ROOT_DIR}}/clusters/${K8S_CLUSTER_NAME}/platform"
-    cmd: sops --encrypt --in-place {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+      AGE_PUBLIC_KEY:
+        sh: age-keygen -y {{.SOPS_AGE_KEY_FILE}}
+    cmds:
+    - sops --encrypt --in-place --age {{.AGE_PUBLIC_KEY}} {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+    - task: :sops:check-encrypted-file
     deps: [age-keygen]
     preconditions:
     - {msg: "Missing Sops Age key file", sh: "test -f {{.SOPS_AGE_KEY_FILE}}"}
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  check-encrypted-file:
+    internal: true
+    silent: true
+    cmds:
+    - |
+      if grep -q -i sops {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml; then
+        echo "Cluster Secrets have been successully encrypted"
+      else
+        echo "Cluster Secrets failed to be properly encrypted, see {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml to troubleshoot"
+        exit 1
+      fi
+    preconditions:
+    - sh: test -f {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml
+      msg: "Missing {{.CLUSTER_PLATFORM_DIR}}/cluster-secrets.sops.yaml"
     requires:
       vars: [K8S_CLUSTER_NAME]

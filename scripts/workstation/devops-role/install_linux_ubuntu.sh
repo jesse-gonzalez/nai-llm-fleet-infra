@@ -12,5 +12,7 @@ if grep -q -i ubuntu /etc/os-release; then
     vim \
     bash-completion \
     python3 \
-    shellcheck
+    shellcheck \
+    fzf \
+    tmux
 fi

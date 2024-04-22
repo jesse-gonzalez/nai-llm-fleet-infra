@@ -1,17 +1,112 @@
 - [Nutanix GitOps Examples](#nutanix-gitops-examples)
-  - [Directory Structure](#directory-structure)
   - [Getting Started](#getting-started)
-    - [Using Devbox NIX Shell](#using-devbox-nix-shell)
-    - [NIX Packages Installed](#nix-packages-installed)
+    - [Option 1: Using Devbox NIX Shell](#option-1-using-devbox-nix-shell)
+    - [Using Devcontainer](#using-devcontainer)
+    - [Bootstrapping New NKE Cluster](#bootstrapping-new-nke-cluster)
+      - [Silent Bootstrap](#silent-bootstrap)
   - [Appendix](#appendix)
-    - [Glossary](#glossary)
-      - [Infrastructure Specific](#infrastructure-specific)
-      - [Platform Specific](#platform-specific)
-      - [Application Specific](#application-specific)
+    - [Directory Structure](#directory-structure)
 
 # Nutanix GitOps Examples
 
-## Directory Structure
+## Getting Started
+
+### Option 1: Using Devbox NIX Shell
+
+This project uses [devbox](https://github.com/jetpack-io/devbox) to manage its development environment.
+
+Install `devbox` and accept all defaults:
+
+```sh
+curl -fsSL https://get.jetpack.io/devbox | bash
+```
+
+Start the `devbox shell` and if `nix` isn't available, you will be prompted to install:
+
+```sh
+devbox shell
+```
+
+### Using Devcontainer
+
+See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudio.com/docs/devcontainers/tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
+
+### Bootstrapping New NKE Cluster
+
+#### Silent Bootstrap
+
+1. Set K8S_CLUSTER_NAME environment variable and copy `./.env.sample.yaml` to `./.env.${K8S_CLUSTER_NAME}.yaml`
+
+    ```bash
+    export K8S_CLUSTER_NAME=flux-kind-local
+    cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml
+    ```
+
+2. Update `.env.${K8S_CLUSTER_NAME}.yaml` with required values. If parameter is enabled, update required parameters below each section
+
+    For example, if `kube_vip.enabled` is true, then uncomment and configure `kube_vip.ipam_range`:
+
+    ```yaml
+      kube_vip:
+        enabled: false
+        ## min. 2 ips for range (i.e., 10.38.110.22-10.38.110.23)
+        ipam_range: required
+    ```
+
+3. [Optional] Generate and Validate Configurations
+  
+    ```bash
+    task bootstrap:generate_cluster_configs
+    cat .local/${K8S_CLUSTER_NAME}/.env
+    cat clusters/${K8S_CLUSTER_NAME}/platform/cluster-configs.yaml
+    ```
+
+4. [Optional] Validate Encrypted Secrets
+
+    ```bash
+    task sops:decrypt
+    ```
+
+5. Select New (or Switching to Existing) Cluster and Download NKE Creds
+
+    ```bash
+    eval $(task nke:switch-shell-env) && \
+    task nke:download-creds && \
+    kubectl get nodes -o wide
+    ```
+
+6. Run Flux Bootstrapping - `task bootstrap:silent`
+
+    ```bash
+    task bootstrap:silent
+    ```
+
+    > NOTE: if there are any issues, troubleshot using `task ts:flux-collect`. You can re-run task `bootstrap:silent` as many times needed
+
+7. Monitor on New Terminal
+
+    ```bash
+    eval $(task nke:switch-shell-env) && \
+    task flux:watch
+    ```
+
+    > NOTE: if there are any issues, update local git repo, push up changes and run `task flux:reconcile`
+
+8. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
+
+    >  if undesired workloads already running on gpu nodepools, drain nodes using `task kubectl:drain_gpu_nodes`
+
+    ```bash
+    ## taint gpu nodes with label nvidia.com/gpu.present=true
+    task kubectl:taint_gpu_nodes
+
+    ## view taint configurations on all nodes
+    kubectl get nodes -o='custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect'
+    ```
+
+## Appendix
+
+### Directory Structure
 
 ```bash
 .
@@ -44,64 +139,3 @@
     │       └── ingress-nginx-patch.yaml # patch that overrides ingress-nginx helm chart
     └── ...
 ```
-
-## Getting Started
-
-### Using Devbox NIX Shell
-
-This project uses [devbox](https://github.com/jetpack-io/devbox) to manage its development environment.
-
-Install `devbox` and accept all defaults:
-
-```sh
-curl -fsSL https://get.jetpack.io/devbox | bash
-```
-
-Start the `devbox shell` and if `nix` isn't available, you will be prompted to install:
-
-```sh
-devbox shell
-```
-
-### NIX Packages Installed
-
-- [jq@1.7.1](https://www.nixhub.io/packages/jq)
-- [gum@0.13.0](https://www.nixhub.io/packages/gum)
-- [gh@2.46.0](https://www.nixhub.io/packages/gh)
-- [kubectl@1.29.3](https://www.nixhub.io/packages/kubectl)
-- [git@2.44.0](https://www.nixhub.io/packages/git)
-- [envsubst@1.4.2](https://www.nixhub.io/packages/envsubst)
-- [age@1.1.1](https://www.nixhub.io/packages/age)
-- [ipcalc@1.0.3](https://www.nixhub.io/packages/ipcalc)
-- [arkade@0.11.6](https://www.nixhub.io/packages/arkade)
-- [yq-go@4.43.1](https://www.nixhub.io/packages/yq-go)
-- [sops@3.8.1](https://www.nixhub.io/packages/sops)
-- [kubernetes-helm@3.14.3](https://www.nixhub.io/packages/kubernetes-helm)
-- [go-task@3.35.1](https://www.nixhub.io/packages/go-task)
-
-## Appendix
-
-### Glossary
-
-#### Infrastructure Specific
-
-- `Cluster`: Leveraged to install a variant of the infrastructure (ie., A set of Kubernetes nodes that run containerized applications) and a set of tenants with their apps.
-- `Operator`: Engineer(s) that manage and own the cluster and platform running in it.
-- `Profiles`: 
-
-#### Platform Specific
-
-- `Platform`: A set of apps and configs installed in all clusters, and that allow operators to manage the cluster or provide features to the apps. It provides some pre-set variants that clusters can reuse.
-- `Platform service`: A single service of the platform. Examples: ingress-nginx,cert-manager,kube-vip,kafka,milvus
-
-#### Application Specific
-
-
-
-- `App`: A single application deployment that integrates and leverages the underlying dependent platform and cluster components. It usually runs in its own namespace and is not a direct dependency on any other application.
-- `Tenant`: Are commonly the engineer(s) that manage and own one or many applications.
-- `Apps` Are commonly installed by `tenants` (ie., developer teams) into a specific cluster.
-
-
-- `Base`: Common resources and configurations of any installation of a unit (be it an App, Cluster, Platform Service, etc.)
-- `Variants`: Also known as `Component` within the `kustomize` project, are an extension of `base` with extra features. Example: ingress-nginx + kube-vip-loadbalancer.

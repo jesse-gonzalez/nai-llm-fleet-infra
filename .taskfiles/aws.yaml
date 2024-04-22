@@ -1,0 +1,47 @@
+version: '3'
+
+vars:
+  AWS_CREDENTIALS_FILE: ${HOME}/.aws/credentials
+  AWS_CONFIG_FILE: ${HOME}/.aws/config
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    internal: true
+    vars:
+      REQUIRED_TOOLS_LIST: aws
+
+  config-creds:
+    silent: true
+    deps: [default]
+    desc: Configures local aws credentials in following location {{.AWS_CREDENTIALS_FILE}}
+    cmds:
+    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+    - aws configure set default.region ${AWS_DEFAULT_REGION}
+    - aws configure list
+    generates:
+    - '{{.AWS_CREDENTIALS_FILE}}'
+    - '{{.AWS_CREDENTIALS_FILE}}'
+
+  clean-creds:
+    silent: true
+    deps: [default]
+    prompt: "This will delete your local aws credentials"
+    desc: Cleans out aws creds and config files ({{.AWS_CREDENTIALS_FILE}},{{.AWS_CONFIG_FILE}})
+    cmds:
+    - rm -f {{.AWS_CREDENTIALS_FILE}}
+    - rm -f {{.AWS_CONFIG_FILE}}
+    preconditions:
+    - sh: '[ ! -f {{.AWS_CREDENTIALS_FILE}} ]'
+      msg: '{{.AWS_CREDENTIALS_FILE}} not found, so nothing to clean'
+    - sh: '[ ! -f {{.AWS_CONFIG_FILE}} ]'
+      msg: '{{.AWS_CREDENTIALS_FILE}} not found, so nothing to clean'
+
+  get-route53-details:
+    silent: true
+    deps: [default]
+    desc: Cleans out aws creds and config files ({{.AWS_CREDENTIALS_FILE}},{{.AWS_CONFIG_FILE}})
+    cmds:
+    - aws route53 list-hosted-zones --output json | jq .

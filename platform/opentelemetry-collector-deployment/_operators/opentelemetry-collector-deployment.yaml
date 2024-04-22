@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: opentelemetry
-      version: "0.80.1"
+      version: ${opentelemetry_collector_version}
   interval: 1h
   values:
     imagePullSecrets:

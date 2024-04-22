@@ -14,26 +14,17 @@ tasks:
     summary: |
       Silently initializes cluster configs, git local/remote & fluxcd
 
-      Requires K8S_CLUSTER_NAME environment variable and .local/<K8S_CLUSTER_NAME>/.env configuration file
+      See README.md for additional details on Getting Started
 
-      If new cluster, connect to Prism Central, select NKE cluster and validate connectivity
-      - task nke:prompt-creds && task kubectl:nodes
-
-      To configure .local/<K8S_CLUSTER_NAME>/.env, simply copy .env.sample.yaml and update, for example:
-
-        export K8S_CLUSTER_NAME=nai-llm-prod-mgmt
-        cp ./.env.sample.yaml ./.env.${K8S_CLUSTER_NAME}.yaml
-
-      After updating ./.env.${K8S_CLUSTER_NAME}.yaml, verify and initialize local configs
-      - task bootstrap:generate_local_configs
-
-      To initiate fluxcd bootstrap:
-      - task bootstrap:silent
+      To see list of tasks, run `task --list` or `task --list-all`
+    vars:
+      IS_KIND_CLUSTER:
+        sh: '[ -z $(kubectl get ds -l app=kindnet -n kube-system  -o name) ] || echo true'
     cmds:
     - task: generate_local_configs
     - task: verify-configs
     - task: generate_cluster_configs
-    - task: :nke:download-creds
+    - '{{if .IS_KIND_CLUSTER}} task kind:get-kubeconfig {{else}} task nke:download-creds {{end}}'
     - task: :flux:init
     requires:
       vars: [K8S_CLUSTER_NAME]
@@ -156,9 +147,9 @@ tasks:
 
   generate_local_configs:
     silent: false
-    desc: Stages .local/<K8S_CLUSTER_NAME/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
+    desc: Stages .local/<K8S_CLUSTER_NAME>/.env from .env.<K8S_CLUSTER_NAME>.yaml file on primary project directory
     cmds:
-    - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
+    - gomplate -f tmpl/vars/.env.tmpl -o .local/${K8S_CLUSTER_NAME}/.env --config=.gotemplate.yaml --datasource config=.env.${K8S_CLUSTER_NAME}.yaml
     - task: :bootstrap:verify-configs
     preconditions:
     - sh: test -f .env.${K8S_CLUSTER_NAME}.yaml
@@ -169,7 +160,7 @@ tasks:
   generate_cluster_configs:
     silent: false
     deps: [generate_local_configs]
-    desc: Stages clusters/<K8S_CLUSTER_NAME/**.yaml configs from tmpl/cluster/*.tmpl templates
+    desc: Stages clusters/<K8S_CLUSTER_NAME>/**.yaml configs from tmpl/cluster/*.tmpl templates
     cmds:
     - task: :sops:age-keygen
     - |
@@ -183,4 +174,3 @@ tasks:
       msg: '.env.{{.K8S_CLUSTER_NAME}}.yaml not found, please copy .env.sample.yaml and update manually'
     requires:
       vars: [K8S_CLUSTER_NAME]
-

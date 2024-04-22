@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: opentelemetry
-      version: "0.47.0"
+      version: ${opentelemetry_operator_version}
   interval: 1h
   values:
     admissionWebhooks:

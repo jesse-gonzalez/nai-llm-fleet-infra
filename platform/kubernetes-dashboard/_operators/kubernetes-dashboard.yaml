@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kubernetes-dashboard
-      version: "*"
+      version: ${kubernetes_dashboard_version}
   interval: 30m
   values:
     metrics-server:

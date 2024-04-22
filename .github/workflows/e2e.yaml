@@ -5,6 +5,26 @@ on:
   push:
     branches: [ '*' ]
     tags-ignore: [ '*' ]
+    paths:
+    - '.github/workflows/e2e.yml'
+    - 'clusters/_profiles/kind-stacks/**/*'
+  pull_request:
+    branches: ["main"]
+    paths:
+    - '.github/workflows/e2e.yml'
+    - 'clusters/_profiles/kind-stacks/**/*'
+    - 'plaforms/**/*'
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: false
+
+env:
+  K8S_CLUSTER_NAME: 'flux-kind-cicd'
 
 jobs:
   kubernetes:
@@ -12,31 +32,41 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Setup Flux
         uses: fluxcd/flux2/action@main
+
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.7.0
         with:
-          cluster_name: flux
+          cluster_name: flux-kind-cicd
+
       - name: Install Flux in Kubernetes Kind
         run: flux install
-      - name: Setup cluster reconciliation
+
+      - name: Create Flux Source GitRepository
         run: |
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --username=${GITHUB_ACTOR} \
-          --password=${{ secrets.GITHUB_TOKEN }} \
+          --username=${{ github.actor }} \
+          --password=${{ github.token }} \
           --ignore-paths="clusters/**/flux-system/"
+
+      - name: Create Flux Cluster Kustomization
+        run: |
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/_profiles/minimalist/kind
+          --path=./clusters/$K8S_CLUSTER_NAME 
+
       - name: Verify cluster reconciliation
         run: |
           kubectl -n flux-system wait kustomization/weave-gitops --for=condition=ready --timeout=5m
+
       - name: Verify helm reconciliation
         run: |
           kubectl -n flux-system wait helmrelease/weave-gitops --for=condition=ready --timeout=5m
+
       - name: Debug failure
         if: failure()
         run: |

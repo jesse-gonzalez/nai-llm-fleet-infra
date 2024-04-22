@@ -6,5 +6,5 @@ resources:
 - cert-manager-repo.yaml
 - ingress-nginx-repo.yaml
 - weave-gitops-repo.yaml
-- kubernetes-dashboard-repo.yaml
+#- kubernetes-dashboard-repo.yaml
 

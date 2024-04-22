@@ -9,30 +9,39 @@ includes:
   helpers: ./.taskfiles/helpers.yaml
   init: ./.taskfiles/init.yaml
   bootstrap: ./.taskfiles/bootstrap.yaml
-  kubectl: ./.taskfiles/kubectl.yaml
+  kubectl:
+    taskfile: ./.taskfiles/kubectl.yaml
+    aliases: [k]
   nke: ./.taskfiles/nke.yaml
   flux: ./.taskfiles/flux.yaml
   tofu: ./.taskfiles/tofu.yaml
   sops: ./.taskfiles/sops.yaml
   test: ./test
-  workstation: ./.taskfiles/workstation.yaml
-  ts: ./.taskfiles/troubleshoot.yaml
+  workstation:
+    taskfile: ./.taskfiles/workstation.yaml
+    aliases: [ws]
+  troubleshoot:
+    taskfile: ./.taskfiles/troubleshoot.yaml
+    aliases: [ts]
+  kind: ./.taskfiles/kind.yaml
+  aws: ./.taskfiles/aws.yaml
 
 tasks:
 
   default:
     silent: true
     cmds:
-    - task -l
+    - task --summary bootstrap:silent
 
-  test:
+  print-versions:
     cmds:
-    - 'echo $K8S_CLUSTER_NAME'
-    - 'echo {{.K8S_CLUSTER_NAME}}'
-    - echo "$BOOTSTRAP_prism_central_user"
-    - echo "$BOOTSTRAP_prism_central_password"
-    - echo "{{.PRISM_CENTRAL_USER}}"
-    - echo "$PRISM_CENTRAL_USER"
-    requires:
-      vars: [K8S_CLUSTER_NAME]
+    - env | grep _VERSION
 
+  print-vars:
+    cmds:
+    - env | grep {{.CLI_ARGS | default "BOOTSTRAP_"}}
+    - echo ${GIT_REPO_URL}
+    - echo {{ env "$GITHUB_REPO_TEST" }}
+    - echo {{ expandenv "$GITHUB_REPO_TEST" }}
+    - echo $(basename $(git rev-parse --show-toplevel))
+    - echo {{exec "ls"}}

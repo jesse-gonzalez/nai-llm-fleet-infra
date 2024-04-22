@@ -8,8 +8,9 @@ components:
 - ../_base
 
 patches:
+- path: cert-manager-addons.yaml
 - path: ingress-nginx-addons.yaml
-- path: kubernetes-dashboard-addons.yaml
+#- path: kubernetes-dashboard-addons.yaml
 - path: weave-gitops-addons.yaml
 - path: kafka-addons.yaml
 #- path: lets-encrypt-staging-issuer-patch.yaml

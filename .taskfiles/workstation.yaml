@@ -69,3 +69,30 @@ tasks:
     - '{{if eq OS "linux"}}task workstation:install-linux-packages --yes{{end}}'
     - task workstation:arkade --yes
     - task workstation:krew --yes
+
+  load-dotfiles:
+    prompt: WARNING!! This will load scripts/dotfiles into ${HOME} directory... Are you certain you wish to continue?
+    platforms: [linux]
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
+    cmds:
+    - ./scripts/dotfiles/install_kube-ps1.sh
+    - cp -r scripts/dotfiles/. $HOME
+    - echo "Loading of .dotfiles is complete, proceed by reloading shell using `source ~/.bashrc`"
+
+  install-zsh:
+    prompt: This will install zsh on local machine, interactively...Would you like to proceed?
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Installs zsh and configures oh-my-zsh interactively
+    cmds:
+    - ./scripts/dotfiles/install_zsh.sh
+    interactive: true
+
+  install-devbox:
+    prompt: This will install Devbox on local machine, interactively...Would you like to proceed?
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Installs devbox interactively
+    cmd: curl -fsSL https://get.jetify.com/devbox | bash
+    interactive: true
+
+

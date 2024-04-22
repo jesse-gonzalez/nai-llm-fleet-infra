@@ -5,6 +5,7 @@ configs/*
 !_common
 
 .env.*
+!infra/kind/examples/.env.flux-kind-local.yaml
 !.env.sample.yaml
 !.env.tmpl
 
@@ -82,7 +83,7 @@ terraform/**-config
 opentofu/**-config
 
 # kind
-kind-**
+#kind-**
 
 # ignore secrets / sops yaml file
 config/**/cluster-secrets.sops.yaml.dec

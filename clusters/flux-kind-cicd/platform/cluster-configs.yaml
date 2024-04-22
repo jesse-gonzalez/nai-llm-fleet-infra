@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "flux-kind-cicd"
+  environment: "minimal"
+  cluster_profile: "kind-stacks"
+  weave_gitops_version: "4.0.36"

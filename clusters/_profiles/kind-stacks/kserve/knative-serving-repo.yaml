@@ -1,0 +1,102 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-serving-pre-deploy
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: cert-manager-resource-configs
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/knative-serving/knative-v1.10.1/_pre-deploy
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: knative-serving
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-serving-deploy
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: knative-serving-pre-deploy
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/knative-serving/knative-v1.10.1/_deploy
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: knative-serving
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+  patches:
+  - patch: |-
+      - op: remove
+        path: /data/_example
+    target:
+      kind: ConfigMap
+      name: config-observability
+      namespace: knative-serving
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-serving-post-deploy
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: knative-serving-deploy
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/knative-serving/knative-v1.10.1/_post-deploy
+  prune: true
+  wait: true
+  force: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: knative-serving
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+

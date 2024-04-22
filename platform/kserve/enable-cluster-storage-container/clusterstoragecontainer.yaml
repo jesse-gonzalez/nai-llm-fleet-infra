@@ -5,7 +5,8 @@ metadata:
 spec:
   container:
     name: storage-initializer
-    image: quay.io/wolfgangntnx/nai-utils:0.2
+    #image: quay.io/wolfgangntnx/nai-utils:0.2
+    image: quay.io/jesseagonzalez/nai-utils:0.3
     resources:
       requests:
         memory: 100Mi
@@ -13,5 +14,11 @@ spec:
       limits:
         memory: 1Gi
         cpu: "1"
+    env:
+    - name: HF_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: hf-secret
+          key: hf_api_token
   supportedUriFormats:
-    - prefix: ntnx://
+  - prefix: ntnx://

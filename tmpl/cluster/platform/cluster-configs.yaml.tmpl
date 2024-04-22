@@ -9,52 +9,86 @@ apiVersion: v1
 metadata:
   name: cluster-configs
 data:
-  cluster_name: "{{ $cluster.name | required }}"
-  environment: "{{ $cluster.environment | required }}"
-  cluster_profile: "{{ $cluster.profile | required }}"
+  cluster_name: {{ $cluster.name | quote | required }}
+  environment: {{ $cluster.environment | quote | required }}
+  cluster_profile: {{ $cluster.profile | quote | required }}
 {{- if $cluster.gpu_operator.enabled }}
-  gpu_cuda_toolkit_version: "{{ $cluster.gpu_operator.cuda_toolkit_version | default "v1.14.3-centos7" }}"
+  gpu_cuda_toolkit_version: {{ $cluster.gpu_operator.cuda_toolkit_version | quote | required }}
+  gpu_operator_version: {{with $cluster.gpu_operator.version | quote | required }}{{.}}{{end}}
 {{- if $cluster.gpu_operator.time_slicing.enabled }}
-  gpu_time_slicing_replica_count: "{{ $cluster.gpu_operator.time_slicing.replica_count | default "2" }}"
+  gpu_time_slicing_replica_count: {{ $cluster.gpu_operator.time_slicing.replica_count | quote | required }}
 {{- end }}
 {{- end }}
-{{- if $services.kube_vip.enabled }}  
-  kube_vip_ipam_range: "{{with $services.kube_vip.ipam_range | required }}{{.}}{{end}}"
 {{- if $services.nginx_ingress.enabled }}
-  kube_vip_nginx_ingress_ipam: "{{with $services.nginx_ingress.vip | required }}{{.}}/32{{end}}"
-  wildcard_ingress_subdomain: "{{with $services.nginx_ingress.wildcard_ingress_subdomain | required }}{{.}}{{end}}"
-  management_cluster_ingress_subdomain: "{{with $services.nginx_ingress.management_cluster_ingress_subdomain | required }}{{.}}{{end}}"
+  nginx_ingress_version: {{with $services.nginx_ingress.version | quote | required }}{{.}}{{end}}
 {{- end }}
 {{- if $services.istio.enabled }}
-  kube_vip_istio_system_ipam: "{{with $services.istio.vip | required }}{{.}}/32{{end}}"
-{{- end }}
+  istio_version: {{with $services.istio.vip | quote | required }}{{.}}{{end}}
 {{- end }}
 {{- if $services.cert_manager.enabled }}
+  cert_manager_version: {{with $services.cert_manager.version | quote | required }}{{.}}{{end}}
 {{- if $services.cert_manager.aws_route53_acme_dns.enabled }}
-  aws_route53_dns_zone: "{{with $services.cert_manager.aws_route53_acme_dns.zone | required }}{{.}}{{end}}"
-  aws_route53_region: "{{with $services.cert_manager.aws_route53_acme_dns.region | required }}{{.}}{{end}}"
+  cert_manager_issuer_name: "letsencrypt-issuer"
+{{- else }}
+  cert_manager_issuer_name: "selfsigned-cluster-issuer"
 {{- end }}
 {{- end }}
-{{- if $nutanix.prism_central.enabled }}  
+{{- if $apps.gptnvd_reference_app.enabled }}
 {{- if $nutanix.objects.enabled }}
-  objects_host: "{{with $nutanix.objects.host | required }}{{.}}{{end}}"
-  objects_port: "{{with $nutanix.objects.port | default "80" }}{{.}}{{end}}"
-  objects_region: "{{with $nutanix.objects.region | default "us-east-1" }}{{.}}{{end}}"
-  objects_use_ssl: "{{with $nutanix.objects.use_ssl | default "false" }}{{.}}{{end}}"
+  documents_objects_bucket_name: {{with $apps.gptnvd_reference_app.documents_bucket_name | quote | required }}{{.}}{{end}}
 {{- end }}
 {{- end }}
-{{- if $apps.reference_app.enabled }}
+{{- if $services.milvus.enabled }}
+  milvus_version: {{with $services.milvus.version | quote | required }}{{.}}{{end}}
 {{- if $nutanix.objects.enabled }}
-  milvus_objects_bucket_name: "{{with $apps.reference_app.rag_config.milvus_bucket_name | required }}{{.}}{{end}}"
-  documents_objects_bucket_name: "{{with $apps.reference_app.rag_config.documents_bucket_name | required }}{{.}}{{end}}"
+  milvus_objects_bucket_name: {{with $services.milvus.milvus_bucket_name | quote | required }}{{.}}{{end}}
 {{- end }}
-  model: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  revision: "{{with $apps.reference_app.llm_config.revision | required }}{{.}}{{end}}"
-  maxTokens: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  repPenalty: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  temperature: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  topP: "{{with $apps.reference_app.llm_config.model | required }}{{.}}{{end}}"
-  useExistingNFS: "{{with $apps.reference_app.llm_config.useExistingNFS | default "false" }}{{.}}{{end}}"
-  nfs_export: "{{with $apps.reference_app.llm_config.nfs_export | required }}{{.}}{{end}}"
-  nfs_server: "{{with $apps.reference_app.llm_config.nfs_server | required }}{{.}}{{end}}"
+{{- if $services.kafka.enabled }}
+  kafka_version: {{with $services.kafka.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- end }}
+{{- if $apps.nai_helm.enabled }}
+  model: {{with $apps.nai_helm.model | quote | required }}{{.}}{{end}}
+  revision: {{with $apps.nai_helm.revision | quote | required }}{{.}}{{end}}
+  maxTokens: {{with $apps.nai_helm.maxTokens | quote | required }}{{.}}{{end}}
+  repPenalty: {{with $apps.nai_helm.repPenalty | quote | required }}{{.}}{{end}}
+  temperature: {{with $apps.nai_helm.temperature | quote | required }}{{.}}{{end}}
+  topP: {{with $apps.nai_helm.topP | quote | required }}{{.}}{{end}}
+  useExistingNFS: {{with $apps.nai_helm.useExistingNFS | quote | default "false" }}{{.}}{{end}}
+{{- end }}
+{{- if $services.kserve.enabled }}
+  kserve_version: {{with $services.kserve.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.knative_serving.enabled }}
+  knative_serving_version: {{with $services.knative_serving.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.knative_istio.enabled }}
+  knative_istio_version: {{with $services.knative_istio.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.kubernetes_dashboard.enabled }}
+  kubernetes_dashboard_version: {{with $services.kubernetes_dashboard.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.kyverno.enabled }}
+  kyverno_version: {{with $services.kyverno.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.opentelemetry_collector.enabled }}
+  opentelemetry_collector_version: {{with $services.opentelemetry_collector.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.opentelemetry_operator.enabled }}
+  opentelemetry_operator_version: {{with $services.opentelemetry_operator.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.uptrace.enabled }}
+  uptrace_version: {{with $services.uptrace.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.weave_gitops.enabled }}
+  weave_gitops_version: {{with $services.weave_gitops.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.jupyterhub.enabled }}
+  jupyterhub_version: {{with $services.jupyterhub.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.elasticsearch.enabled }}
+  elasticsearch_version: {{with $services.elasticsearch.version | quote | required }}{{.}}{{end}}
+{{- end }}
+{{- if $services.redis.enabled }}
+  redis_version: {{with $services.redis.version | quote | required }}{{.}}{{end}}
 {{- end }}

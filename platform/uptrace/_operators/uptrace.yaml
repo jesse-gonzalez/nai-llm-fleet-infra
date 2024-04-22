@@ -28,5 +28,5 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: uptrace
-      version: "1.5.7"
+      version: ${uptrace_version}
   interval: 1h
