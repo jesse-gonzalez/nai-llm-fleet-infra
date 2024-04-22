@@ -39,10 +39,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+  # decryption:
+  #   provider: sops
+  #   secretRef:
+  #     name: sops-age
   path: ./platform/weave-gitops/_resource-configs
   prune: true
   wait: true
@@ -54,6 +54,6 @@ spec:
     - kind: ConfigMap
       name: cluster-configs
       optional: false
-    - kind: Secret
-      name: cluster-secrets
-      optional: false
+    # - kind: Secret
+    #   name: cluster-secrets
+    #   optional: true
