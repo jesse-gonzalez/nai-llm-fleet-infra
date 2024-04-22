@@ -3,18 +3,13 @@ name: e2e
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
     paths:
     - '.github/workflows/e2e.yml'
     - 'clusters/_profiles/kind-stacks/**/*'
-    tags:
-      - v*
   pull_request:
-    branches:
-    - main
-    - feat**
-    - bug**
-    - task**
+    branches: ["main"]
     paths:
     - '.github/workflows/e2e.yml'
     - 'clusters/_profiles/kind-stacks/**/*'
@@ -26,7 +21,8 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
+
 env:
   K8S_CLUSTER_NAME: 'flux-kind-cicd'
 

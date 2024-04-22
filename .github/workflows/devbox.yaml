@@ -4,27 +4,20 @@ name: "devbox"
 on:
   workflow_dispatch:
   push:
-    branches:
-    - main
-    - feat**
-    - bug**
-    - task**
+    branches: [ '*' ]
+    tags-ignore: [ '*' ]
     paths:
     - '.github/workflows/devbox.yml'
     - './devbox.**'
-    tags:
-      - v*
   pull_request:
     branches: ["main"]
     paths:
     - '.github/workflows/devbox.yml'
     - './devbox.**'
-  # schedule:
-  #   - cron: "0 0 * * 1"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   test:
