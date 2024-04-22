@@ -78,6 +78,7 @@ tasks:
     cmds:
     - ./scripts/dotfiles/install_kube-ps1.sh
     - cp -r scripts/dotfiles/. $HOME
+    - echo "Loading of .dotfiles is complete, proceed by reloading shell using `source ~/.bashrc`"
 
   install-zsh:
     prompt: This will install zsh on local machine, interactively...Would you like to proceed?
