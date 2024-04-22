@@ -53,7 +53,7 @@ jobs:
           --password=${{ github.token }} \
           --ignore-paths="clusters/**/flux-system/"
 
-      - name: Create Flux Source GitRepository
+      - name: Create Flux Cluster Kustomization
         run: |
           flux create kustomization flux-system \
           --source=flux-system \
