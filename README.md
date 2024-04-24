@@ -72,7 +72,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     ```bash
     eval $(task nke:switch-shell-env) && \
     task nke:download-creds && \
-    kubectl get nodes -o wide
+    kubectl get nodes
     ```
 
 6. Run Flux Bootstrapping - `task bootstrap:silent`
