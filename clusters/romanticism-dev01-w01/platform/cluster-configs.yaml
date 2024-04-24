@@ -3,9 +3,9 @@ apiVersion: v1
 metadata:
   name: cluster-configs
 data:
-  cluster_name: "romanticism-dev01-mgmt"
+  cluster_name: "romanticism-dev01-w01"
   environment: "non-prod"
-  cluster_profile: "llm-management"
+  cluster_profile: "llm-workloads"
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
   gpu_operator_version: "v23.9.0"
   nginx_ingress_version: "4.8.3"
