@@ -14,7 +14,6 @@ data:
   milvus_version: "4.1.13"
   milvus_objects_bucket_name: "romanticism-dev01-mgmt-milvus"
   kafka_version: "26.8.5"
-  knative_istio_version: "knative-v1.10.0"
   kyverno_version: "3.1.4"
   opentelemetry_collector_version: "0.80.1"
   opentelemetry_operator_version: "0.47.0"
