@@ -116,4 +116,4 @@ tasks:
     cmds:
     - kubectl get pods,svc,ingress -n kafka
     - kubectl get cm ingress-nginx-ingress-nginx-tcp -n ingress-nginx -o yaml  -o json | jq .data | grep -i kafka
-    - ./opt/bitnami/kafka/bin/kafka-topics.sh --list
+    #- ./opt/bitnami/kafka/bin/kafka-topics.sh --list
