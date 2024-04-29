@@ -7,7 +7,7 @@ data:
   environment: "prod"
   cluster_profile: "llm-management"
   nginx_ingress_version: "4.8.3"
-  cert_manager_version: "v1.9.1"
+  cert_manager_version: "v1.13.5"
   cert_manager_issuer_name: "letsencrypt-issuer"
   milvus_version: "4.1.13"
   milvus_objects_bucket_name: "nai-llm-gitops-mgmt-milvus"

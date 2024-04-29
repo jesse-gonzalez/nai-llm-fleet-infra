@@ -9,7 +9,7 @@ data:
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
   gpu_operator_version: "v23.9.0"
   nginx_ingress_version: "4.8.3"
-  cert_manager_version: "v1.9.1"
+  cert_manager_version: "v1.13.5"
   cert_manager_issuer_name: "letsencrypt-issuer"
   milvus_version: "4.1.13"
   milvus_objects_bucket_name: "romanticism-dev01-mgmt-milvus"

@@ -4,5 +4,5 @@ namespace: flux-system
 components:
 - ../../_profiles/kind-stacks/minimal
 resources:
-#- cluster-secrets.sops.yaml
+- cluster-secrets.sops.yaml
 - cluster-configs.yaml
