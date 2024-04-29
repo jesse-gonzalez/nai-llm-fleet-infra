@@ -4,6 +4,5 @@ resources:
 - gpu-operator-repo.yaml
 - knative-istio-repo.yaml
 - knative-serving-repo.yaml
-- knative-eventing-repo.yaml
 - kserve-repo.yaml
 - nai-helm-repo.yaml
