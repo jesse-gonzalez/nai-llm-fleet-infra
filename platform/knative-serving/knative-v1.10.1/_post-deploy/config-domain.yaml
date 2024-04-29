@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: config-domain
   annotations:
-    kustomize.toolkit.fluxcd.io/force: disabled
+    kustomize.toolkit.fluxcd.io/force: enabled
   namespace: knative-serving
 data:
   ${wildcard_ingress_subdomain}: ""

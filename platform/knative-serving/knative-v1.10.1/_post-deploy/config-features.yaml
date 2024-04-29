@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: config-features
   annotations:
-    kustomize.toolkit.fluxcd.io/force: disabled
+    kustomize.toolkit.fluxcd.io/force: enabled
   namespace: knative-serving
 data:
   kubernetes.podspec-tolerations: "enabled"
