@@ -6,7 +6,6 @@ metadata:
 spec:
   dependsOn:
   - name: knative-serving-post-deploy
-  - name: knative-eventing-post-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository

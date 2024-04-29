@@ -49,7 +49,7 @@ tasks:
     cmds:
     - kubectl config view --raw --minify --kubeconfig ${HOME}/.kube/tmp-kubeconfig | tee "${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg"
     - |
-      echo "export KUBECONFIG=${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg" && \
+      export KUBECONFIG=${HOME}/.kube/{{.NKE_CLUSTER_NAME}}.cfg && \
       kubectl config use-context {{.NKE_CLUSTER_NAME}}-context
     interactive: true
 
