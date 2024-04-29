@@ -87,7 +87,7 @@ spec:
   path: ./platform/knative-serving/knative-v1.10.1/_post-deploy
   prune: true
   wait: true
-  force: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:

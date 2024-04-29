@@ -3,7 +3,7 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-issuer
   annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/force: disabled
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory

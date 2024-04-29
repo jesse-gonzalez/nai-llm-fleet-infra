@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: milvus-operator
   annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/force: disabled
   namespace: flux-system
 spec:
   targetNamespace: ${namespace_name:=milvus-operator}

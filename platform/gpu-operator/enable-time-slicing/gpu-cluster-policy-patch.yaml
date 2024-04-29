@@ -3,7 +3,7 @@ kind: ClusterPolicy
 metadata:
   name: cluster-policy
   annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/force: disabled
   namespace: gpu-operator
 spec:
   devicePlugin:

@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: config-gc
   annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/force: disabled
   namespace: knative-serving
 data:
   max-non-active-revisions: "0"

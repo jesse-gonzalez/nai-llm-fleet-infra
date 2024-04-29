@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: time-slicing-config
   annotations:
-    kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/force: disabled
   namespace: gpu-operator
 data:
   any: |-
