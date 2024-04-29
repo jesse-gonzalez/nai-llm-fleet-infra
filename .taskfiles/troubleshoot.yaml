@@ -108,3 +108,12 @@ tasks:
     - kubectl get po -l ray.io/node-type=head
     #{{.CLI_ARGS | default "-n default"}} 
     #ray.io/node-type=worker,ray.io/serve=true
+
+  kafka-collect:
+    silent: false
+    deps: [default]
+    desc: Gather common Kafka resources in your cluster
+    cmds:
+    - kubectl get pods,svc,ingress -n kafka
+    - kubectl get cm ingress-nginx-ingress-nginx-tcp -n ingress-nginx -o yaml  -o json | jq .data | grep -i kafka
+    - ./opt/bitnami/kafka/bin/kafka-topics.sh --list
