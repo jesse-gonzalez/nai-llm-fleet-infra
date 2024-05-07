@@ -26,12 +26,20 @@ spec:
   chart:
     spec:
       chart: milvus-operator
-      interval: 1h
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: milvus-operator
       version: "0.9.x"
-  interval: 1h
+  interval: 30m
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+    preserveValues: true
   values:
     imagePullSecrets: # Optional
     - name: docker-hub-regcred

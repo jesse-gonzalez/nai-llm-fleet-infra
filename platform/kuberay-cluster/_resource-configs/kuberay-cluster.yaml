@@ -24,12 +24,12 @@ spec:
   chart:
     spec:
       chart: ray-cluster
-      interval: 1h
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: kuberay
       version: "1.1.0"
-  interval: 1h
+  interval: 30m
   timeout: 10m
   install:
     remediation:

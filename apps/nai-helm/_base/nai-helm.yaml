@@ -11,7 +11,7 @@ metadata:
   name: nai-llm-helm
   namespace: flux-system
 spec:
-  interval: 60m0s
+  interval: 15m
   url: https://jesse-gonzalez.github.io/nai-llm-helm/
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1

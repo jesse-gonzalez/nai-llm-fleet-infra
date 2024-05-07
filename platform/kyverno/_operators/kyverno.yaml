@@ -24,10 +24,18 @@ spec:
   chart:
     spec:
       chart: kyverno
-      interval: 1h
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: kyverno
       version: ${kyverno_version}
-  interval: 1h
+  interval: 30m
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+    preserveValues: true
   values: {}

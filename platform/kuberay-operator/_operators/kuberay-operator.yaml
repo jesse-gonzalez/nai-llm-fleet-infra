@@ -24,13 +24,13 @@ spec:
   chart:
     spec:
       chart: kuberay-operator
-      interval: 1h
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: kuberay
       version: "1.1.0"
-  interval: 1h
-  timeout: 5m
+  interval: 30m
+  timeout: 10m
   install:
     remediation:
       retries: 3

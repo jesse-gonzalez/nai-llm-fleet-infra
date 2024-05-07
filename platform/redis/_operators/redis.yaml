@@ -24,12 +24,20 @@ spec:
   chart:
     spec:
       chart: redis
-      interval: 1h
+      interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bitnami
       version: ${redis_version}
-  interval: 1h
+  interval: 30m
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+    preserveValues: true
   values:
     global:
       redis:
