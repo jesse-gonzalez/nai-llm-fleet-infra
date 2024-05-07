@@ -5,15 +5,14 @@ metadata:
   namespace: flux-system
 spec:
   values:
-    app:
-      ingress:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
-        hosts:
-        - gitops.${wildcard_ingress_subdomain}
-        className: nginx
-        secretName: weave-gitops-certs
-        issuer:
-          name: ${cert_manager_issuer_name}
-          scope: cluster
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
+      hosts:
+      - gitops.${wildcard_ingress_subdomain}
+      className: nginx
+      secretName: weave-gitops-certs
+      issuer:
+        name: ${cert_manager_issuer_name}
+        scope: cluster
