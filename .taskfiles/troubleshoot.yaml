@@ -128,7 +128,7 @@ tasks:
   kafka-repair:
     silent: false
     deps: [default]
-    desc: Purge and RepairKafka OSSEvents Topic
+    desc: Purge and Repair Kafka OSSEvents Topic
     env:
       KAFKA_HOME: ./opt/bitnami/kafka/bin
       TOPIC_NAME: OSSEvents
