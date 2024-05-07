@@ -119,14 +119,11 @@ tasks:
     cmds:
     - kubectl get pods,svc,ingress -n kafka
     - kubectl get cm ingress-nginx-ingress-nginx-tcp -n ingress-nginx -o yaml  -o json | jq .data | grep -i kafka
-    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 --version
-    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --list --exclude-internal
+    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --list --exclude-internal
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --describe
-    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type topics --entity-name $TOPIC_NAME --describe
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic $TOPIC_NAME
-    # kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- ls /opt/bitnami/kafka/bin
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --max-messages 2 --timeout-ms 5000 --skip-message-on-error
-    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-transactions.sh --bootstrap-server localhost:9092 list
+    # kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- ls /opt/bitnami/kafka/bin
 
   kafka-repair:
     silent: false
