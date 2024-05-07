@@ -7,12 +7,15 @@ spec:
   values:
     ingress:
       enabled: true
+      className: "nginx"
       annotations:
         cert-manager.io/cluster-issuer: ${cert_manager_issuer_name}
       hosts:
       - host: gitops.${wildcard_ingress_subdomain}
-      className: nginx
-      secretName: weave-gitops-certs
-      issuer:
-        name: ${cert_manager_issuer_name}
-        scope: cluster
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+      tls:
+      - secretName: weave-gitops-ingress-tls
+        hosts:
+        - gitops.${wildcard_ingress_subdomain}
