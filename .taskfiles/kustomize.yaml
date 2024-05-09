@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    internal: true
+    vars:
+      REQUIRED_TOOLS_LIST: kustomize
+
+  localize:
+    silent: true
+    deps: [default]
+    desc: Leverages kustomize localize to download all remote manifests
+    cmds:
+    - kustomize localize platform/kserve/v0.11.2/_deploy platform/kserve/v0.11.2/_deploy/manifests
+    - kustomize localize platform/kserve/v0.11.2/_post-deploy platform/kserve/v0.11.2/_post-deploy/manifests

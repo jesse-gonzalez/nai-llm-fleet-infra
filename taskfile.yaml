@@ -12,6 +12,9 @@ includes:
   kubectl:
     taskfile: ./.taskfiles/kubectl.yaml
     aliases: [k]
+  kustomize:
+    taskfile: ./.taskfiles/kustomize.yaml
+    aliases: [ks]
   nke: ./.taskfiles/nke.yaml
   flux: ./.taskfiles/flux.yaml
   tofu: ./.taskfiles/tofu.yaml
