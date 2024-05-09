@@ -1,8 +1,5 @@
 version: '3'
 
-#vars:
-#  K8S_CLUSTER_NAME: '{{.K8S_CLUSTER_NAME}}'
-
 dotenv: ['configs/_common/.env', '.local/{{.K8S_CLUSTER_NAME}}/.env']
 
 includes:
