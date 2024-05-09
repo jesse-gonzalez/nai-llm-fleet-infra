@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+commonLabels:
+  knative.dev/crd-install: "true"
+kind: Kustomization
+resources:
+- localized-files/github.com/knative/net-istio/releases/download/knative-v1.10.0/istio.yaml
