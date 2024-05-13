@@ -2,8 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ./net-istio.yaml
-- ./serving-hpa.yaml
+#- ./net-istio.yaml
+#- ./serving-hpa.yaml
 - ./config-domain.yaml
 - ./config-features.yaml
 - ./config-gc.yaml
+- https://github.com/knative/serving/releases/download/knative-v1.10.1/serving-hpa.yaml
