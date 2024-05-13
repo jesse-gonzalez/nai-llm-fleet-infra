@@ -80,7 +80,7 @@ spec:
       image:
         repository: "quay.io/wolfgangntnx/doc-ingest"
         pullPolicy: Always
-        #tag: 0.2.7-1
+        tag: 0.2.7-1
 
       imagePullSecrets: []
       nameOverride: backend
