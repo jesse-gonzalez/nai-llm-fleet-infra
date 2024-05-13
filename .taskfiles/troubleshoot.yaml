@@ -122,7 +122,7 @@ tasks:
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --list --exclude-internal
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --describe
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic $TOPIC_NAME
-    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --max-messages 2 --timeout-ms 5000 --skip-message-on-error
+    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --max-messages 5 --timeout-ms 5000 --skip-message-on-error
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group knative-group --describe --members
     # kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- ls /opt/bitnami/kafka/bin
 
@@ -135,7 +135,7 @@ tasks:
       TOPIC_NAME: OSSEvents
     cmds:
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic $TOPIC_NAME && sleep 5
-    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic $TOPIC_NAME --partitions 4
+    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic $TOPIC_NAME --partitions 1
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name $TOPIC_NAME --add-config max.message.bytes=10485880
     #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --consumer-property max.partition.fetch.bytes=10485880
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --describe
