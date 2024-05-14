@@ -142,6 +142,28 @@ tasks:
     requires:
       vars: [K8S_CLUSTER_NAME]
 
+  suspend-all:
+    silent: false
+    prompt: "Are you sure you wish to SUSPEND all resources managed by flux?"
+    deps: [default]
+    desc: Suspends all flux resources from being reconciled
+    cmds:
+    - kubectl get kustomization -n flux-system -o name | cut -d/ -f2 | xargs flux suspend kustomization
+    - kubectl get helmrelease -n flux-system -o name | cut -d/ -f2 | xargs flux suspend helmrelease
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
+  resume-all:
+    silent: false
+    prompt: "Are you sure you wish to RESUME all resources managed by flux?"
+    deps: [default]
+    desc: Resumes all flux resources from being reconciled
+    cmds:
+    - kubectl get kustomization -n flux-system -o name | cut -d/ -f2 | xargs flux resume kustomization
+    - kubectl get helmrelease -n flux-system -o name | cut -d/ -f2 | xargs flux resume helmrelease
+    requires:
+      vars: [K8S_CLUSTER_NAME]
+
   get-cluster-configs:
     silent: true
     deps: [default]
