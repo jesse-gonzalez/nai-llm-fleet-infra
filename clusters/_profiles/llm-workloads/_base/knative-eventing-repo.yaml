@@ -4,8 +4,8 @@ metadata:
   name: knative-eventing-pre-deploy
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: knative-serving-post-deploy
+  #dependsOn:
+  #- name: knative-serving-post-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
@@ -17,6 +17,7 @@ spec:
   path: ./platform/knative-eventing/knative-v1.10.1/_pre-deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:
@@ -48,6 +49,7 @@ spec:
   path: ./platform/knative-eventing/knative-v1.10.1/_deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:

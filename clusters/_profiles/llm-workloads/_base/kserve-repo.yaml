@@ -17,6 +17,7 @@ spec:
   path: ./platform/kserve/v0.11.2/_deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:
@@ -57,6 +58,7 @@ spec:
   path: ./platform/kserve/v0.11.2/_post-deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:

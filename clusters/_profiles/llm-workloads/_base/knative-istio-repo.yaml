@@ -18,6 +18,7 @@ spec:
   path: ./platform/knative-istio/knative-v1.10.0/_pre-deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:
@@ -37,7 +38,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: knative-serving-post-deploy
+  #- name: knative-serving-post-deploy
   - name: knative-istio-pre-deploy
   interval: 15m
   sourceRef:
@@ -50,6 +51,7 @@ spec:
   path: ./platform/knative-istio/knative-v1.10.0/_deploy/manifests
   prune: true
   wait: true
+  force: false
   timeout: 15m
   postBuild:
     substitute:
