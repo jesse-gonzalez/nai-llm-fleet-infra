@@ -13,13 +13,13 @@ tasks:
       REQUIRED_TOOLS_LIST: aws
 
   config-creds:
-    silent: true
+    silent: false
     deps: [default]
     desc: Configures local aws credentials in following location {{.AWS_CREDENTIALS_FILE}}
     cmds:
-    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-    - aws configure set default.region ${AWS_DEFAULT_REGION}
+    - aws configure set aws_access_key_id {{.BOOTSTRAP_aws_access_key_id}}
+    - aws configure set aws_secret_access_key {{.BOOTSTRAP_aws_access_key_secret}}
+    - aws configure set default.region {{.BOOTSTRAP_aws_route53_region}}
     - aws configure list
     generates:
     - '{{.AWS_CREDENTIALS_FILE}}'

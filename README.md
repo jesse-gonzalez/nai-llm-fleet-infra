@@ -1,13 +1,13 @@
-- [Nutanix GitOps Examples](#nutanix-gitops-examples)
+- [Deploying GPT-in-a-Box NVD Reference Application using GitOps (FluxCD)](#deploying-gpt-in-a-box-nvd-reference-application-using-gitops-fluxcd)
   - [Getting Started](#getting-started)
     - [Option 1: Using Devbox NIX Shell](#option-1-using-devbox-nix-shell)
-    - [Using Devcontainer](#using-devcontainer)
+    - [Option 2: Using VSCode Devcontainer](#option-2-using-vscode-devcontainer)
     - [Bootstrapping New NKE Cluster](#bootstrapping-new-nke-cluster)
       - [Silent Bootstrap](#silent-bootstrap)
   - [Appendix](#appendix)
     - [Directory Structure](#directory-structure)
 
-# Nutanix GitOps Examples
+# Deploying GPT-in-a-Box NVD Reference Application using GitOps (FluxCD)
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ Start the `devbox shell` and if `nix` isn't available, you will be prompted to i
 devbox shell
 ```
 
-### Using Devcontainer
+### Option 2: Using VSCode Devcontainer
 
 See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudio.com/docs/devcontainers/tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
 

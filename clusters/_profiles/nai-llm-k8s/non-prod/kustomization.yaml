@@ -7,8 +7,12 @@ components:
 ## then _profiles/llm-workloads/_base next
 - ../_base
 
+resources:
+- jupyterhub-repo.yaml
+
 patches:
 - path: gpu-operator-addons.yaml
 - path: weave-gitops-addons.yaml
 - path: kserve-addons.yaml
+- path: jupyterhub-addons.yaml
 - path: nai-helm-addons.yaml
