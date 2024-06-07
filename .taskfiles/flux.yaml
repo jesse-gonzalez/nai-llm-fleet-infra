@@ -104,18 +104,27 @@ tasks:
   reconcile:
     silent: true
     deps: [default]
-    desc: Force update Flux to pull in changes from your Git repository
+    desc: Force a Reconcile of flux resources from latest in Git Repository
+    vars:
+      IS_NKP_CLUSTER:
+        sh: '[ -z $(kubectl get ks kommander -o name -n kommander --ignore-not-found) ] || echo $?'
     cmds:
-    - flux reconcile -n flux-system source git flux-system
-    - flux reconcile -n flux-system kustomization flux-system
+    - |
+      {{if .IS_NKP_CLUSTER}}
+        flux reconcile source git management -n kommander-flux
+        flux reconcile kustomization kommander -n kommander
+      {{else}}
+        flux reconcile source git flux-system -n flux-system
+        flux reconcile kustomization flux-system -n flux-system
+      {{end}}
 
   summary:
     silent: true
     deps: [default]
-    desc: Use to troubleshoot issues with flux resources
+    desc: Use to troubleshoot issues with flux resources.
     cmds:
-    - flux get all
-    - flux stats
+    - flux get all -n {{.CLI_ARGS | default "flux-system"}}
+    - flux stats -n {{.CLI_ARGS | default "flux-system"}}
 
   watch:
     silent: true

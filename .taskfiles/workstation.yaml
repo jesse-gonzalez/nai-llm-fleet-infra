@@ -31,7 +31,7 @@ tasks:
     cmds:
     - '[ -n "$(command -v arkade)" ] || (curl -sLS https://get.arkade.dev | sudo sh)'
     - for: {var: ARKADE_PACKAGES, split: ',', as: ARKADE_PACKAGE}
-      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo mv ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
+      cmd: 'arkade get {{ .ARKADE_PACKAGE }} && sudo cp ${HOME}/.arkade/bin/{{ .ARKADE_PACKAGE }} /usr/local/bin/'
 
   krew:
     prompt: This will install Krew and dependent kubectl plugins... Do you wish to continue?
@@ -50,7 +50,6 @@ tasks:
 
   install-linux-packages:
     platforms: [linux]
-    dir: '{{.USER_WORKING_DIR}}'
     prompt: This will install linux minimal dependent pre-reqs... Do you wish to continue?
     silent: true
     desc: Check kubectl plugins and if not available, install
@@ -73,7 +72,6 @@ tasks:
   load-dotfiles:
     prompt: WARNING!! This will load scripts/dotfiles into ${HOME} directory... Are you certain you wish to continue?
     platforms: [linux]
-    dir: '{{.USER_WORKING_DIR}}'
     desc: Loads scripts/dotfiles into home directorya and installs kube-ps1 PS1 prompt and ZSH. Only for new linux use cases
     cmds:
     - ./scripts/dotfiles/install_kube-ps1.sh
@@ -82,7 +80,6 @@ tasks:
 
   install-zsh:
     prompt: This will install zsh on local machine, interactively...Would you like to proceed?
-    dir: '{{.USER_WORKING_DIR}}'
     desc: Installs zsh and configures oh-my-zsh interactively
     cmds:
     - ./scripts/dotfiles/install_zsh.sh
@@ -90,7 +87,6 @@ tasks:
 
   install-devbox:
     prompt: This will install Devbox on local machine, interactively...Would you like to proceed?
-    dir: '{{.USER_WORKING_DIR}}'
     desc: Installs devbox interactively
     cmd: curl -fsSL https://get.jetify.com/devbox | bash
     interactive: true
