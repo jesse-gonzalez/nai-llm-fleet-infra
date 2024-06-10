@@ -14,9 +14,9 @@ We will use Infrastucture as Code framework to deploy NKE kubernetes clusters.
 - NKE is at version 1.8 (updated through LCM)
 - NKE OS at version 1.5
 
-## Preparing OpenTofu 
+## Preparing OpenTofu
 
-On your Linux workstation run the following scripts to install OpenTofu. See [here]for latest instructions and other platform information. 
+On your Linux workstation run the following scripts to install OpenTofu. See [here]for latest instructions and other platform information.
 
 ```bash title="Download the installer script:"
 curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
