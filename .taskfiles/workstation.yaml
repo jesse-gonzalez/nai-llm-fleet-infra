@@ -111,10 +111,9 @@ tasks:
   install-docker:
     silent: true
     platforms: [linux]
-    desc: Installs Docker Engine on Linux machine using convenience script.
+    desc: Installs Docker on Linux machine. This will enable, start and configure current user to run docker cli.
     cmds:
-    - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (sudo apt-get install -y uidmap);fi'
-    - '[ -n "$(command -v docker)" ] || (curl -fsSL https://get.docker.com | sudo bash && dockerd-rootless-setuptool.sh install)'
+    - '[ -n "$(command -v docker)" ] || ./scripts/common/install_linux_docker.sh'
 
   bootstrap-jumpbox:
     prompt: This should ONLY be installed on NEW jumpbox as it will install ALL packages and override local dotfiles... Are you certain you wish to continue?
