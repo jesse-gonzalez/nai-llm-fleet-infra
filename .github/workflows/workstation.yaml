@@ -50,5 +50,5 @@ jobs:
     - name: Run Workstation Deployment for Platform Engineering Role
       run: task workstation:install-packages --yes USER_ROLE="devops-role"
 
-    - name: Run Bootstrap all Packages available for Bastion Host
-      run: task workstation:install-packages --yes USER_ROLE="devops-role"
+    - name: Test Bootstrapping all Packages available on Jumpbox like use case
+      run: task workstation:bootstrap-jumpbox --yes
