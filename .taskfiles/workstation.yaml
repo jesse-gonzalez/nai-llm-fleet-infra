@@ -127,6 +127,5 @@ tasks:
         task workstation:krew --yes
         task workstation:install-docker --yes
         task workstation:install-dkp --yes
-        task workstation:install-zsh --yes
         task workstation:load-dotfiles --yes
       {{end}}
