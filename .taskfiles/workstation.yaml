@@ -105,6 +105,7 @@ tasks:
     desc: Installs Nutanix DKP cli tool
     cmds:
     - ./scripts/common/install_linux_dkp.sh
+    - arkade get kind && sudo cp -a ${HOME}/.arkade/bin/kind /usr/local/bin/
     interactive: true
 
   install-docker:
