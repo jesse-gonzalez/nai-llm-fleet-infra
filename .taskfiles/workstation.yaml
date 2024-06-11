@@ -58,7 +58,7 @@ tasks:
     - '[ -n "$(command -v gum)" ] || ./scripts/common/install_linux_gum.sh'
     - '[ -n "$(command -v age)" ] || ./scripts/common/install_linux_age.sh'
     - '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
-    - './scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh'
+    - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (./scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh);fi'
 
   install-packages:
     prompt: This will install all required packages locally... Are you certain you wish to continue?
@@ -98,6 +98,7 @@ tasks:
 
   install-dkp:
     prompt: This will install dkp cli on local machine...Would you like to proceed?
+    deps: [install-docker]
     silent: true
     platforms: [darwin, linux]
     dir: '{{.USER_WORKING_DIR}}'
@@ -111,9 +112,8 @@ tasks:
     platforms: [linux]
     desc: Installs Docker Engine on Linux machine using convenience script.
     cmds:
-    - sudo apt-get install -y uidmap
-    - curl -fsSL https://get.docker.com | sudo bash
-    - dockerd-rootless-setuptool.sh install
+    - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (sudo apt-get install -y uidmap);fi'
+    - '[ -n "$(command -v docker)" ] || (curl -fsSL https://get.docker.com | sudo bash && dockerd-rootless-setuptool.sh install)'
 
   bootstrap-jumpbox:
     prompt: This should ONLY be installed on NEW jumpbox as it will install ALL packages and override local dotfiles... Are you certain you wish to continue?
