@@ -41,7 +41,11 @@ alias k='kubectl'
 complete -F __start_kubectl k
 export do='--dry-run=client -o yaml'
 
-if [ -f $HOME/.kube/config ]; then
+if [ ! -f $HOME/.kube/config ]; then
+  mkdir -p $HOME/.kube && touch $HOME/.kube/config
+fi
+
+if ls $HOME/.kube/*.cfg 1> /dev/null 2>&1; then
   export KUBECONFIG_HOME=$HOME/.kube
   export KUBECONFIG_LIST=$( ls $HOME/.kube/*.cfg | xargs -n 1 basename | xargs -I {} echo $KUBECONFIG_HOME/{} )
   export KUBECONFIG=$( echo $KUBECONFIG_LIST | tr ' ' ':' )

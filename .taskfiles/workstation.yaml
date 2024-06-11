@@ -82,6 +82,7 @@ tasks:
 
   install-zsh:
     prompt: This will install zsh on local machine, interactively...Would you like to proceed?
+    platforms: [darwin, linux]
     dir: '{{.USER_WORKING_DIR}}'
     desc: Installs zsh and configures oh-my-zsh interactively
     cmds:
@@ -95,4 +96,12 @@ tasks:
     cmd: curl -fsSL https://get.jetify.com/devbox | bash
     interactive: true
 
-
+  install-dkp:
+    prompt: This will install dkp cli on local machine...Would you like to proceed?
+    silent: true
+    platforms: [darwin, linux]
+    dir: '{{.USER_WORKING_DIR}}'
+    desc: Installs Nutanix DKP cli tool
+    cmds:
+    - ./scripts/common/install_linux_dkp.sh
+    interactive: true

@@ -6,7 +6,6 @@ kubectl
 krew
 flux
 gh
-task
 gomplate
 kustomize
 kubectx

@@ -81,6 +81,7 @@ __pycache__
 *.tfstate.backup
 terraform/**-config
 opentofu/**-config
+terraform.tfvars
 
 # kind
 #kind-**

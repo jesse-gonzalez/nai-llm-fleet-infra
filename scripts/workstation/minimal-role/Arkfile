@@ -6,5 +6,4 @@ kubectl
 krew
 flux
 gh
-task
 gomplate
