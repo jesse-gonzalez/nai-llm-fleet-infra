@@ -25,11 +25,20 @@ tasks:
   select-cluster:
     silent: true
     deps: [default]
+    desc: Prompt for Existing DKP Managed CAPI Cluster and Get Kubeconfig.
+    vars:
+      DKP_CLUSTER_NAME:
+        sh: task bootstrap:gum -- choose --header "Select existing DKP cluster instance to get kubeconfig." $(kubectl get cluster -o name -A | cut -d/ -f2)
+    cmds:
+    - dkp get kubeconfig -c {{.DKP_CLUSTER_NAME}} > $HOME/.kube/{{.DKP_CLUSTER_NAME}}.cfg
+
+  switch-shell-env:
+    silent: true
+    deps: [default]
     desc: Prompt for Existing Cluster Instance in Local Shell. ex. eval $(task dkp:switch-shell-env)
     vars:
       DKP_CLUSTER_NAME:
         sh: task bootstrap:gum -- choose --header "Select existing DKP cluster instance to load." $(kubectl get cluster -o name -A | cut -d/ -f2)
     cmds:
-    - dkp get kubeconfig -c {{.DKP_CLUSTER_NAME}} > $HOME/.kube/{{.DKP_CLUSTER_NAME}}.cfg
     - echo "export K8S_CLUSTER_NAME={{.DKP_CLUSTER_NAME}}"
     - echo "export KUBECONFIG=${HOME}/.kube/{{.DKP_CLUSTER_NAME}}.cfg"
