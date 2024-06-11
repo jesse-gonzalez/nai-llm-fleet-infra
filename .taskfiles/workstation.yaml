@@ -105,3 +105,18 @@ tasks:
     cmds:
     - ./scripts/common/install_linux_dkp.sh
     interactive: true
+
+  bootstrap-jumpbox:
+    prompt: This should ONLY be installed on NEW jumpbox as it will install ALL packages and override local dotfiles... Are you certain you wish to continue?
+    platforms: [linux]
+    desc: Bootstraps ALL platform engineering development and admin CLI tools and packages
+    cmds:
+    - |
+      {{if eq OS "linux"}}
+        task workstation:install-linux-packages USER_ROLE=devops-role --yes
+        task workstation:arkade --yes
+        task workstation:krew --yes
+        task workstation:install-dkp --yes
+        task workstation:install-zsh --yes
+        task workstation:load-dotfiles --yes
+      {{end}}
