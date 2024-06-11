@@ -106,6 +106,15 @@ tasks:
     - ./scripts/common/install_linux_dkp.sh
     interactive: true
 
+  install-docker:
+    silent: true
+    platforms: [linux]
+    desc: Installs Docker Engine on Linux machine using convenience script.
+    cmds:
+    - sudo apt-get install -y uidmap
+    - curl -fsSL https://get.docker.com | sudo bash
+    - dockerd-rootless-setuptool.sh install
+
   bootstrap-jumpbox:
     prompt: This should ONLY be installed on NEW jumpbox as it will install ALL packages and override local dotfiles... Are you certain you wish to continue?
     platforms: [linux]
@@ -116,6 +125,7 @@ tasks:
         task workstation:install-linux-packages USER_ROLE=devops-role --yes
         task workstation:arkade --yes
         task workstation:krew --yes
+        task workstation:install-docker --yes
         task workstation:install-dkp --yes
         task workstation:install-zsh --yes
         task workstation:load-dotfiles --yes

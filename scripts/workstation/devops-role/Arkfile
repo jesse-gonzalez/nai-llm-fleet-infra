@@ -19,3 +19,4 @@ clusterctl
 kind
 trivy
 kubestr
+kind
