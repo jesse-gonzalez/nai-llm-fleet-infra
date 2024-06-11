@@ -1,0 +1,23 @@
+version: '3'
+
+tasks:
+
+  default:
+  - task: :helpers:validate
+    internal: true
+    vars:
+      REQUIRED_TOOLS_LIST: dkp
+
+  bootstrap:
+    silent: true
+    deps: [default]
+    desc: DKP Bootstrap which writes out kubeconfig for easier access.
+    cmds:
+    - dkp create bootstrap --kubeconfig $HOME/.kube/kind-konvoy-capi-bootstrapper.cfg
+
+  watch:
+    silent: true
+    deps: [default]
+    desc: Watch Key resources during DKP Cluster create
+    cmds:
+    - watch "kubectl get cluster,md,ms,machine"

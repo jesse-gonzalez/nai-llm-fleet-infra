@@ -13,6 +13,7 @@ includes:
     taskfile: ./.taskfiles/kustomize.yaml
     aliases: [ks]
   nke: ./.taskfiles/nke.yaml
+  dkp: ./.taskfiles/dkp.yaml
   flux: ./.taskfiles/flux.yaml
   tofu: ./.taskfiles/tofu.yaml
   sops: ./.taskfiles/sops.yaml
