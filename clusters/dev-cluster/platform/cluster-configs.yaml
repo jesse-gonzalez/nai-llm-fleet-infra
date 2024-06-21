@@ -8,6 +8,7 @@ data:
   cluster_profile: "llm-workloads"
   gpu_cuda_toolkit_version: "v1.14.3-centos7"
   gpu_operator_version: "v23.9.0"
+  gpu_time_slicing_replica_count: "3"
   nginx_ingress_version: "4.8.3"
   istio_version: "10.122.7.217"
   cert_manager_version: "v1.9.1"
