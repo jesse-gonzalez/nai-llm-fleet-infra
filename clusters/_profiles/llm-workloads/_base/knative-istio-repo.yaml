@@ -3,6 +3,9 @@ kind: Kustomization
 metadata:
   name: knative-istio-pre-deploy
   namespace: flux-system
+  annotations:
+    #kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   dependsOn:
   - name: cert-manager-resource-configs
