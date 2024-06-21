@@ -67,7 +67,7 @@ tasks:
     - '{{if eq .NKE_PROMPT "yes"}} task nke:select-creds {{end}}'
 
   init-configs:
-    internal: true
+    internal: false
     silent: true
     deps: [default]
     desc: Initializes Cluster Configs based on Cluster Profile and Target K8s Cluster

@@ -1,63 +1,14 @@
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-crds.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-core.yaml
- 
-# HPA
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.11.6/serving-hpa.yaml
 
-# TLS
-kubectl apply -f https://github.com/knative/net-certmanager/releases/download/knative-v1.11.5/release.yaml
+## About this platform directory
 
+IMPORTANT: The `manifests/localized-files` folders are generated from the `kustomization.yaml` that are stored within root of each directory.
 
-TODO: 
+To generate the `manifests/localized-files` directories using `kusomize local` cli, you can run one for the following commands:
 
-kubectl patch configmap/config-domain \
-  --namespace knative-serving \
-  --type merge \
-  --patch '{"data":{"kubeflow.nai-llm-prod-mgmt.ncnlabs.ninja":""}}' --dry-run 
-
-
-  config:
-    # domain:
-    #   knative.${wildcard_ingress_subdomain}: ""
-
-Configure base domain:
-
-```
-kubectl patch configmap config-domain -n knative-serving --patch '
-data:
-  kubeflow.gptnvd.dachlab.net: ""
-'
-```
-
-Allow Tolerations:
-
-```
-kubectl patch configmap config-features -n knative-serving --patch '
-data:
-  kubernetes.podspec-tolerations: "enabled"
-'
-```
-
-Remember to add tolerations to inferenceservice like (nai-helm does it automatically):
-```
-  predictor:
-    tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "gpu"
-        effect: "NoSchedule"
-```
-
-Create wildcard DNS entries for each namespace you want to run kserve inferencing
-
-Configure Garbage Collection:
-
-```
-kubectl patch configmap config-gc -n knative-serving --patch '
-data:
-  max-non-active-revisions: "0"
-  min-non-active-revisions: "0"
-  retain-since-create-time: "disabled"
-  retain-since-last-active-time: "disabled"
-'
+```bash
+kustomize:localize-all:                      Leverages kustomize localize to download all remote manifests
+kustomize:localize-knative-eventing:         Leverages kustomize localize to download all remote manifests for knative-eventing
+kustomize:localize-knative-istio:            Leverages kustomize localize to download all remote manifests for knative-istio
+kustomize:localize-knative-serving:          Leverages kustomize localize to download all remote manifests for knative-serving
+kustomize:localize-kserve:                   Leverages kustomize localize to download all remote manifests for kserve               
 ```

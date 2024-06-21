@@ -51,6 +51,7 @@ __pycache__
 
 # ignore kubectl config files
 *.cfg
+kind-llm-management-config
 
 # ignore logfiles
 *.log
@@ -106,3 +107,4 @@ devcontainer.env
 ## ignore binaries
 *.tar
 *.tar.gz
+

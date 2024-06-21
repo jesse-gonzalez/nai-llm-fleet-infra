@@ -4,7 +4,7 @@ metadata:
   name: config-domain
   annotations:
     #kustomize.toolkit.fluxcd.io/force: enabled
-    kustomize.toolkit.fluxcd.io/ssa: override
+    kustomize.toolkit.fluxcd.io/ssa: merge
   namespace: knative-serving
 data:
-  ${wildcard_ingress_subdomain}: ""
+  ${istio_wildcard_ingress_subdomain}: ""

@@ -1,33 +1,13 @@
-https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#install-the-knative-serving-component
+## About this platform directory
 
-KNATIVE_ISTIO_VERSION=knative-v1.11.5
+IMPORTANT: The `manifests/localized-files` folders are generated from the `kustomization.yaml` that are stored within root of each directory.
 
-## install knative-istio (_operators)
+To generate the `manifests/localized-files` directories using `kusomize local` cli, you can run one for the following commands:
 
-kubectl apply -l knative.dev/crd-install=true -f https://github.com/knative/net-istio/releases/download/${KNATIVE_ISTIO_VERSION}/istio.yaml --dry-run=client -o yaml >| ./istio-crds.yaml
-
-kubectl apply -f https://github.com/knative/net-istio/releases/download/${KNATIVE_ISTIO_VERSION}/istio.yaml --dry-run=client -o yaml >| ./istio.yaml
-
-## install knative-istio-controller (_resource-configs)
-
-kubectl apply -f https://github.com/knative/net-istio/releases/download/${KNATIVE_ISTIO_VERSION}/net-istio.yaml --dry-run=client -o yaml >| ./net-istio.yaml
-
-## Fetch the External IP address or CNAME by running the command:
-
-kubectl --namespace istio-system get service istio-ingressgateway
-
-- [ ] Setup MetalLB to have IP address for Ingress vs. Istio
-- [ ] Setup Wildcard DNS Records to have IP address
-
-## Validate DNS record configured correctly
-
-## Here knative.example.com is the domain suffix for your cluster
-
-*.knative.example.com == A 35.233.41.212
-
-## Replace knative.example.com with your domain suffix
-
-kubectl patch configmap/config-domain \
-  --namespace knative-serving \
-  --type merge \
-  --patch '{"data":{"knative.example.com":""}}'
+```bash
+kustomize:localize-all:                      Leverages kustomize localize to download all remote manifests
+kustomize:localize-knative-eventing:         Leverages kustomize localize to download all remote manifests for knative-eventing
+kustomize:localize-knative-istio:            Leverages kustomize localize to download all remote manifests for knative-istio
+kustomize:localize-knative-serving:          Leverages kustomize localize to download all remote manifests for knative-serving
+kustomize:localize-kserve:                   Leverages kustomize localize to download all remote manifests for kserve               
+```

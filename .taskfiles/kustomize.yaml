@@ -22,33 +22,64 @@ tasks:
     silent: true
     deps: [default]
     desc: Leverages kustomize localize to download all remote manifests for kserve
+    vars:
+      VERSION_LIST:
+        sh: 'find platform/kserve/v* -type d -not -name _base -maxdepth 0 -print | cut -d / -f 3'
     cmds:
-    - kustomize localize platform/kserve/v0.11.2/_deploy platform/kserve/v0.11.2/_deploy/manifests
-    - kustomize localize platform/kserve/v0.11.2/_post-deploy platform/kserve/v0.11.2/_post-deploy/manifests
+    - for: {var: VERSION_LIST, as: VERSION}
+      cmd: |
+        [ -d "$(platform/kserve/{{ .VERSION }}/_deploy/manifests)" ] || rm -rf  "platform/kserve/{{ .VERSION }}/_deploy/manifests"
+        [ -d "$(platform/kserve/{{ .VERSION }}/_post-deploy/manifests)" ] || rm -rf  "platform/kserve/{{ .VERSION }}/_post-deploy/manifests"
+        kustomize localize platform/kserve/{{ .VERSION }}/_deploy platform/kserve/{{ .VERSION }}/_deploy/manifests
+        kustomize localize platform/kserve/{{ .VERSION }}/_post-deploy platform/kserve/{{ .VERSION }}/_post-deploy/manifests
 
   localize-knative-serving:
     silent: true
     deps: [default]
     desc: Leverages kustomize localize to download all remote manifests for knative-serving
+    vars:
+      VERSION_LIST:
+        sh: 'find platform/knative-serving/knative-v* -type d -not -name _base -maxdepth 0 -print | cut -d / -f 3'
     cmds:
-    - kustomize localize platform/knative-serving/knative-v1.10.1/_pre-deploy platform/knative-serving/knative-v1.10.1/_pre-deploy/manifests
-    - kustomize localize platform/knative-serving/knative-v1.10.1/_deploy platform/knative-serving/knative-v1.10.1/_deploy/manifests
-    - kustomize localize platform/knative-serving/knative-v1.10.1/_post-deploy platform/knative-serving/knative-v1.10.1/_post-deploy/manifests
+    - for: {var: VERSION_LIST, as: VERSION}
+      cmd: |
+        [ -d "$(platform/knative-serving/{{ .VERSION }}/_pre-deploy/manifests)" ] || rm -rf  "platform/knative-serving/{{ .VERSION }}/_pre-deploy/manifests"
+        [ -d "$(platform/knative-serving/{{ .VERSION }}/_deploy/manifests)" ] || rm -rf  "platform/knative-serving/{{ .VERSION }}/_deploy/manifests"
+        [ -d "$(platform/knative-serving/{{ .VERSION }}/_post-deploy/manifests)" ] || rm -rf  "platform/knative-serving/{{ .VERSION }}/_post-deploy/manifests"
+        kustomize localize platform/knative-serving/{{ .VERSION }}/_pre-deploy platform/knative-serving/{{ .VERSION }}/_pre-deploy/manifests
+        kustomize localize platform/knative-serving/{{ .VERSION }}/_deploy platform/knative-serving/{{ .VERSION }}/_deploy/manifests
+        kustomize localize platform/knative-serving/{{ .VERSION }}/_post-deploy platform/knative-serving/{{ .VERSION }}/_post-deploy/manifests
 
   localize-knative-eventing:
     silent: true
     deps: [default]
     desc: Leverages kustomize localize to download all remote manifests for knative-eventing
+    vars:
+      VERSION_LIST:
+        sh: 'find platform/knative-eventing/knative-v* -type d -not -name _base -maxdepth 0 -print | cut -d / -f 3'
     cmds:
-    - kustomize localize platform/knative-eventing/knative-v1.10.1/_pre-deploy platform/knative-eventing/knative-v1.10.1/_pre-deploy/manifests
-    - kustomize localize platform/knative-eventing/knative-v1.10.1/_deploy platform/knative-eventing/knative-v1.10.1/_deploy/manifests
-    - kustomize localize platform/knative-eventing/knative-v1.10.1/_post-deploy platform/knative-eventing/knative-v1.10.1/_post-deploy/manifests
+    - for: {var: VERSION_LIST, as: VERSION}
+      cmd: |
+        [ -d "$(platform/knative-eventing/{{ .VERSION }}/_pre-deploy/manifests)" ] || rm -rf  "platform/knative-eventing/{{ .VERSION }}/_pre-deploy/manifests"
+        [ -d "$(platform/knative-eventing/{{ .VERSION }}/_deploy/manifests)" ] || rm -rf  "platform/knative-eventing/{{ .VERSION }}/_deploy/manifests"
+        [ -d "$(platform/knative-eventing/{{ .VERSION }}/_post-deploy/manifests)" ] || rm -rf  "platform/knative-eventing/{{ .VERSION }}/_post-deploy/manifests"
+        kustomize localize platform/knative-eventing/{{ .VERSION }}/_pre-deploy platform/knative-eventing/{{ .VERSION }}/_pre-deploy/manifests
+        kustomize localize platform/knative-eventing/{{ .VERSION }}/_deploy platform/knative-eventing/{{ .VERSION }}/_deploy/manifests
+        kustomize localize platform/knative-eventing/{{ .VERSION }}/_post-deploy platform/knative-eventing/{{ .VERSION }}/_post-deploy/manifests
 
   localize-knative-istio:
     silent: true
     deps: [default]
     desc: Leverages kustomize localize to download all remote manifests for knative-istio
+    vars:
+      VERSION_LIST:
+        sh: 'find platform/knative-istio/knative-v* -type d -not -name _base -maxdepth 0 -print | cut -d / -f 3'
     cmds:
-    - kustomize localize platform/knative-istio/knative-v1.10.0/_pre-deploy platform/knative-istio/knative-v1.10.0/_pre-deploy/manifests
-    - kustomize localize platform/knative-istio/knative-v1.10.0/_deploy platform/knative-istio/knative-v1.10.0/_deploy/manifests
-    - kustomize localize platform/knative-istio/knative-v1.10.0/_post-deploy platform/knative-istio/knative-v1.10.0/_post-deploy/manifests
+    - for: {var: VERSION_LIST, as: VERSION}
+      cmd: |
+        [ -d "$(platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests"
+        [ -d "$(platform/knative-istio/{{ .VERSION }}/_deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_deploy/manifests"
+        [ -d "$(platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests"
+        kustomize localize platform/knative-istio/{{ .VERSION }}/_pre-deploy platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests
+        kustomize localize platform/knative-istio/{{ .VERSION }}/_deploy platform/knative-istio/{{ .VERSION }}/_deploy/manifests
+        kustomize localize platform/knative-istio/{{ .VERSION }}/_post-deploy platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests

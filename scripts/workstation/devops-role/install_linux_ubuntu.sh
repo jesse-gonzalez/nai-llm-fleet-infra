@@ -14,5 +14,6 @@ if grep -q -i ubuntu /etc/os-release; then
     python3 \
     shellcheck \
     fzf \
-    tmux
+    tmux \
+    zstd
 fi

@@ -1,16 +1,13 @@
-Use version 1.10.1 to match kserve knative installation for 1.25.x
+## About this platform directory
 
-https://knative.dev/v1.11-docs/eventing/brokers/broker-types/kafka-broker/#installation
+IMPORTANT: The `manifests/localized-files` folders are generated from the `kustomization.yaml` that are stored within root of each directory.
 
-# Knative Eventing Core
-kubectl apply -f https://github.com/knative/eventing/releases/download/knative-v1.11.11/eventing-crds.yaml
-kubectl apply -f https://github.com/knative/eventing/releases/download/knative-v1.11.11/eventing-core.yaml
+To generate the `manifests/localized-files` directories using `kusomize local` cli, you can run one for the following commands:
 
-# Knative Eventing Kafka Broker
-
-kubectl apply -f https://github.com/knative-sandbox/eventing-kafka-broker/releases/download/knative-v1.11.13/eventing-kafka-controller.yaml
-kubectl apply -f https://github.com/knative-sandbox/eventing-kafka-broker/releases/download/knative-v1.11.13/eventing-kafka-source.yaml
-
-
-
-
+```bash
+kustomize:localize-all:                      Leverages kustomize localize to download all remote manifests
+kustomize:localize-knative-eventing:         Leverages kustomize localize to download all remote manifests for knative-eventing
+kustomize:localize-knative-istio:            Leverages kustomize localize to download all remote manifests for knative-istio
+kustomize:localize-knative-serving:          Leverages kustomize localize to download all remote manifests for knative-serving
+kustomize:localize-kserve:                   Leverages kustomize localize to download all remote manifests for kserve               
+```
