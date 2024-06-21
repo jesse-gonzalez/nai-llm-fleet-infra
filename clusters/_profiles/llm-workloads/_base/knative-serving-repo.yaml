@@ -70,6 +70,13 @@ spec:
       kind: ConfigMap
       name: config-observability
       namespace: knative-serving
+  - patch: |-
+      - op: remove
+        path: /data/_example
+    target:
+      kind: ConfigMap
+      name: config-domain
+      namespace: knative-serving
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
