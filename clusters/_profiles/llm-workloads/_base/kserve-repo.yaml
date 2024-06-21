@@ -3,6 +3,9 @@ kind: Kustomization
 metadata:
   name: kserve-deploy
   namespace: flux-system
+  annotations:
+    #kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   dependsOn:
   - name: knative-serving-post-deploy

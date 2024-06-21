@@ -3,6 +3,9 @@ kind: Kustomization
 metadata:
   name: opentelemetry-collector-daemon
   namespace: flux-system
+  annotations:
+    #kustomize.toolkit.fluxcd.io/force: enabled
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   interval: 15m
   sourceRef:
