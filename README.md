@@ -59,7 +59,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     task bootstrap:generate_cluster_configs
     ```
     Verify the generated cluster configs
-    
+
     ```bash
     cat .local/${K8S_CLUSTER_NAME}/.env
     cat clusters/${K8S_CLUSTER_NAME}/platform/cluster-configs.yaml
@@ -77,6 +77,13 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     eval $(task nke:switch-shell-env) && \
     task nke:download-creds && \
     kubectl get nodes
+    ```
+6. Taint the GPU nodes
+    
+    ```bash
+    task kubectl:taint_gpu_nodes
+    # if gpu are over utilised
+    # task kubectl:drain_gpu_nodes
     ```
 
 6. Run Flux Bootstrapping - `task bootstrap:silent`
