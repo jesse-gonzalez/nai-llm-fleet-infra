@@ -57,6 +57,10 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
   
     ```bash
     task bootstrap:generate_cluster_configs
+    ```
+    Verify the generated cluster configs
+    
+    ```bash
     cat .local/${K8S_CLUSTER_NAME}/.env
     cat clusters/${K8S_CLUSTER_NAME}/platform/cluster-configs.yaml
     ```
