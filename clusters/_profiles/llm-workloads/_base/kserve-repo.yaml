@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
   annotations:
     #kustomize.toolkit.fluxcd.io/force: enabled
-    kustomize.toolkit.fluxcd.io/ssa: merge
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
   dependsOn:
   - name: knative-serving-post-deploy
