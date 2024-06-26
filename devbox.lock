@@ -1285,6 +1285,54 @@
         }
       }
     },
+    "nmap@latest": {
+      "last_modified": "2024-06-11T07:07:27Z",
+      "resolved": "github:NixOS/nixpkgs/f7207adcc68d9cafa29e3cd252a18743ae512c6a#nmap",
+      "source": "devbox-search",
+      "version": "7.94",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ixyqx7chgw8vlbpsxkhh2wx9mllx9c2s-nmap-7.94",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ixyqx7chgw8vlbpsxkhh2wx9mllx9c2s-nmap-7.94"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/nlgxpxvy3v8x7vd4jl2ipg43nhw7kb9x-nmap-7.94",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/nlgxpxvy3v8x7vd4jl2ipg43nhw7kb9x-nmap-7.94"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0qbyc3jrrrs1rn9rkynmcm16f4z5vlx9-nmap-7.94",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/0qbyc3jrrrs1rn9rkynmcm16f4z5vlx9-nmap-7.94"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hk1jvn2l0581kjnia53nn9jlc8jga1yd-nmap-7.94",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hk1jvn2l0581kjnia53nn9jlc8jga1yd-nmap-7.94"
+        }
+      }
+    },
     "oh-my-posh@19.18.1": {
       "last_modified": "2024-03-25T21:25:22Z",
       "resolved": "github:NixOS/nixpkgs/07262b18b97000d16a4bdb003418bd2fb067a932#oh-my-posh",
