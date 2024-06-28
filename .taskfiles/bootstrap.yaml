@@ -24,7 +24,6 @@ tasks:
     - task bootstrap:generate_local_configs
     - task bootstrap:verify-configs
     - task bootstrap:generate_cluster_configs
-    - task nke:download-creds
     - '{{if .IS_KIND_CLUSTER}}task kind:get-kubeconfig {{else}}task nke:download-creds {{end}}'
     - task flux:init
     requires:
