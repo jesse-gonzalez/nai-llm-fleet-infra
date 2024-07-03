@@ -41,6 +41,3 @@ spec:
   values:
     toolkit:
       version: ${gpu_cuda_toolkit_version:=v1.14.3-centos7}
-    driver:
-      repoConfig:
-        configMapName: repo-config
