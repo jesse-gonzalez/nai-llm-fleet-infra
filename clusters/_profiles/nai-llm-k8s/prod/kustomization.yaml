@@ -8,6 +8,7 @@ components:
 - ../_base
 
 patches:
+- path: gpu-operator-addons.yaml
 - path: cert-manager-addons.yaml
 - path: weave-gitops-addons.yaml
 - path: kserve-addons.yaml

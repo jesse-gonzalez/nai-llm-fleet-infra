@@ -6,4 +6,3 @@ metadata:
 spec:
   components:
   - ../repo-config
-  - ../enable-time-slicing

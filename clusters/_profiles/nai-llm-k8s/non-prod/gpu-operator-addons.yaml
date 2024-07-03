@@ -5,4 +5,5 @@ metadata:
   namespace: flux-system
 spec:
   components:
+  - ../repo-config
   - ../enable-time-slicing

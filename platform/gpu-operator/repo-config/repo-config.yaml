@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  CentOS-Base.repo: |
+    [base]
+    name=CentOS-$releasever - Base - Vault
+    baseurl=https://vault.centos.org/7.9.2009/os/x86_64/
+    gpgcheck=0
+    enabled=1
+
+    [updates]
+    name=CentOS-$releasever - Updates - Vault
+    baseurl=https://vault.centos.org/7.9.2009/updates/x86_64/
+    gpgcheck=0
+    enabled=1 
+kind: ConfigMap
+metadata:
+  name: repo-config
+  namespace: gpu-operator
