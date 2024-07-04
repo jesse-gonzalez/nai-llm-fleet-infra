@@ -3,3 +3,8 @@ kind: Kustomization
 
 resources:
 - https://github.com/knative/serving/releases/download/knative-v1.10.1/serving-core.yaml
+
+patches:
+- path: ./config-domain.yaml
+- path: ./config-features.yaml
+- path: ./config-gc.yaml
