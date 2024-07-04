@@ -79,7 +79,5 @@ tasks:
       cmd: |
         [ -d "$(platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests"
         [ -d "$(platform/knative-istio/{{ .VERSION }}/_deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_deploy/manifests"
-        [ -d "$(platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests)" ] || rm -rf  "platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests"
         kustomize localize platform/knative-istio/{{ .VERSION }}/_pre-deploy platform/knative-istio/{{ .VERSION }}/_pre-deploy/manifests
         kustomize localize platform/knative-istio/{{ .VERSION }}/_deploy platform/knative-istio/{{ .VERSION }}/_deploy/manifests
-        kustomize localize platform/knative-istio/{{ .VERSION }}/_post-deploy platform/knative-istio/{{ .VERSION }}/_post-deploy/manifests
