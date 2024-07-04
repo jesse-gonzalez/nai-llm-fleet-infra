@@ -1,35 +1,35 @@
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: knative-istio-pre-deploy
-#   namespace: flux-system
-# spec:
-#   dependsOn:
-#   - name: cert-manager-resource-configs
-#   - name: kube-vip-resource-configs
-#   interval: 15m
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   decryption:
-#     provider: sops
-#     secretRef:
-#       name: sops-age
-#   path: ./platform/knative-istio/knative-v1.10.0/_pre-deploy/manifests
-#   prune: true
-#   wait: true
-#   timeout: 15m
-#   postBuild:
-#     substitute:
-#       namespace_name: istio-system
-#     substituteFrom:
-#     - kind: ConfigMap
-#       name: cluster-configs
-#       optional: false
-#     - kind: Secret
-#       name: cluster-secrets
-#       optional: false
-# ---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: knative-istio-pre-deploy
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: cert-manager-resource-configs
+  - name: kube-vip-resource-configs
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  path: ./platform/knative-istio/knative-v1.10.0/_pre-deploy/manifests
+  prune: true
+  wait: true
+  timeout: 15m
+  postBuild:
+    substitute:
+      namespace_name: istio-system
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -38,7 +38,7 @@ metadata:
 spec:
   dependsOn:
   - name: knative-serving-post-deploy
-  #- name: knative-istio-pre-deploy
+  - name: knative-istio-pre-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
