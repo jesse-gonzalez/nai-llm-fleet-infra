@@ -38,6 +38,8 @@ kind: Kustomization
 metadata:
   name: knative-eventing-deploy
   namespace: flux-system
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   # dependsOn:
   # - name: knative-eventing-pre-deploy
@@ -71,7 +73,6 @@ metadata:
   name: knative-eventing-post-deploy
   namespace: flux-system
   annotations:
-    #kustomize.toolkit.fluxcd.io/force: enabled
     kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   dependsOn:

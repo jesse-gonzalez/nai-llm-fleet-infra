@@ -34,6 +34,8 @@ kind: Kustomization
 metadata:
   name: knative-serving-deploy
   namespace: flux-system
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   # dependsOn:
   # - name: knative-serving-pre-deploy
@@ -73,6 +75,8 @@ kind: Kustomization
 metadata:
   name: knative-serving-post-deploy
   namespace: flux-system
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: merge
 spec:
   dependsOn:
   - name: knative-serving-deploy
