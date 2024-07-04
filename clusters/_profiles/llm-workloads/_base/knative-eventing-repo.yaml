@@ -1,46 +1,46 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: knative-eventing-pre-deploy
-  namespace: flux-system
-  annotations:
-    #kustomize.toolkit.fluxcd.io/force: enabled
-    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
-spec:
-  #dependsOn:
-  #- name: knative-serving-post-deploy
-  interval: 15m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
-  path: ./platform/knative-eventing/knative-v1.10.1/_pre-deploy/manifests
-  prune: true
-  wait: true
-  force: false
-  timeout: 15m
-  postBuild:
-    substitute:
-      namespace_name: knative-eventing
-    substituteFrom:
-    - kind: ConfigMap
-      name: cluster-configs
-      optional: false
-    - kind: Secret
-      name: cluster-secrets
-      optional: false
----
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: knative-eventing-pre-deploy
+#   namespace: flux-system
+#   annotations:
+#     #kustomize.toolkit.fluxcd.io/force: enabled
+#     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+# spec:
+#   #dependsOn:
+#   #- name: knative-serving-post-deploy
+#   interval: 15m
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   decryption:
+#     provider: sops
+#     secretRef:
+#       name: sops-age
+#   path: ./platform/knative-eventing/knative-v1.10.1/_pre-deploy/manifests
+#   prune: true
+#   wait: true
+#   force: false
+#   timeout: 15m
+#   postBuild:
+#     substitute:
+#       namespace_name: knative-eventing
+#     substituteFrom:
+#     - kind: ConfigMap
+#       name: cluster-configs
+#       optional: false
+#     - kind: Secret
+#       name: cluster-secrets
+#       optional: false
+#---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: knative-eventing-deploy
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: knative-eventing-pre-deploy
+  # dependsOn:
+  # - name: knative-eventing-pre-deploy
   interval: 15m
   sourceRef:
     kind: GitRepository
