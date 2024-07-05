@@ -80,15 +80,6 @@ tasks:
     - cp -r scripts/dotfiles/. $HOME
     - echo "Loading of .dotfiles is complete, proceed by reloading shell using `source ~/.bashrc`"
 
-  install-zsh:
-    prompt: This will install zsh on local machine, interactively...Would you like to proceed?
-    platforms: [darwin, linux]
-    dir: '{{.USER_WORKING_DIR}}'
-    desc: Installs zsh and configures oh-my-zsh interactively
-    cmds:
-    - ./scripts/dotfiles/install_zsh.sh
-    interactive: true
-
   install-devbox:
     prompt: This will install Devbox on local machine, interactively...Would you like to proceed?
     dir: '{{.USER_WORKING_DIR}}'

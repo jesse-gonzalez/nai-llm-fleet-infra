@@ -11,11 +11,7 @@ kustomize
 kubectx
 kubens
 krew
-oh-my-posh
 flux
 fzf
 gh
-clusterctl
 kind
-trivy
-kubestr

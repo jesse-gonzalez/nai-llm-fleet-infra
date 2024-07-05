@@ -1,3 +1,0 @@
-creation_rules:
-- encrypted_regex: "^(data|stringData|auth)$"
-  age: age1akw20gxdussq8503jml0ccy64vywysc56t66sygs3ktflsgzsf9s2mzpcz

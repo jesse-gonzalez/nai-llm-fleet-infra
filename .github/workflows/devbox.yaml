@@ -30,6 +30,3 @@ jobs:
 
       - name: Run arbitrary commands
         run: devbox run -- task
-
-      # - name: Run a script called test
-      #   run: devbox run test

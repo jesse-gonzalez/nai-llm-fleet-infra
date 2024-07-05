@@ -37,6 +37,7 @@ tasks:
   print-versions:
     cmds:
     - env | grep _VERSION
+    - env
 
   print-vars:
     cmds:
@@ -45,4 +46,3 @@ tasks:
     - echo {{ env "$GITHUB_REPO_TEST" }}
     - echo {{ expandenv "$GITHUB_REPO_TEST" }}
     - echo $(basename $(git rev-parse --show-toplevel))
-    - echo {{exec "ls"}}

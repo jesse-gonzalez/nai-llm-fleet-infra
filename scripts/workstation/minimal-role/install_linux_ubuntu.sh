@@ -7,6 +7,5 @@ set -o pipefail
 if grep -q -i ubuntu /etc/os-release; then
   sudo apt-get update -y && \
   sudo apt-get install -y \
-    wget \
-    zstd
+    wget
 fi
