@@ -1,7 +1,5 @@
 FROM jetpackio/devbox:latest
 
-ARG GITHUB_USERNAME=jesse-gonzalez
-
 # Installing your devbox project
 WORKDIR /code
 USER root:root

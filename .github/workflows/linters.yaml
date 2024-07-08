@@ -23,9 +23,6 @@ jobs:
       - name: Install yq
         uses: fluxcd/pkg/actions/yq@main
 
-      - name: Install kubeconform
-        uses: fluxcd/pkg/actions/kubeconform@main
-
       - name: Install kustomize
         uses: fluxcd/pkg/actions/kustomize@main
 
