@@ -134,7 +134,7 @@ tasks:
       KAFKA_HOME: ./opt/bitnami/kafka/bin
       TOPIC_NAME: OSSEvents
     cmds:
-    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic $TOPIC_NAME && sleep 5
+    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic $TOPIC_NAME && sleep 15
     #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic $TOPIC_NAME --partitions 1
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name $TOPIC_NAME --add-config max.message.bytes=10485880
     #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --consumer-property max.partition.fetch.bytes=10485880

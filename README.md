@@ -58,6 +58,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     ```bash
     task bootstrap:generate_cluster_configs
     ```
+
     Verify the generated cluster configs
 
     ```bash
@@ -78,15 +79,16 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
     task nke:download-creds && \
     kubectl get nodes
     ```
-6. Taint the GPU nodes
-    
+
+6. Optionally - Taint the GPU nodes
+
     ```bash
     task kubectl:taint_gpu_nodes
     # if gpu are over utilised
     # task kubectl:drain_gpu_nodes
     ```
 
-6. Run Flux Bootstrapping - `task bootstrap:silent`
+7. Run Flux Bootstrapping - `task bootstrap:silent`
 
     ```bash
     task bootstrap:silent
@@ -94,7 +96,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
 
     > NOTE: if there are any issues, troubleshot using `task ts:flux-collect`. You can re-run task `bootstrap:silent` as many times needed
 
-7. Monitor on New Terminal
+8. Monitor on New Terminal
 
     ```bash
     eval $(task nke:switch-shell-env) && \
@@ -103,7 +105,7 @@ See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudi
 
     > NOTE: if there are any issues, update local git repo, push up changes and run `task flux:reconcile`
 
-8. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
+9. [Optional] Post Install - Taint GPU Nodepool with dedicated=gpu:NoSchedule
 
     >  if undesired workloads already running on gpu nodepools, drain nodes using `task kubectl:drain_gpu_nodes`
 
