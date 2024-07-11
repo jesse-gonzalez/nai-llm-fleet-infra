@@ -8,11 +8,11 @@ resources:
 namespace: kubeflow
 
 # Delete the cache deployer as we use the cert-manager instead
-patchesStrategicMerge:
-  - ./delete-cache-deployer.yaml
+#patches:
 
 # Pass proper arguments to cache-server to use cert-manager certificate
 patches:
+- path: delete-cache-deployer.yaml
 - patch: |-
     - op: add
       path: /spec/template/spec/containers/0/args/-
