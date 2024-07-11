@@ -1,8 +1,0 @@
-bases:
-- ../crd
-- ../rbac
-- ../manager
-commonLabels:
-  kustomize.component: profiles
-namePrefix: profiles-
-namespace: profiles-system
