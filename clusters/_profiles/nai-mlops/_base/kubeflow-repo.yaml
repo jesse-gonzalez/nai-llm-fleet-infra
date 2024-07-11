@@ -6,7 +6,10 @@ metadata:
 spec:
   interval: 6h
   timeout: 15m0s
-  path: ./platform/kubeflow/v1.8.1/_deploy/manifests
+  ## localized manifests
+  #path: ./platform/kubeflow/v1.8.1/_deploy/manifests
+  ## remote manifests
+  path: ./platform/kubeflow/v1.8.1/_deploy
   prune: true
   serviceAccountName: flux-system
   sourceRef:
