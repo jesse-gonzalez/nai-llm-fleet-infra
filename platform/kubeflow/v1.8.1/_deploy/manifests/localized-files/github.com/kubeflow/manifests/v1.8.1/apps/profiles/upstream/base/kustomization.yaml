@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+configMapGenerator:
+- files:
+  - namespace-labels.yaml
+  name: namespace-labels-data
+images:
+- name: docker.io/kubeflownotebookswg/profile-controller
+  newName: docker.io/kubeflownotebookswg/profile-controller
+  newTag: v1.8.0
+kind: Kustomization
+patchesStrategicMerge:
+- patches/manager.yaml
+resources:
+- ../default

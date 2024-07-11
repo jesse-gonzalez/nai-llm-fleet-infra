@@ -1,0 +1,33 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kubeflow
+  namespace: flux-system
+spec:
+  interval: 6h
+  timeout: 15m0s
+  path: ./platform/kubeflow/v1.8.1/_deploy/manifests
+  prune: true
+  serviceAccountName: flux-system
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  ## stuff I typically add
+  dependsOn:
+  - name: cert-manager-resource-configs
+  - name: kube-vip-resource-configs
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  wait: true
+  postBuild:
+    substitute:
+      namespace_name: kubeflow
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false

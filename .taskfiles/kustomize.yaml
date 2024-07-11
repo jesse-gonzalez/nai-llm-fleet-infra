@@ -83,7 +83,7 @@ tasks:
         kustomize localize platform/knative-istio/{{ .VERSION }}/_deploy platform/knative-istio/{{ .VERSION }}/_deploy/manifests
 
   localize-kubeflow:
-    silent: true
+    silent: false
     deps: [default]
     desc: Leverages kustomize localize to download all remote manifests for kubeflow
     vars:

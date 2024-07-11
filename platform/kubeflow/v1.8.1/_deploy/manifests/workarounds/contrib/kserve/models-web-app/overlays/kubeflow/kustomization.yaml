@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+commonLabels:
+  app: kserve
+  app.kubernetes.io/name: kserve
+configMapGenerator:
+- behavior: replace
+  literals:
+  - USERID_HEADER=kubeflow-userid
+  - APP_PREFIX=/kserve-endpoints
+  name: kserve-models-web-app-config
+configurations:
+- params.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+kind: Kustomization
+namespace: kubeflow
+patchesJson6902:
+- path: patches/web-app-vsvc.yaml
+  target:
+    group: networking.istio.io
+    kind: VirtualService
+    name: kserve-models-web-app
+    namespace: kserve
+    version: v1beta1
+patchesStrategicMerge:
+- patches/web-app-sidecar.yaml
+resources:
+- localized-files/github.com/kubeflow/manifests/v1.8.1/contrib/kserve/models-web-app/base
+- web-app-authorization-policy.yaml

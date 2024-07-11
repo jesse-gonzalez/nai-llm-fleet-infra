@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+commonLabels:
+  kustomize.component: profiles
+configurations:
+- params.yaml
+images:
+- name: docker.io/kubeflownotebookswg/kfam
+  newName: docker.io/kubeflownotebookswg/kfam
+  newTag: v1.8.0
+kind: Kustomization
+namespace: kubeflow
+patchesStrategicMerge:
+- patches/kfam.yaml
+- patches/remove-namespace.yaml
+resources:
+- ../../base
+- service.yaml
+- virtual-service.yaml
+- authorizationpolicy.yaml
+vars:
+- fieldref:
+    fieldPath: metadata.namespace
+  name: PROFILES_NAMESPACE
+  objref:
+    apiVersion: v1
+    kind: Service
+    name: profiles-kfam

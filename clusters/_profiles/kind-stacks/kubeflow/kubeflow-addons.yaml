@@ -1,0 +1,9 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kserve-post-deploy
+  namespace: flux-system
+spec:
+  components:
+  - ../../../enable-image-pull-secret
+  #- ../../../enable-cluster-storage-container
