@@ -97,4 +97,4 @@ resources:
 # Enabling kubeflow with Nutanix Objects Patches
 
 - ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user
-- ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/ntnx
+#- ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/ntnx
