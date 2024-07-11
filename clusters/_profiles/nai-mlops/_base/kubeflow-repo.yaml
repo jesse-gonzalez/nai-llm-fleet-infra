@@ -43,7 +43,6 @@ metadata:
   name: kubeflow
   namespace: flux-system
 spec:
-  dependsOn: kubeflow-instance
   interval: 6h
   timeout: 15m0s
   ## localized manifests
@@ -57,8 +56,9 @@ spec:
     name: flux-system
   ## stuff I typically add
   dependsOn:
-  #- name: cert-manager-resource-configs
+  - name: cert-manager-resource-configs
   - name: kube-vip-resource-configs
+  - name: kubeflow-instance
   decryption:
     provider: sops
     secretRef:
