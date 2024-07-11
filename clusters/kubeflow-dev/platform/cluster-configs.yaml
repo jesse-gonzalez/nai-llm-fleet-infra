@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "kubeflow-dev"
+  environment: "non-prod"
+  cluster_profile: "nai-mlops"
+  gpu_cuda_toolkit_version: "v1.14.3-centos7"
+  gpu_operator_version: "v23.9.0"
+  nginx_ingress_version: "4.8.3"
+  istio_version: "10.122.7.95"
+  cert_manager_version: "v1.13.5"
+  cert_manager_issuer_name: "letsencrypt-issuer"
+  milvus_version: "4.1.13"
+  milvus_objects_bucket_name: "romanticism-dev01-mgmt-milvus"
+  kafka_version: "26.8.5"
+  kyverno_version: "3.1.4"
+  opentelemetry_collector_version: "0.80.1"
+  opentelemetry_operator_version: "0.47.0"
+  uptrace_version: "1.5.7"
+  weave_gitops_version: "4.0.36"

@@ -17,6 +17,8 @@ resources:
 - ml-pipeline-ui-configmap.yaml
 - kubeflow-pipelines-profile-controller-code.yaml
 - mlpipeline-minio-artifact-secret.yaml
+- certificate.yaml
+- kubeflow-gateway.yaml
 
 # generatorOptions:
 #   # mlpipeline-minio-artifact needs to be referred by exact name
