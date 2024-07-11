@@ -11,14 +11,7 @@ resources:
 - https://github.com/kubeflow/manifests/apps/pipeline/upstream/third-party/mysql/options/istio?ref=v1.8.1
 - https://github.com/kubeflow/manifests/apps/pipeline/upstream/third-party/metacontroller/base?ref=v1.8.1
 
-## replaces config and secrets mapt generators
-- pipeline-install-config.yaml
-- workflow-controller-configmap.yaml
-- ml-pipeline-ui-configmap.yaml
-- kubeflow-pipelines-profile-controller-code.yaml
-- mlpipeline-minio-artifact-secret.yaml
-- certificate.yaml
-- kubeflow-gateway.yaml
+
 
 # generatorOptions:
 #   # mlpipeline-minio-artifact needs to be referred by exact name
@@ -45,7 +38,17 @@ resources:
 # - name: mlpipeline-minio-artifact
 #   env: object-store-secrets.env
 
+patches:
+- path: pipeline-install-config.yaml
+- path: workflow-controller-configmap.yaml
+- path: ml-pipeline-ui-configmap.yaml
+- path: kubeflow-pipelines-profile-controller-code.yaml
+- path: mlpipeline-minio-artifact-secret.yaml
+- path: certificate.yaml
+- path: kubeflow-gateway.yaml
+
 patchesStrategicMerge:
+## replaces config and secrets mapt generators
 - ntnx-config-patch.yaml
 
 # Identifier for application manager to apply ownerReference.
