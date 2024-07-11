@@ -1,9 +1,49 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: kubeflow-instance
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    tag: v1.8.1
+  timeout: 15m0s
+  url: https://github.com/kubeflow/manifests
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: kubeflow-instance
+  namespace: flux-system
+spec:
+  interval: 6h
+  timeout: 15m0s
+  path: ./example
+  prune: true
+  serviceAccountName: flux-system
+  sourceRef:
+   kind: GitRepository
+   name: kubeflow-instance
+   namespace: flux-system
+  postBuild:
+    substitute:
+      namespace_name: kubeflow
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: kubeflow
   namespace: flux-system
 spec:
+  dependsOn: kubeflow-instance
   interval: 6h
   timeout: 15m0s
   ## localized manifests
@@ -17,7 +57,7 @@ spec:
     name: flux-system
   ## stuff I typically add
   dependsOn:
-  - name: cert-manager-resource-configs
+  #- name: cert-manager-resource-configs
   - name: kube-vip-resource-configs
   decryption:
     provider: sops

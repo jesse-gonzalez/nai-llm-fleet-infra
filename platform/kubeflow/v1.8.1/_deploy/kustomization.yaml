@@ -36,8 +36,8 @@ resources:
 #- https://github.com/kubeflow/manifests/example?ref=v1.8.1
 
 # Cert-Manager
-#- https://github.com/kubeflow/manifests/common/cert-manager/cert-manager/base?ref=v1.8.1
-#- https://github.com/kubeflow/manifests/common/cert-manager/kubeflow-issuer/base?ref=v1.8.1
+- https://github.com/kubeflow/manifests/common/cert-manager/cert-manager/base?ref=v1.8.1
+- https://github.com/kubeflow/manifests/common/cert-manager/kubeflow-issuer/base?ref=v1.8.1
 # Istio
 - https://github.com/kubeflow/manifests/common/istio-1-17/istio-crds/base?ref=v1.8.1
 - https://github.com/kubeflow/manifests/common/istio-1-17/istio-namespace/base?ref=v1.8.1
@@ -94,7 +94,7 @@ resources:
 # # KServe Workarouonds - had to manually download files from contrib/kserve/models-web-app/overlays/kubeflow/ due to above issue
 # #- ./workarounds/contrib/kserve/models-web-app/overlays/kubeflow
 
-# # Enabling kubeflow with Nutanix Objects Patches
+# Enabling kubeflow with Nutanix Objects Patches
 
-# - ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user
-# - ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/ntnx
+- ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user
+- ./nutanix-kubeflow-kustomizations/apps/pipeline/upstream/env/ntnx
