@@ -36,12 +36,12 @@ resources:
 #- https://github.com/kubeflow/manifests/example?ref=v1.8.1
 
 # Cert-Manager
-- https://github.com/kubeflow/manifests/common/cert-manager/cert-manager/base?ref=v1.8.1
-- https://github.com/kubeflow/manifests/common/cert-manager/kubeflow-issuer/base?ref=v1.8.1
-# Istio
-- https://github.com/kubeflow/manifests/common/istio-1-17/istio-crds/base?ref=v1.8.1
-- https://github.com/kubeflow/manifests/common/istio-1-17/istio-namespace/base?ref=v1.8.1
-- https://github.com/kubeflow/manifests/common/istio-1-17/istio-install/base?ref=v1.8.1
+# - https://github.com/kubeflow/manifests/common/cert-manager/cert-manager/base?ref=v1.8.1
+# - https://github.com/kubeflow/manifests/common/cert-manager/kubeflow-issuer/base?ref=v1.8.1
+# # Istio
+# - https://github.com/kubeflow/manifests/common/istio-1-17/istio-crds/base?ref=v1.8.1
+# - https://github.com/kubeflow/manifests/common/istio-1-17/istio-namespace/base?ref=v1.8.1
+# - https://github.com/kubeflow/manifests/common/istio-1-17/istio-install/base?ref=v1.8.1
 # OIDC Authservice
 # - https://github.com/kubeflow/manifests/common/oidc-client/oidc-authservice/base?ref=v1.8.1
 # # Dex
