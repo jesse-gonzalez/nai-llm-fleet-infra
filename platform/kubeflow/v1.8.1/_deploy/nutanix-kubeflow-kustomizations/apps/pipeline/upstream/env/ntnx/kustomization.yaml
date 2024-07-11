@@ -12,6 +12,7 @@ resources:
 - https://github.com/kubeflow/manifests/apps/pipeline/upstream/third-party/metacontroller/base?ref=v1.8.1
 
 
+- mlpipeline-minio-artifact-secret.yaml
 
 # generatorOptions:
 #   # mlpipeline-minio-artifact needs to be referred by exact name
@@ -43,7 +44,6 @@ patches:
 - path: workflow-controller-configmap.yaml
 - path: ml-pipeline-ui-configmap.yaml
 - path: kubeflow-pipelines-profile-controller-code.yaml
-- path: mlpipeline-minio-artifact-secret.yaml
 - path: certificate.yaml
 - path: kubeflow-gateway.yaml
 
