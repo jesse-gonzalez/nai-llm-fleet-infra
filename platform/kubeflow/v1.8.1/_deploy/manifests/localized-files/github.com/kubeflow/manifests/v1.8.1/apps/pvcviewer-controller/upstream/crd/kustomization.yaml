@@ -1,0 +1,7 @@
+configurations:
+- kustomizeconfig.yaml
+patchesStrategicMerge:
+- patches/webhook_in_pvcviewers.yaml
+- patches/cainjection_in_pvcviewers.yaml
+resources:
+- bases/kubeflow.org_pvcviewers.yaml

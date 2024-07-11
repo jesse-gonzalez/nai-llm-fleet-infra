@@ -1,0 +1,4 @@
+configurations:
+- kustomizeconfig.yaml
+resources:
+- certificate.yaml
