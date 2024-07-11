@@ -1,0 +1,50 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gpu-operator
+  namespace: flux-system
+spec:
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./platform/gpu-operator/_operators
+  prune: true
+  wait: false
+  healthChecks:
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-device-plugin-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-driver-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: gpu-feature-discovery
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-operator-validator
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-container-toolkit-daemonset
+    namespace: gpu-operator
+  - apiVersion: apps/v1
+    kind: DaemonSet
+    name: nvidia-dcgm-exporter
+    namespace: gpu-operator
+  timeout: 20m
+  postBuild:
+    substitute:
+      namespace_name: gpu-operator
+    substituteFrom:
+    - kind: ConfigMap
+      name: cluster-configs
+      optional: false
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
+
