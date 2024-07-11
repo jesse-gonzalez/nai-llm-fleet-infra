@@ -13,6 +13,7 @@ resources:
 
 
 - mlpipeline-minio-artifact-secret.yaml
+- certificate.yaml
 
 # generatorOptions:
 #   # mlpipeline-minio-artifact needs to be referred by exact name
@@ -44,7 +45,6 @@ patches:
 - path: workflow-controller-configmap.yaml
 - path: ml-pipeline-ui-configmap.yaml
 - path: kubeflow-pipelines-profile-controller-code.yaml
-- path: certificate.yaml
 - path: kubeflow-gateway.yaml
 
 patchesStrategicMerge:
