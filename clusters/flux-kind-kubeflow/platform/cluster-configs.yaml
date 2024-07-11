@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-configs
+data:
+  cluster_name: "flux-kind-local"
+  environment: "kubeflow"
+  cluster_profile: "kind-stacks"
+  nginx_ingress_version: "4.8.3"
+  istio_version: "172.20.0.21"
+  cert_manager_version: "v1.3.0"
+  cert_manager_issuer_name: "selfsigned-cluster-issuer"
+  kserve_version: "v0.11.2"
+  knative_serving_version: "knative-v1.10.1"
+  knative_istio_version: "knative-v1.10.0"
+  kyverno_version: "3.1.4"
+  weave_gitops_version: "4.0.36"
