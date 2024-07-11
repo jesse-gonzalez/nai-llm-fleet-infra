@@ -92,7 +92,7 @@ resources:
 #- https://github.com/kubeflow/manifests/contrib/kserve/models-web-app/overlays/kubeflow?ref=v1.8.1
 
 # KServe Workarouonds - had to manually download files from contrib/kserve/models-web-app/overlays/kubeflow/ due to above issue
-- ./workarounds/contrib/kserve/models-web-app/overlays/kubeflow
+#- ./workarounds/contrib/kserve/models-web-app/overlays/kubeflow
 
 # Enabling kubeflow with Nutanix Objects Patches
 
