@@ -7,7 +7,7 @@ spec:
     istio: ingressgateway
   servers:
   - hosts:
-    - '${istio_wildcard_ingress_subdomain}'
+    - '*'
     port:
       name: http
       number: 80
@@ -16,7 +16,7 @@ spec:
     tls:
       httpsRedirect: true
   - hosts:
-    - '${istio_wildcard_ingress_subdomain}'
+    - '*'
     port:
       name: https
       number: 443

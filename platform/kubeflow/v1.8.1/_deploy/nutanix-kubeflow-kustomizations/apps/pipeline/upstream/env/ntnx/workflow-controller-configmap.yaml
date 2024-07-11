@@ -11,7 +11,7 @@ data:
             s3: {
                 bucket: nkp3-kf-mlpipeline,
                 keyPrefix: artifacts,
-                endpoint: ${objects_host},
+                endpoint: "${objects_host}",
                 insecure: true,
                 accessKeySecret: {
                     name: mlpipeline-minio-artifact,
