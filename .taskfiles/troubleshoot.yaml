@@ -10,16 +10,16 @@ tasks:
   gpu-collect:
     silent: false
     deps: [default]
-    desc: Gather common nvidia gpu resources in your cluster
+    desc: Gather common nvidia gpu resources in your cluster. If using NKP, you can override with task ts:gpu-collect -- -n kommander
     cmds:
     - kubectl get nodes -o='custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect'
-    - kubectl get cm time-slicing-config -n gpu-operator --ignore-not-found
-    - kubectl get clusterpolicies.nvidia.co/cluster-policy -n gpu-operator -o jsonpath='{.spec.devicePlugin.config}}' && echo
-    - kubectl get pod -n gpu-operator
+    - kubectl get cm time-slicing-config {{.CLI_ARGS | default "-n gpu-operator"}} --ignore-not-found
+    - kubectl get clusterpolicies.nvidia.co/cluster-policy {{.CLI_ARGS | default "-n gpu-operator"}} -o jsonpath='{.spec.devicePlugin.config}}' && echo
+    - kubectl get pod {{.CLI_ARGS | default "-n gpu-operator"}}
     - kubectl get node -o json -l nvidia.com/gpu.present=true | jq '.items[].metadata.labels'
-    - kubectl get pod -n gpu-operator -o name -l app=nvidia-driver-daemonset | xargs -I {} kubectl exec -n gpu-operator -i {} -c nvidia-driver-ctr -- nvidia-smi
+    - kubectl get pod {{.CLI_ARGS | default "-n gpu-operator"}} -o name -l app=nvidia-driver-daemonset | xargs -I {} kubectl exec {{.CLI_ARGS | default "-n gpu-operator"}} -i {} -c nvidia-driver-ctr -- nvidia-smi
     - kubectl top nodes -l nvidia.com/gpu.present=true --show-capacity
-    #- kubectl get events -n gpu-operator --sort-by='.lastTimestamp'
+    #- kubectl get events {{.CLI_ARGS | default "-n gpu-operator"}} --sort-by='.lastTimestamp'
 
   kyverno-collect:
     silent: true
@@ -70,7 +70,7 @@ tasks:
   cert-manager-collect:
     silent: false
     deps: [default]
-    desc: Gather resources managed by cert-maanger
+    desc: Gather resources managed by cert-manager. If using NKP, you can override with task ts:cert-manager-collect -- -n kommander
     cmds:
     - kubectl get certificates.cert-manager.io {{.CLI_ARGS | default "-A"}}
     - kubectl get certificaterequests.cert-manager.io {{.CLI_ARGS | default "-A"}}
@@ -78,11 +78,11 @@ tasks:
     - kubectl get orders.acme.cert-manager.io -A
     - kubectl get challenges.acme.cert-manager.io -A
     - kubectl get secrets {{.CLI_ARGS | default "-A"}} | grep -i tls
-    - flux events --for Kustomization/cert-manager
-    - flux events --for Kustomization/cert-manager-resource-configs
-    - flux events --for HelmRelease/cert-manager
-    - flux logs --kind=Kustomization --name=cert-manager --tail 10
-    - flux logs --kind=HelmRelease --name=cert-manager --tail 10
+    - flux events --for Kustomization/cert-manager {{.CLI_ARGS | default "-n flux-system"}}
+    - flux events --for Kustomization/cert-manager-resource-configs {{.CLI_ARGS | default "-n flux-system"}}
+    - flux events --for HelmRelease/cert-manager {{.CLI_ARGS | default "-n flux-system"}}
+    - flux logs --kind=Kustomization --name=cert-manager --tail 10 {{.CLI_ARGS | default "-n flux-system"}}
+    - flux logs --kind=HelmRelease --name=cert-manager --tail 10 {{.CLI_ARGS | default "-n flux-system"}}
 
   lets-encrypt-aws-collect:
     silent: false
@@ -142,3 +142,36 @@ tasks:
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic $TOPIC_NAME
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --max-messages 5 --timeout-ms 5000 --skip-message-on-error
 
+
+  istio-collect:
+    silent: false
+    deps: [default]
+    desc: Gather resources managed by istio
+    cmds:
+    - kubectl get virtualservice.networking.istio.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get certificate.networking.internal.knative.dev -n  istio-system
+
+  kserve-collect:
+    silent: false
+    deps: [default]
+    desc: Gather resources managed by kserve and knative
+    cmds:
+    - kubectl get virtualservice.networking.istio.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get configuration.serving.knative.dev {{.CLI_ARGS | default "-A"}}
+    - kubectl get route.serving.knative.dev {{.CLI_ARGS | default "-A"}}
+    - kubectl get service.serving.knative.dev {{.CLI_ARGS | default "-A"}}
+    - kubectl get inferenceservice.serving.kserve.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get ingress.networking.internal.knative.dev {{.CLI_ARGS | default "-A"}}
+    - kubectl get gateway.networking.istio.io {{.CLI_ARGS | default "-A"}}
+    - kubectl get peerauthentication.security.istio.io {{.CLI_ARGS | default "-A"}}
+
+  iep-collect:
+    silent: false
+    deps: [default]
+    desc: Gather resources managed by kserve and knative
+    cmds:
+    - kubectl get model.iep.nai.nutanix.com -n nai-admin
+    - task ts:istio-collect
+    - task ts:ingress-collect -- -n nai-admin
+    - task ts:kserve-collect -- -n nai-admin
+    - task ts:kserve-collect -- -n nai-admin
