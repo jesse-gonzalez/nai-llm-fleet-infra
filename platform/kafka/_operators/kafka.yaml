@@ -38,4 +38,13 @@ spec:
     remediation:
       retries: 3
     preserveValues: true
+  values:
+    config:
+      broker:
+        num.partitions: 1
+        auto.create.topics.enable: true
+        max.message.bytes: 104857600
+      producer:
+        max.request.size: 104857600
+
 

@@ -117,6 +117,7 @@ tasks:
       KAFKA_HOME: ./opt/bitnami/kafka/bin
       TOPIC_NAME: OSSEvents
     cmds:
+    - echo "KAFKA_HOME=$KAFKA_HOME" && echo "TOPIC_NAME=$TOPIC_NAME"
     - kubectl get pods,svc,ingress -n kafka
     - kubectl get cm ingress-nginx-ingress-nginx-tcp -n ingress-nginx -o yaml  -o json | jq .data | grep -i kafka
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --list --exclude-internal
@@ -134,6 +135,7 @@ tasks:
       KAFKA_HOME: ./opt/bitnami/kafka/bin
       TOPIC_NAME: OSSEvents
     cmds:
+    - echo "KAFKA_HOME=$KAFKA_HOME" && echo "TOPIC_NAME=$TOPIC_NAME"
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic $TOPIC_NAME && sleep 15
     #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic $TOPIC_NAME --partitions 1
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name $TOPIC_NAME --add-config max.message.bytes=10485880
