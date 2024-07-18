@@ -44,7 +44,7 @@ spec:
       producer.fetch.max.bytes=104857600
       num.partitions=1
       auto.create.topics.enable=true
-      max.message.bytes=104857600
+      message.max.bytes=104857600
       fetch.max.bytes=104857600
       replica.fetch.max.bytes=104857600
       replica.fetch.response.max.bytes=104857600
