@@ -41,15 +41,19 @@ spec:
   values:
     extraConfig: |
       producer.max.request.size=104857600
+      producer.fetch.max.bytes=104857600
       num.partitions=1
       auto.create.topics.enable=true
       max.message.bytes=104857600
-    ## Topic provisioning
-    provisioning:
-      enabled: true
-      topics:
-      - name: OSSEvents
-        partitions: 1
-        replicationFactor: 1
-        config:
-          max.message.bytes: 104857600
+      fetch.max.bytes=104857600
+      replica.fetch.max.bytes=104857600
+      replica.fetch.response.max.bytes=104857600
+    # ## Topic provisioning
+    # provisioning:
+    #   enabled: true
+    #   topics:
+    #   - name: OSSEvents
+    #     partitions: 1
+    #     replicationFactor: 1
+    #     config:
+    #       max.message.bytes: 104857600
