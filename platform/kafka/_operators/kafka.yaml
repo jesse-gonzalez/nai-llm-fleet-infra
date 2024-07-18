@@ -45,17 +45,14 @@ spec:
       auto.create.topics.enable=true
       message.max.bytes=104857600
       fetch.max.bytes=104857600
-    #replica.fetch.response.max.bytes=104857600
-    #producer.fetch.max.bytes=104857600
-    #fetch.max.bytes=104857600
-    #replica.fetch.max.bytes=104857600
-    #
+      replica.fetch.response.max.bytes=104857600
+      replica.fetch.max.bytes=104857600
     # ## Topic provisioning
-    # provisioning:
-    #   enabled: true
-    #   topics:
-    #   - name: OSSEvents
-    #     partitions: 1
-    #     replicationFactor: 1
-    #     config:
-    #       max.message.bytes: 104857600
+    provisioning:
+      enabled: true
+      topics:
+      - name: OSSEvents
+        partitions: 1
+        replicationFactor: 1
+        config:
+          max.message.bytes: 104857600
