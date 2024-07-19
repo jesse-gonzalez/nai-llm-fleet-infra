@@ -137,7 +137,7 @@ tasks:
     cmds:
     - echo "KAFKA_HOME=$KAFKA_HOME" && echo "TOPIC_NAME=$TOPIC_NAME"
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic $TOPIC_NAME && sleep 15
-    #- kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name $TOPIC_NAME --add-config max.message.bytes=104857600
+    - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name $TOPIC_NAME --add-config max.message.bytes=104857600
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-topics.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --describe
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic $TOPIC_NAME
     - kubectl exec -it svc/kafka-kafka -n kafka -c kafka -- $KAFKA_HOME/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $TOPIC_NAME --from-beginning --max-messages 5 --timeout-ms 5000 --skip-message-on-error
