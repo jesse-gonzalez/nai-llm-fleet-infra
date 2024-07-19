@@ -5,9 +5,6 @@ metadata:
   namespace: flux-system
 spec:
   values:
-    hub:
-      config:
-        Authenticator:
-          admin_users:
-          - admin
-          - jesse
+    proxy:
+      service:
+        type: ClusterIP

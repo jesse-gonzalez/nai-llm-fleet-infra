@@ -75,7 +75,4 @@ spec:
           password: nutanix.1
         JupyterHub:
           authenticator_class: dummy
-    proxy:
-      service:
-        type: ClusterIP
 
