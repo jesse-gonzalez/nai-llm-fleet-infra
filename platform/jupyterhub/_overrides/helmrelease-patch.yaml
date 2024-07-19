@@ -4,4 +4,5 @@ metadata:
   name: jupyterhub
   namespace: flux-system
 spec:
-  ${jupyter_hub_values_override}
+  values:
+    ${jupyter_hub_values_override}
