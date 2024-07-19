@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 components:
 - ../../_profiles/llm-workloads/non-prod
+- ./_overrides
 resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml
