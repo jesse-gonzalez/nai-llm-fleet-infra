@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 components:
-- ../../_profiles/llm-workloads/non-prod
 - ./_overrides
+- ../../_profiles/llm-workloads/non-prod
 resources:
 - cluster-secrets.sops.yaml
 - cluster-configs.yaml
