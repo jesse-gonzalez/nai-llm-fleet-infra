@@ -6,4 +6,5 @@ metadata:
 spec:
   components:
   - ../enable-ingress
+  - ../_overrides
   #- ../enable-shared-volume
