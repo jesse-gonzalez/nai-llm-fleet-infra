@@ -30,7 +30,7 @@ Detailed deployment instructions of dependent components will not be covered in 
 
 Whether you're on a jumpserver, or running each step on local Linux/Windows terminal, the minimum tools needed are listed to bootstrap and configure any NKE cluster below:
 
-| Tool                                | Install Link | macOS Command | Linux Command | Purpose | License Link |
+| Tool                                | Install Link | macOS Example | Linux Example | Purpose | License Link |
 |-------------------------------------|--------------|---------------|---------------|---------|--------------|
 | Go-Task       | [Task GitHub](https://github.com/go-task/task#installation) | `brew install go-task/tap/go-task` | `sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d` | A task runner / simpler Make alternative written in Go | [MIT License](https://github.com/go-task/task/blob/main/LICENSE) |
 | Gomplate      | [Gomplate GitHub](https://github.com/hairyhenderson/gomplate#installation) | `brew install gomplate` | ```curl -o /usr/local/bin/gomplate -sSL https://github.com/hairyhenderson/gomplate/releases/latest/download/gomplate_linux-amd64 && chmod 755 /usr/local/bin/gomplate``` | Template renderer which supports various data sources | [MIT License](https://github.com/hairyhenderson/gomplate/blob/main/LICENSE) |
