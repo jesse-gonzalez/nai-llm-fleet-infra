@@ -54,9 +54,21 @@ Whether you're on a jumpserver, or running each step on local Linux/Windows term
 
 ### Option 2: Leverage Devbox NIX Shell as Development Environment
 
-As an alternative, you can leverage [Devbox NixOS Shell](https://github.com/jetpack-io/devbox) to provision the tools needed within an isolated developoment environment either locally or on remote jumpserver/bastion host. 
+As an alternative, you can leverage [Devbox NixOS Shell](https://github.com/jetpack-io/devbox) to provision the tools needed within an isolated developoment environment either locally or on remote jumpserver/bastion host.
 
-By default, Devbox will install the cli tool packages listed in `devbox.json`. These packages are available within the [Nixos](https://search.nixos.org/packages) package manager, and below is listing of each package
+Install `devbox` and Accept All Defaults:
+
+```sh
+curl -fsSL https://get.jetpack.io/devbox | bash
+```
+
+Start the `devbox shell` and if `nix` isn't available, you will be prompted to install:
+
+```sh
+devbox shell
+```
+
+By default, Devbox will install the cli tool packages listed in `devbox.json` when you run `devbox shell` within the code workspace. These packages are available within the [Nixos](https://search.nixos.org/packages) package manager, and below is listing of each package
 
 | Tool | Install Link | Purpose | License Link | Devbox Add Command |
 |------|--------------|---------|--------------|---------------------|
@@ -76,23 +88,10 @@ By default, Devbox will install the cli tool packages listed in `devbox.json`. T
 | [kubectx@0.9.5](https://search.nixos.org/packages?channel=23.11&show=kubectx&from=0&size=50&sort=relevance&type=packages&query=kubectx) | [kubectx GitHub](https://github.com/ahmetb/kubectx) | Tool to switch between Kubernetes contexts | [Apache License 2.0](https://github.com/ahmetb/kubectx/blob/master/LICENSE) | `devbox add kubectx@0.9.5` |
 | [opentofu@1.6.2](https://search.nixos.org/packages?channel=23.11&show=opentofu&from=0&size=50&sort=relevance&type=packages&query=opentofu) | [OpenTofu GitHub](https://github.com/opentofu/opentofu) | Open-source alternative to Terraform | [Mozilla Public License 2.0](https://github.com/opentofu/opentofu/blob/main/LICENSE) | `devbox add opentofu@1.6.2` |
 | [fluxcd@2.2.3](https://search.nixos.org/packages?channel=23.11&show=fluxcd&from=0&size=50&sort=relevance&type=packages&query=fluxcd) | [Flux Docs](https://fluxcd.io/docs/installation/) | GitOps tool for deploying applications to Kubernetes | [Apache License 2.0](https://github.com/fluxcd/flux2/blob/main/LICENSE) | `devbox add fluxcd@2.2.3` |
-| [kind@0.22.0](https://search.nixos.org/packages?channel=23.11&show=kind&from=0&size=50&sort=relevance&type=packages&query=kind) | [Kind GitHub](https://github.com/kubernetes-sigs/kind) | Tool for running local Kubernetes clusters using Docker containers | [Apache License 2.0](https://github.com/kubernetes-sigs/kind/blob/main/LICENSE) | `devbox add kind@0.22.0` |
-| [clusterctl@1.6.3](https://search.nixos.org/packages?channel=23.11&show=clusterctl&from=0&size=50&sort=relevance&type=packages&query=clusterctl) | [Cluster API GitHub](https://github.com/kubernetes-sigs/cluster-api) | Command-line tool to manage Kubernetes Cluster API | [Apache License 2.0](https://github.com/kubernetes-sigs/cluster-api/blob/main/LICENSE) | `devbox add clusterctl@1.6.3` |
 | [stern@1.28.0](https://search.nixos.org/packages?channel=23.11&show=stern&from=0&size=50&sort=relevance&type=packages&query=stern) | [Stern GitHub](https://github.com/stern/stern) | Multi pod and container log tailing for Kubernetes | [Apache License 2.0](https://github.com/stern/stern/blob/master/LICENSE) | `devbox add stern@1.28.0` |
 | [fzf@0.47.0](https://search.nixos.org/packages?channel=23.11&show=fzf&from=0&size=50&sort=relevance&type=packages&query=fzf) | [fzf GitHub](https://github.com/junegunn/fzf) | A command-line fuzzy finder | [MIT License](https://github.com/junegunn/fzf/blob/master/LICENSE) | `devbox add fzf@0.47.0` |
 | [gomplate@3.11.7](https://search.nixos.org/packages?channel=23.11&show=gomplate&from=0&size=50&sort=relevance&type=packages&query=gomplate) | [Gomplate GitHub](https://github.com/hairyhenderson/gomplate) | Template renderer which supports various data sources | [MIT License](https://github.com/hairyhenderson/gomplate/blob/main/LICENSE) | `devbox add gomplate@3.11.7` |
 
-Install `devbox` and Accept All Defaults:
-
-```sh
-curl -fsSL https://get.jetpack.io/devbox | bash
-```
-
-Start the `devbox shell` and if `nix` isn't available, you will be prompted to install:
-
-```sh
-devbox shell
-```
 
 ### Option 3: Using VSCode Devcontainer
 
