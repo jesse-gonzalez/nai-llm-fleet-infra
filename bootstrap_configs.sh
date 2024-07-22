@@ -202,7 +202,7 @@ verify_age() {
 }
 
 verify_binaries() {
-    _has_binary "envsubst"
+    #_has_binary "envsubst"
     _has_binary "git"
     _has_binary "age"
     _has_binary "ipcalc"
