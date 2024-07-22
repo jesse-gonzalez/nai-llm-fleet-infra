@@ -6,7 +6,6 @@
     "gh@2.46.0",
     "kubectl@1.29.3",
     "git@2.44.0",
-    "envsubst@1.4.2",
     "age@1.1.1",
     "ipcalc@1.0.3",
     "arkade@0.11.6",
@@ -18,20 +17,9 @@
     "kubectx@0.9.5",
     "opentofu@1.6.2",
     "fluxcd@2.2.3",
-    "kind@0.22.0",
-    "clusterctl@1.6.3",
     "stern@1.28.0",
     "fzf@0.47.0",
-    "oh-my-posh@19.18.1",
-    "openshift@latest",
-    "chezmoi@2.47.3",
-    "k9s@0.32.4",
-    "kubie@0.23.0",
-    "gomplate@3.11.7",
-    "shellcheck@0.10.0",
-    "hadolint@2.12.0",
-    "awscli@1.32.58",
-    "nmap@latest"
+    "gomplate@3.11.7"
   ],
   "shell": {
     "init_hook": [

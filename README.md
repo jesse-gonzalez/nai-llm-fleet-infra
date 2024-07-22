@@ -2,9 +2,9 @@
   - [Overview](#overview)
   - [PreRequisites](#prerequisites)
   - [Getting Started](#getting-started)
-    - [Option 1: Provision Min. Required CLI Tools](#option-1-provision-min-required-cli-tools)
-    - [Option 2: Leverage Devbox NIX Shell](#option-2-leverage-devbox-nix-shell)
-    - [Option 2: Using VSCode Devcontainer](#option-2-using-vscode-devcontainer)
+    - [Option 1: Install Minimal CLI Tools on Local Machine / JumpServer](#option-1-install-minimal-cli-tools-on-local-machine--jumpserver)
+    - [Option 2: Leverage Devbox NIX Shell as Development Environment](#option-2-leverage-devbox-nix-shell-as-development-environment)
+    - [Option 3: Using VSCode Devcontainer](#option-3-using-vscode-devcontainer)
     - [Bootstrapping each NKE Cluster](#bootstrapping-each-nke-cluster)
       - [Silent Bootstrap](#silent-bootstrap)
   - [Appendix](#appendix)
@@ -26,7 +26,9 @@ Detailed deployment instructions of dependent components will not be covered in 
 
 ## Getting Started
 
-### Option 1: Provision Min. Required CLI Tools
+The below assumes that you are either leveraging a local machine with Linux terminal or jumpserver
+
+### Option 1: Install Minimal CLI Tools on Local Machine / JumpServer
 
 Whether you're on a jumpserver, or running each step on local Linux/Windows terminal, the minimum tools needed are listed to bootstrap and configure any NKE cluster below:
 
@@ -47,12 +49,40 @@ Whether you're on a jumpserver, or running each step on local Linux/Windows term
 | ipcalc        | [ipcalc GitHub](https://github.com/kjokjo/ipcalc) | `brew install ipcalc` | `sudo apt-get install ipcalc` | IP subnet calculator | [GPL-2.0 License](https://github.com/kjokjo/ipcalc/blob/master/LICENSE) |
 | Gum Charm     | [Gum GitHub](https://github.com/charmbracelet/gum) | `brew install gum` | ```curl -sSL https://github.com/charmbracelet/gum/releases/latest/download/gum_linux_amd64.tar.gz \| tar xz && sudo mv gum /usr/local/bin/``` | Tool for creating glamorous shell scripts | [MIT License](https://github.com/charmbracelet/gum/blob/main/LICENSE) |
 | arkade        | [arkade GitHub](https://github.com/alexellis/arkade) | `curl -sLS https://get.arkade.dev \| sudo sh` | Same | Marketplace for downloading your favorite devops CLIs and installing helm charts | [MIT License](https://github.com/alexellis/arkade/blob/master/LICENSE) |
+| GitHub CLI    | [GitHub CLI Docs](https://cli.github.com/) | `brew install gh` | `sudo apt install gh` | GitHub’s official command line tool | [MIT License](https://github.com/cli/cli/blob/trunk/LICENSE) |
+| fzf           | [fzf GitHub](https://github.com/junegunn/fzf) | `brew install fzf` | `sudo apt-get install fzf` | A command-line fuzzy finder | [MIT License](https://github.com/junegunn/fzf/blob/master/LICENSE) |
 
-### Option 2: Leverage Devbox NIX Shell
+### Option 2: Leverage Devbox NIX Shell as Development Environment
 
-This project uses [devbox](https://github.com/jetpack-io/devbox) to manage its development environment.
+As an alternative, you can leverage [Devbox NixOS Shell](https://github.com/jetpack-io/devbox) to provision the tools needed within an isolated developoment environment either locally or on remote jumpserver/bastion host. 
 
-Install `devbox` and accept all defaults:
+By default, Devbox will install the cli tool packages listed in `devbox.json`. These packages are available within the [Nixos](https://search.nixos.org/packages) package manager, and below is listing of each package
+
+| Tool | Install Link | Purpose | License Link | Devbox Add Command |
+|------|--------------|---------|--------------|---------------------|
+| [jq@1.7.1](https://search.nixos.org/packages?channel=23.11&show=jq&from=0&size=50&sort=relevance&type=packages&query=jq) | [jq GitHub](https://github.com/stedolan/jq) | Command-line JSON processor | [MIT License](https://github.com/stedolan/jq/blob/master/COPYING) | `devbox add jq@1.7.1` |
+| [gum@0.13.0](https://search.nixos.org/packages?channel=23.11&show=gum&from=0&size=50&sort=relevance&type=packages&query=gum) | [Gum GitHub](https://github.com/charmbracelet/gum) | Tool for creating glamorous shell scripts | [MIT License](https://github.com/charmbracelet/gum/blob/main/LICENSE) | `devbox add gum@0.13.0` |
+| [gh@2.46.0](https://search.nixos.org/packages?channel=23.11&show=gh&from=0&size=50&sort=relevance&type=packages&query=gh) | [GitHub CLI Docs](https://cli.github.com/) | GitHub's official command line tool | [MIT License](https://github.com/cli/cli/blob/trunk/LICENSE) | `devbox add gh@2.46.0` |
+| [kubectl@1.29.3](https://search.nixos.org/packages?channel=23.11&show=kubectl&from=0&size=50&sort=relevance&type=packages&query=kubectl) | [Kubectl Docs](https://kubernetes.io/docs/tasks/tools/) | Command-line tool for controlling Kubernetes clusters | [Apache License 2.0](https://github.com/kubernetes/kubernetes/blob/master/LICENSE) | `devbox add kubectl@1.29.3` |
+| [git@2.44.0](https://search.nixos.org/packages?channel=23.11&show=git&from=0&size=50&sort=relevance&type=packages&query=git) | [Git Docs](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) | Distributed version control system | [GPL-2.0 License](https://github.com/git/git/blob/master/COPYING) | `devbox add git@2.44.0` |
+| [age@1.1.1](https://search.nixos.org/packages?channel=23.11&show=age&from=0&size=50&sort=relevance&type=packages&query=age) | [Age GitHub](https://github.com/FiloSottile/age) | A simple, modern, and secure file encryption tool | [BSD 3-Clause License](https://github.com/FiloSottile/age/blob/master/LICENSE) | `devbox add age@1.1.1` |
+| [ipcalc@1.0.3](https://search.nixos.org/packages?channel=23.11&show=ipcalc&from=0&size=50&sort=relevance&type=packages&query=ipcalc) | [ipcalc GitHub](https://github.com/kjokjo/ipcalc) | IP subnet calculator | [GPL-2.0 License](https://github.com/kjokjo/ipcalc/blob/master/LICENSE) | `devbox add ipcalc@1.0.3` |
+| [arkade@0.11.6](https://search.nixos.org/packages?channel=23.11&show=arkade&from=0&size=50&sort=relevance&type=packages&query=arkade) | [arkade GitHub](https://github.com/alexellis/arkade) | Marketplace for downloading your favorite devops CLIs and installing helm charts | [MIT License](https://github.com/alexellis/arkade/blob/master/LICENSE) | `devbox add arkade@0.11.6` |
+| [yq-go@4.43.1](https://search.nixos.org/packages?channel=23.11&show=yq-go&from=0&size=50&sort=relevance&type=packages&query=yq-go) | [yq GitHub](https://github.com/mikefarah/yq) | Portable command-line YAML, JSON, and XML processor | [MIT License](https://github.com/mikefarah/yq/blob/master/LICENSE) | `devbox add yq-go@4.43.1` |
+| [sops@3.8.1](https://search.nixos.org/packages?channel=23.11&show=sops&from=0&size=50&sort=relevance&type=packages&query=sops) | [SOPS GitHub](https://github.com/mozilla/sops) | Encryption tool for managing secrets | [Mozilla Public License 2.0](https://github.com/mozilla/sops/blob/develop/LICENSE) | `devbox add sops@3.8.1` |
+| [kubernetes-helm@3.14.3](https://search.nixos.org/packages?channel=23.11&show=kubernetes-helm&from=0&size=50&sort=relevance&type=packages&query=kubernetes-helm) | [Helm Docs](https://helm.sh/docs/intro/install/) | Package manager for Kubernetes | [Apache License 2.0](https://github.com/helm/helm/blob/main/LICENSE) | `devbox add kubernetes-helm@3.14.3` |
+| [go-task@3.35.1](https://search.nixos.org/packages?channel=23.11&show=go-task&from=0&size=50&sort=relevance&type=packages&query=go-task) | [Task GitHub](https://github.com/go-task/task) | A task runner / simpler Make alternative written in Go | [MIT License](https://github.com/go-task/task/blob/main/LICENSE) | `devbox add go-task@3.35.1` |
+| [krew@0.4.4](https://search.nixos.org/packages?channel=23.11&show=krew&from=0&size=50&sort=relevance&type=packages&query=krew) | [Krew Docs](https://krew.sigs.k8s.io/docs/user-guide/setup/install/) | Plugin manager for kubectl command-line tool | [Apache License 2.0](https://github.com/kubernetes-sigs/krew/blob/master/LICENSE) | `devbox add krew@0.4.4` |
+| [kubectx@0.9.5](https://search.nixos.org/packages?channel=23.11&show=kubectx&from=0&size=50&sort=relevance&type=packages&query=kubectx) | [kubectx GitHub](https://github.com/ahmetb/kubectx) | Tool to switch between Kubernetes contexts | [Apache License 2.0](https://github.com/ahmetb/kubectx/blob/master/LICENSE) | `devbox add kubectx@0.9.5` |
+| [opentofu@1.6.2](https://search.nixos.org/packages?channel=23.11&show=opentofu&from=0&size=50&sort=relevance&type=packages&query=opentofu) | [OpenTofu GitHub](https://github.com/opentofu/opentofu) | Open-source alternative to Terraform | [Mozilla Public License 2.0](https://github.com/opentofu/opentofu/blob/main/LICENSE) | `devbox add opentofu@1.6.2` |
+| [fluxcd@2.2.3](https://search.nixos.org/packages?channel=23.11&show=fluxcd&from=0&size=50&sort=relevance&type=packages&query=fluxcd) | [Flux Docs](https://fluxcd.io/docs/installation/) | GitOps tool for deploying applications to Kubernetes | [Apache License 2.0](https://github.com/fluxcd/flux2/blob/main/LICENSE) | `devbox add fluxcd@2.2.3` |
+| [kind@0.22.0](https://search.nixos.org/packages?channel=23.11&show=kind&from=0&size=50&sort=relevance&type=packages&query=kind) | [Kind GitHub](https://github.com/kubernetes-sigs/kind) | Tool for running local Kubernetes clusters using Docker containers | [Apache License 2.0](https://github.com/kubernetes-sigs/kind/blob/main/LICENSE) | `devbox add kind@0.22.0` |
+| [clusterctl@1.6.3](https://search.nixos.org/packages?channel=23.11&show=clusterctl&from=0&size=50&sort=relevance&type=packages&query=clusterctl) | [Cluster API GitHub](https://github.com/kubernetes-sigs/cluster-api) | Command-line tool to manage Kubernetes Cluster API | [Apache License 2.0](https://github.com/kubernetes-sigs/cluster-api/blob/main/LICENSE) | `devbox add clusterctl@1.6.3` |
+| [stern@1.28.0](https://search.nixos.org/packages?channel=23.11&show=stern&from=0&size=50&sort=relevance&type=packages&query=stern) | [Stern GitHub](https://github.com/stern/stern) | Multi pod and container log tailing for Kubernetes | [Apache License 2.0](https://github.com/stern/stern/blob/master/LICENSE) | `devbox add stern@1.28.0` |
+| [fzf@0.47.0](https://search.nixos.org/packages?channel=23.11&show=fzf&from=0&size=50&sort=relevance&type=packages&query=fzf) | [fzf GitHub](https://github.com/junegunn/fzf) | A command-line fuzzy finder | [MIT License](https://github.com/junegunn/fzf/blob/master/LICENSE) | `devbox add fzf@0.47.0` |
+| [gomplate@3.11.7](https://search.nixos.org/packages?channel=23.11&show=gomplate&from=0&size=50&sort=relevance&type=packages&query=gomplate) | [Gomplate GitHub](https://github.com/hairyhenderson/gomplate) | Template renderer which supports various data sources | [MIT License](https://github.com/hairyhenderson/gomplate/blob/main/LICENSE) | `devbox add gomplate@3.11.7` |
+
+Install `devbox` and Accept All Defaults:
 
 ```sh
 curl -fsSL https://get.jetpack.io/devbox | bash
@@ -64,7 +94,7 @@ Start the `devbox shell` and if `nix` isn't available, you will be prompted to i
 devbox shell
 ```
 
-### Option 2: Using VSCode Devcontainer
+### Option 3: Using VSCode Devcontainer
 
 See Devcontainer Tutorial on using Devcontainer.json - [https://code.visualstudio.com/docs/devcontainers/tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
 
