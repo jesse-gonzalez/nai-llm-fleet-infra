@@ -57,7 +57,7 @@ tasks:
     cmds:
     - '[ -n "$(command -v gum)" ] || ./scripts/common/install_linux_gum.sh'
     - '[ -n "$(command -v age)" ] || ./scripts/common/install_linux_age.sh'
-    - '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
+    #- '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
     - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (./scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh);fi'
 
   install-packages:

@@ -6,13 +6,14 @@
     - [Option 2: Leverage Devbox NIX Shell as Development Environment](#option-2-leverage-devbox-nix-shell-as-development-environment)
     - [Bootstrapping each NKE Cluster](#bootstrapping-each-nke-cluster)
       - [Silent Bootstrap](#silent-bootstrap)
-  - [LLM Managment and Workload Component to Profile Mappings](#llm-managment-and-workload-component-to-profile-mappings)
-  - [Variables](#variables)
-    - [`k8s_cluster` Section](#k8s_cluster-section)
-    - [`flux` Section](#flux-section)
-    - [`infra` Section](#infra-section)
-    - [`services` Section](#services-section)
-    - [`apps` Section](#apps-section)
+  - [LLM Managment and Workload Profile Overview](#llm-managment-and-workload-profile-overview)
+    - [Component to Profile Mappings](#component-to-profile-mappings)
+    - [Variables](#variables)
+      - [`k8s_cluster` Section](#k8s_cluster-section)
+      - [`flux` Section](#flux-section)
+      - [`infra` Section](#infra-section)
+      - [`services` Section](#services-section)
+      - [`apps` Section](#apps-section)
   - [Appendix](#appendix)
     - [Directory Structure](#directory-structure)
 
@@ -51,8 +52,6 @@ Whether you're on a jumpserver, or running each step on local Linux/Windows term
 | Karbon Plugin                       | [Karbon CLI Docs](https://portal.nutanix.com/page/documents/details?targetId=Karbon-v2_1:kar-karbon-cli-reference-r.html) | `kubectl krew install karbon` (after installing Krew)                             | Same                                                                                                                                                                                                                            | Nutanix Karbon plugin for kubectl                                                | [Apache License 2.0](https://github.com/nutanix/karbon/blob/master/LICENSE)        |
 | jq                                  | [jq GitHub](https://github.com/stedolan/jq)                                                                               | `brew install jq`                                                                 | `sudo apt-get install jq`                                                                                                                                                                                                       | Command-line JSON processor                                                      | [MIT License](https://github.com/stedolan/jq/blob/master/COPYING)                  |
 | yq                                  | [yq GitHub](https://github.com/mikefarah/yq)                                                                              | `brew install yq`                                                                 | `wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq`                                                                                                           | Portable command-line YAML, JSON, and XML processor                              | [MIT License](https://github.com/mikefarah/yq/blob/master/LICENSE)                 |
-| Git                                 | [Git Docs](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)                                                 | `brew install git`                                                                | `sudo apt-get install git`                                                                                                                                                                                                      | Distributed version control system                                               | [GPL-2.0 License](https://github.com/git/git/blob/master/COPYING)                  |
-| ipcalc                              | [ipcalc GitHub](https://github.com/kjokjo/ipcalc)                                                                         | `brew install ipcalc`                                                             | `sudo apt-get install ipcalc`                                                                                                                                                                                                   | IP subnet calculator                                                             | [GPL-2.0 License](https://github.com/kjokjo/ipcalc/blob/master/LICENSE)            |
 | Gum Charm                           | [Gum GitHub](https://github.com/charmbracelet/gum)                                                                        | `brew install gum`                                                                | ```curl -sSL https://github.com/charmbracelet/gum/releases/latest/download/gum_linux_amd64.tar.gz \| tar xz && sudo mv gum /usr/local/bin/```                                                                                   | Tool for creating glamorous shell scripts                                        | [MIT License](https://github.com/charmbracelet/gum/blob/main/LICENSE)              |
 | arkade                              | [arkade GitHub](https://github.com/alexellis/arkade)                                                                      | `curl -sLS https://get.arkade.dev \| sudo sh`                                     | Same                                                                                                                                                                                                                            | Marketplace for downloading your favorite devops CLIs and installing helm charts | [MIT License](https://github.com/alexellis/arkade/blob/master/LICENSE)             |
 | GitHub CLI                          | [GitHub CLI Docs](https://cli.github.com/)                                                                                | `brew install gh`                                                                 | `sudo apt install gh`                                                                                                                                                                                                           | GitHub’s official command line tool                                              | [MIT License](https://github.com/cli/cli/blob/trunk/LICENSE)                       |
@@ -82,9 +81,7 @@ By default, Devbox will install the cli tool packages listed in `devbox.json` wh
 | [gum@0.13.0](https://search.nixos.org/packages?channel=23.11&show=gum&from=0&size=50&sort=relevance&type=packages&query=gum)                                     | [Gum GitHub](https://github.com/charmbracelet/gum)                        | Tool for creating glamorous shell scripts                                        | [MIT License](https://github.com/charmbracelet/gum/blob/main/LICENSE)                | `devbox add gum@0.13.0`             |
 | [gh@2.46.0](https://search.nixos.org/packages?channel=23.11&show=gh&from=0&size=50&sort=relevance&type=packages&query=gh)                                        | [GitHub CLI Docs](https://cli.github.com/)                                | GitHub's official command line tool                                              | [MIT License](https://github.com/cli/cli/blob/trunk/LICENSE)                         | `devbox add gh@2.46.0`              |
 | [kubectl@1.29.3](https://search.nixos.org/packages?channel=23.11&show=kubectl&from=0&size=50&sort=relevance&type=packages&query=kubectl)                         | [Kubectl Docs](https://kubernetes.io/docs/tasks/tools/)                   | Command-line tool for controlling Kubernetes clusters                            | [Apache License 2.0](https://github.com/kubernetes/kubernetes/blob/master/LICENSE)   | `devbox add kubectl@1.29.3`         |
-| [git@2.44.0](https://search.nixos.org/packages?channel=23.11&show=git&from=0&size=50&sort=relevance&type=packages&query=git)                                     | [Git Docs](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) | Distributed version control system                                               | [GPL-2.0 License](https://github.com/git/git/blob/master/COPYING)                    | `devbox add git@2.44.0`             |
 | [age@1.1.1](https://search.nixos.org/packages?channel=23.11&show=age&from=0&size=50&sort=relevance&type=packages&query=age)                                      | [Age GitHub](https://github.com/FiloSottile/age)                          | A simple, modern, and secure file encryption tool                                | [BSD 3-Clause License](https://github.com/FiloSottile/age/blob/master/LICENSE)       | `devbox add age@1.1.1`              |
-| [ipcalc@1.0.3](https://search.nixos.org/packages?channel=23.11&show=ipcalc&from=0&size=50&sort=relevance&type=packages&query=ipcalc)                             | [ipcalc GitHub](https://github.com/kjokjo/ipcalc)                         | IP subnet calculator                                                             | [GPL-2.0 License](https://github.com/kjokjo/ipcalc/blob/master/LICENSE)              | `devbox add ipcalc@1.0.3`           |
 | [arkade@0.11.6](https://search.nixos.org/packages?channel=23.11&show=arkade&from=0&size=50&sort=relevance&type=packages&query=arkade)                            | [arkade GitHub](https://github.com/alexellis/arkade)                      | Marketplace for downloading your favorite devops CLIs and installing helm charts | [MIT License](https://github.com/alexellis/arkade/blob/master/LICENSE)               | `devbox add arkade@0.11.6`          |
 | [yq-go@4.43.1](https://search.nixos.org/packages?channel=23.11&show=yq-go&from=0&size=50&sort=relevance&type=packages&query=yq-go)                               | [yq GitHub](https://github.com/mikefarah/yq)                              | Portable command-line YAML, JSON, and XML processor                              | [MIT License](https://github.com/mikefarah/yq/blob/master/LICENSE)                   | `devbox add yq-go@4.43.1`           |
 | [sops@3.8.1](https://search.nixos.org/packages?channel=23.11&show=sops&from=0&size=50&sort=relevance&type=packages&query=sops)                                   | [SOPS GitHub](https://github.com/mozilla/sops)                            | Encryption tool for managing secrets                                             | [Mozilla Public License 2.0](https://github.com/mozilla/sops/blob/develop/LICENSE)   | `devbox add sops@3.8.1`             |
@@ -99,6 +96,8 @@ By default, Devbox will install the cli tool packages listed in `devbox.json` wh
 | [gomplate@3.11.7](https://search.nixos.org/packages?channel=23.11&show=gomplate&from=0&size=50&sort=relevance&type=packages&query=gomplate)                      | [Gomplate GitHub](https://github.com/hairyhenderson/gomplate)             | Template renderer which supports various data sources                            | [MIT License](https://github.com/hairyhenderson/gomplate/blob/main/LICENSE)          | `devbox add gomplate@3.11.7`        |
 
 ### Bootstrapping each NKE Cluster
+
+Follow the procedures below for the management cluster until completion, then rinse and repeat for each subsequent workload specific cluster (e.g., prod, dev, qa, etc.)
 
 #### Silent Bootstrap
 
@@ -119,6 +118,10 @@ By default, Devbox will install the cli tool packages listed in `devbox.json` wh
         ## min. 2 ips for range (i.e., 10.38.110.22-10.38.110.23)
         ipam_range: required
     ```
+
+    For a breakdown of what components are required to be configured for each profile (i.e., `llm-management` or `llm-workloads`) based on environment-type (i.e., `non-prod` vs `prod`), see [LLM Managment and Workload Profile to Component Mappings](#llm-managment-and-workload-component-to-profile-mappings).
+
+    To see more detail on what variables are required for each component based on environment type, see [Variables](#variables).
 
 3. Generate and Validate Configurations
   
@@ -176,7 +179,9 @@ By default, Devbox will install the cli tool packages listed in `devbox.json` wh
 
     > NOTE: if there are any issues, update local git repo, push up changes and run `task flux:reconcile`
 
-## LLM Managment and Workload Component to Profile Mappings
+## LLM Managment and Workload Profile Overview
+
+### Component to Profile Mappings
 
 The table below provides an overview of which components are recommended to be configured based on the different profile types and environments listed under `clusters/_profiles/llm-*`.
 
@@ -213,7 +218,7 @@ Legend:
 | GPT NVD Reference App      | `gptnvd_reference_app.enabled`    |         ❌           |         ✅           |
 | NAI LLM Helm Chart         | `nai_helm.enabled`                |         ❌           |         ✅           |
 
-## Variables
+### Variables
 
 Below are the various variables and values that could be defined with the `.env.CLUSTER_NAME.yaml` configuration file.
 
@@ -221,7 +226,7 @@ The parameters are listed based on the various sections required for either all 
 
 > NOTE: While `prod` is in the naming convention of `environment` name, it is only intended to demonstrate what a `production-like` configuration may require from an advanced configuration perspective, such as valid TLS, monitoring, logging, HA, etc.
 
-### `k8s_cluster` Section
+#### `k8s_cluster` Section
 
 This section is required for all profiles and environments. It includes configurations for the Kubernetes cluster, Docker Hub registry, and GPU-specific settings.
 
@@ -239,7 +244,7 @@ This section is required for all profiles and environments. It includes configur
 | `gpu_operator.time_slicing.enabled`       | No       | false           | llm-workloads (non-prod) | Enable GPU time slicing. Example: true                                                                                              |
 | `gpu_operator.time_slicing.replica_count` | No       | 2               | llm-workloads (non-prod) | Number of replicas for GPU time slicing. Example: 3                                                                                 |
 
-### `flux` Section
+#### `flux` Section
 
 This section is required for all profiles and environments. It includes Flux-specific configurations for the GitHub repository.
 
@@ -249,7 +254,7 @@ This section is required for all profiles and environments. It includes Flux-spe
 | `github.repo_user`      | Yes      | ""            | All                      | GitHub username for Flux. Example: github_user                        |
 | `github.repo_api_token` | Yes      | ""            | All                      | GitHub API token for Flux. Example: github_token                      |
 
-### `infra` Section
+#### `infra` Section
 
 This section is required for all profiles and environments. It includes global Nutanix configurations, including Prism Central credentials and Nutanix Objects Store configurations.
 
@@ -267,7 +272,7 @@ This section is required for all profiles and environments. It includes global N
 | `nutanix.objects.access_key`     | No (Required - If objects section enabled) | ""            | llm-management, llm-workloads | Nutanix Objects store access key. Example: access_key   |
 | `nutanix.objects.secret_key`     | No (Required - If objects section enabled) | ""            | llm-management, llm-workloads | Nutanix Objects store secret key. Example: secret_key   |
 
-### `services` Section
+#### `services` Section
 
 This section is required for all profiles and environments. It includes configurations for various services such as kube-vip, nginx-ingress, istio, and others.
 
@@ -319,7 +324,7 @@ This section is required for all profiles and environments. It includes configur
 | `weave_gitops.enabled`                               | No                                                      | true            | All                      | Enable Weave GitOps. Example: false                                                                                                  |
 | `weave_gitops.version`                               | No                                                      | 4.0.36          | All                      | Version of Weave GitOps. Example: 4.1.0                                                                                              |
 
-### `apps` Section
+#### `apps` Section
 
 This section is required only for llm-workloads profiles and environments. It includes configurations for the GPT NVD Reference Application and NAI LLM Helm Chart.
 

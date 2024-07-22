@@ -1,6 +1,5 @@
 brew "age"
 brew "gum"
-brew "ipcalc"
 brew "gomplate"
 brew "go-task"
 brew "jq"

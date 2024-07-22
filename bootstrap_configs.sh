@@ -166,17 +166,17 @@ _has_envar() {
     fi
 }
 
-_has_valid_ip() {
-    local ip="${1}"
-    local variable_name="${2}"
+# _has_valid_ip() {
+#     local ip="${1}"
+#     local variable_name="${2}"
 
-    if ! ipcalc "${ip}" | awk 'BEGIN{FS=":"; is_invalid=0} /^INVALID/ {is_invalid=1; print $1} END{exit is_invalid}' >/dev/null 2>&1; then
-      _log "INFO" "Variable '${variable_name}' has an invalid IP address '${ip}'"
-      exit 1
-    else
-      _log "INFO" "Variable '${variable_name}' has a valid IP address '${ip}'"
-    fi
-}
+#     if ! ipcalc "${ip}" | awk 'BEGIN{FS=":"; is_invalid=0} /^INVALID/ {is_invalid=1; print $1} END{exit is_invalid}' >/dev/null 2>&1; then
+#       _log "INFO" "Variable '${variable_name}' has an invalid IP address '${ip}'"
+#       exit 1
+#     else
+#       _log "INFO" "Variable '${variable_name}' has a valid IP address '${ip}'"
+#     fi
+# }
 
 generate_age() {
     _has_envar "SOPS_AGE_KEY_FILE"
@@ -205,7 +205,7 @@ verify_binaries() {
     #_has_binary "envsubst"
     _has_binary "git"
     _has_binary "age"
-    _has_binary "ipcalc"
+    #_has_binary "ipcalc"
     _has_binary "jq"
     _has_binary "yq"
     _has_binary "sops"
@@ -291,13 +291,13 @@ verify_kubevip() {
     ip_floor=$(echo "${BOOTSTRAP_kube_vip_ipam_range}" | cut -d- -f1)
     ip_ceil=$(echo "${BOOTSTRAP_kube_vip_ipam_range}" | cut -d- -f2)
 
-    _has_valid_ip "${ip_floor}" "BOOTSTRAP_kube_vip_ipam_range"
+    #_has_valid_ip "${ip_floor}" "BOOTSTRAP_kube_vip_ipam_range"
 
     _has_envar "BOOTSTRAP_kube_vip_istio_system_ipam"
     _has_envar "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
     
-    _has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
-    _has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    #_has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
+    #_has_valid_ip "${BOOTSTRAP_kube_vip_nginx_ingress_ipam}" "BOOTSTRAP_kube_vip_nginx_ingress_ipam"
 }
 
 verify_git_repository() {
