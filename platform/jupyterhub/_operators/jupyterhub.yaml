@@ -38,7 +38,7 @@ spec:
   upgrade:
     remediation:
       retries: 30
-    preserveValues: true
+    preserveValues: false
   values:
     singleuser:
       defaultUrl: "/lab"
