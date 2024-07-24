@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jupyterhub
+  labels:
+    toolkit.fluxcd.io/tenant: platform-team
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
@@ -27,7 +34,7 @@ spec:
   install:
     remediation:
       retries: 30
-    createNamespace: true
+    createNamespace: false
     replace: true
   upgrade:
     remediation:
