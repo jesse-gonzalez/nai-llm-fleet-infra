@@ -28,15 +28,11 @@ spec:
     remediation:
       retries: 30
     createNamespace: true
+    replace: true
   upgrade:
     remediation:
       retries: 30
-    preserveValues: true
-  valuesFrom:
-  - kind: ConfigMap
-    name: cluster-configs
-    valuesKey: jupyterhub_values_override
-    optional: true
+    preserveValues: false
   values:
     singleuser:
       defaultUrl: "/lab"
@@ -69,7 +65,9 @@ spec:
           password: ${jupyterhub_default_pass}
         JupyterHub:
           authenticator_class: dummy
-    proxy:
-      service:
-        type: ClusterIP
+  valuesFrom:
+  - kind: ConfigMap
+    name: cluster-configs
+    valuesKey: jupyterhub_values_override
+    optional: true
 
