@@ -36,6 +36,7 @@ spec:
   - kind: ConfigMap
     name: cluster-configs
     valuesKey: jupyterhub_values_override
+    optional: true
   values:
     singleuser:
       defaultUrl: "/lab"
