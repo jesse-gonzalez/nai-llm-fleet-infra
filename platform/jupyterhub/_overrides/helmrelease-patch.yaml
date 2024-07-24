@@ -4,5 +4,7 @@ metadata:
   name: jupyterhub
   namespace: flux-system
 spec:
-  values: |-
-    ${jupyter_hub_values_override}
+  valuesFrom:
+  - kind: ConfigMap
+    name: cluster-configs
+    valuesKey: jupyterhub_values_override
