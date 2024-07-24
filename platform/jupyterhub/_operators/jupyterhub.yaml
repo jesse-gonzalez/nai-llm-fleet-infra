@@ -29,14 +29,15 @@ spec:
         kind: HelmRepository
         name: jupyterhub
       version: ${jupyterhub_version}
-  interval: 30m
-  timeout: 10m
+  interval: 15s
+  timeout: 30m
   install:
     remediation:
-      retries: 3
+      retries: 30
+    createNamespace: false
   upgrade:
     remediation:
-      retries: 3
+      retries: 30
     preserveValues: true
   values:
     singleuser:
