@@ -66,13 +66,8 @@ spec:
         Authenticator:
           admin_users:
           - admin
-          allowed_users:
-          - user1
-          - user2
-          - user3
-          - user4
         DummyAuthenticator:
-          password: nutanix.1
+          password: ${jupyterhub_default_pass}
         JupyterHub:
           authenticator_class: dummy
 

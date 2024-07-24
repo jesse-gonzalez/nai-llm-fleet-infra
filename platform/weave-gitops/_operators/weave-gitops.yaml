@@ -58,4 +58,4 @@ spec:
       create: true
       username: admin
       # Change password by leveraging bcrypt hash generator
-      passwordHash: "$2y$10$p0N51SS/qdLtCO6FtLZuVeOdGyTGkmw.UJjYEVF42UdqWg7l5HiW."
+      passwordHash: ${weave_gitops_default_pass}
