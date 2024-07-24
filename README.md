@@ -4,7 +4,7 @@
   - [Getting Started](#getting-started)
     - [Option 1: Install Minimal CLI Tools on Local Machine / JumpServer](#option-1-install-minimal-cli-tools-on-local-machine--jumpserver)
     - [Option 2: Leverage Devbox NIX Shell as Development Environment](#option-2-leverage-devbox-nix-shell-as-development-environment)
-    - [Bootstrapping each NKE Cluster](#bootstrapping-each-nke-cluster)
+    - [Bootstrapping Management and Workload NKE Clusters](#bootstrapping-management-and-workload-nke-clusters)
       - [Silent Bootstrap](#silent-bootstrap)
   - [LLM Managment and Workload Profile Overview](#llm-managment-and-workload-profile-overview)
     - [Component to Profile Mappings](#component-to-profile-mappings)
@@ -95,9 +95,9 @@ By default, Devbox will install the cli tool packages listed in `devbox.json` wh
 | [fzf@0.47.0](https://search.nixos.org/packages?channel=23.11&show=fzf&from=0&size=50&sort=relevance&type=packages&query=fzf) | [fzf GitHub](https://github.com/junegunn/fzf) | A command-line fuzzy finder | [MIT License](https://github.com/junegunn/fzf/blob/master/LICENSE) | `devbox add fzf@0.47.0` |
 | [gomplate@3.11.7](https://search.nixos.org/packages?channel=23.11&show=gomplate&from=0&size=50&sort=relevance&type=packages&query=gomplate) | [Gomplate GitHub](https://github.com/hairyhenderson/gomplate) | Template renderer which supports various data sources | [MIT License](https://github.com/hairyhenderson/gomplate/blob/main/LICENSE) | `devbox add gomplate@3.11.7` |
 
-### Bootstrapping each NKE Cluster
+### Bootstrapping Management and Workload NKE Clusters
 
-Follow the procedures below for the management cluster until completion, then rinse and repeat for each subsequent workload specific cluster (e.g., prod, dev, qa, etc.)
+Follow the procedures below for the management cluster has run into full completion, then rinse and repeat for each subsequent workload specific cluster (e.g., prod, dev, qa, etc.)
 
 #### Silent Bootstrap
 

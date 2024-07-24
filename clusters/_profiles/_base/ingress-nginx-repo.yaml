@@ -18,7 +18,7 @@ spec:
   path: ./platform/ingress-nginx/_operators
   prune: true
   wait: true
-  timeout: 5m
+  timeout: 10m
   postBuild:
     substitute:
       namespace_name: ingress-nginx
