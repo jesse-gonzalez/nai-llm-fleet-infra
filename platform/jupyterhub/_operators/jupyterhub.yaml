@@ -72,6 +72,9 @@ spec:
           password: ${jupyterhub_default_pass}
         JupyterHub:
           authenticator_class: dummy
+    proxy:
+      service:
+        type: ClusterIP
   valuesFrom:
   - kind: ConfigMap
     name: cluster-configs
