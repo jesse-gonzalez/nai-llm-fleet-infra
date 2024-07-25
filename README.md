@@ -321,8 +321,34 @@ This section is required for all profiles and environments. It includes configur
 | `uptrace.version` | No | 1.5.7 | llm-management | Version of Uptrace. Example: 1.6.0 |
 | `jupyterhub.enabled` | No | false | llm-workloads (non-prod) | Enable JupyterHub. Example: true |
 | `jupyterhub.version` | No | 3.1.0 | llm-workloads (non-prod) | Version of JupyterHub. Example: 3.2.0 |
-| `weave_gitops.enabled` | No | true | All | Enable Weave GitOps. Example: false |
-| `weave_gitops.version` | No | 4.0.36 | All | Version of Weave GitOps. Example: 4.1.0 |
+| `jupyterhub.password` | No | "" | llm-workloads (non-prod) | JupyterHub Default password for admin and allowed_users. Example: jupyterhub_password |
+| `jupyterhub.overrides` | No | {} | llm-workloads (non-prod) | JupyterHub Custom Overrides YAML. Similar to helm-chart values key-pair values. Used to override values not handled by default (ex. adding custom allowed_users). Example below |
+| `weave_gitops.enabled` | Yes | true | All | Enable Weave GitOps. Example: false |
+| `weave_gitops.version` | Yes | 4.0.36 | All | Version of Weave GitOps. Example: 4.1.0 |
+| `weave_gitops.password` | Yes | "" | All | Weave Gitops password for admin and allowed_users. Example: weave_gitops_password |
+
+---
+
+Example of `jupyterhub.overrides` in JupyterHub section:
+
+  ```yaml
+  ## Jupyterhub is deployed on non-prod workload clusters in NVD Reference
+  jupyterhub:
+    enabled: true
+    version: 3.1.0
+    ## default admin account password
+    default_password: Nutanix.123
+    ## this will merge or override only the inline values defined within platform/jupyterhub/_operators/jupyterhub.yaml, 
+    ## but could be overriden by add-ons/patches, so use at your own risk
+    ## example below merges hub config with additional users:
+    overrides: |-
+      hub:
+        config:
+          Authenticator:
+            allowed_users:
+            - wolfgang
+            - jesse
+  ```
 
 #### `apps` Section
 
