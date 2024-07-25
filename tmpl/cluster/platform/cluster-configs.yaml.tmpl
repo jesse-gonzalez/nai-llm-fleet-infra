@@ -85,7 +85,7 @@ data:
 {{- end }}
 {{- if $services.jupyterhub.enabled }}
   jupyterhub_version: {{with $services.jupyterhub.version | quote | required }}{{.}}{{end}}
-  jupyterhub_values_override: |-
+  jupyterhub_overrides: |-
 {{with $services.jupyterhub.overrides | indent 4 }}{{.}}{{end}}
 {{- end }}
 {{- if $services.elasticsearch.enabled }}

@@ -5,7 +5,7 @@ tasks:
   default:
   - task: :helpers:validate
     vars:
-      REQUIRED_TOOLS_LIST: gum,kubectl,git,age,jq,yq,sops,age-keygen,kubectl-karbon,gomplate
+      REQUIRED_TOOLS_LIST: gum,kubectl,git,age,jq,yq,sops,age-keygen,kubectl-karbon,gomplate,htpasswd
 
   silent:
     silent: true

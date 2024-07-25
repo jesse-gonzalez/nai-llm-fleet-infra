@@ -33,10 +33,10 @@ data:
   uptrace_version: "1.5.7"
   weave_gitops_version: "4.0.36"
   jupyterhub_version: "3.1.0"
-  jupyterhub_values_override: |-
+  jupyterhub_overrides: |-
     hub:
       config:
         Authenticator:
           allowed_users:
-          - user1
-          - user2
+          - wolfgang
+          - jesse
