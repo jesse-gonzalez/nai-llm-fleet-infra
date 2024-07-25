@@ -65,9 +65,6 @@ data:
 {{- if $services.knative_istio.enabled }}
   knative_istio_version: {{with $services.knative_istio.version | quote | required }}{{.}}{{end}}
 {{- end }}
-{{- if $services.kubernetes_dashboard.enabled }}
-  kubernetes_dashboard_version: {{with $services.kubernetes_dashboard.version | quote | required }}{{.}}{{end}}
-{{- end }}
 {{- if $services.kyverno.enabled }}
   kyverno_version: {{with $services.kyverno.version | quote | required }}{{.}}{{end}}
 {{- end }}
@@ -87,10 +84,4 @@ data:
   jupyterhub_version: {{with $services.jupyterhub.version | quote | required }}{{.}}{{end}}
   jupyterhub_overrides: |-
 {{with $services.jupyterhub.overrides | indent 4 }}{{.}}{{end}}
-{{- end }}
-{{- if $services.elasticsearch.enabled }}
-  elasticsearch_version: {{with $services.elasticsearch.version | quote | required }}{{.}}{{end}}
-{{- end }}
-{{- if $services.redis.enabled }}
-  redis_version: {{with $services.redis.version | quote | required }}{{.}}{{end}}
 {{- end }}
