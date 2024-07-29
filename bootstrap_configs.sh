@@ -211,6 +211,7 @@ verify_binaries() {
     _has_binary "sops"
     _has_binary "task"
     _has_binary "age-keygen"
+    _has_binary "htpasswd"
 }
 
 verify_vars(){

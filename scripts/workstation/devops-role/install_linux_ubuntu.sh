@@ -15,5 +15,6 @@ if grep -q -i ubuntu /etc/os-release; then
     shellcheck \
     fzf \
     tmux \
-    zstd
+    zstd \
+    apache2-utils
 fi
