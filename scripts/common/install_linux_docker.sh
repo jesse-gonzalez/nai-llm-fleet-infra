@@ -8,7 +8,7 @@ curl -fsSL https://get.docker.com | sudo bash
 
 ## https://docs.docker.com/engine/install/linux-postinstall/
 
-sudo groupadd docker
+sudo groupadd docker -f
 sudo usermod -aG docker $USER
 newgrp docker
 

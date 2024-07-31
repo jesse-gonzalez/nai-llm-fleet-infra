@@ -10,7 +10,7 @@ alias ke="kubectl explain"
 alias ker="kubectl explain --recursive"
 alias kns='kubens'
 alias kctx='kubectx'
-alias stern="stern --tail 10 --since 5m"
+alias stern="kubectl stern --tail 10 --since 5m"
 
 # bash completion stuff
 complete -F __start_kubectl k

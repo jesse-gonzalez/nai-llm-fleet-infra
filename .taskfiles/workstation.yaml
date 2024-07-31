@@ -5,9 +5,9 @@ env:
   USER_ROLE: '{{default "minimal-role" .USER_ROLE}}'
 
 vars:
-  BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Brewfile"
-  ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Arkfile"
-  KREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/${USER_ROLE}/Krewfile"
+  BREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/{{.USER_ROLE}}/Brewfile"
+  ARKADE_FILE: "{{.ROOT_DIR}}/scripts/workstation/{{.USER_ROLE}}/Arkfile"
+  KREW_FILE: "{{.ROOT_DIR}}/scripts/workstation/{{.USER_ROLE}}/Krewfile"
 
 tasks:
 
@@ -58,7 +58,7 @@ tasks:
     - '[ -n "$(command -v gum)" ] || ./scripts/common/install_linux_gum.sh'
     - '[ -n "$(command -v age)" ] || ./scripts/common/install_linux_age.sh'
     #- '[ -n "$(command -v ipcalc)" ] || ./scripts/common/install_linux_ipcalc.sh'
-    - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (./scripts/workstation/${USER_ROLE}/install_linux_ubuntu.sh);fi'
+    - 'if (grep -q -i ubuntu /etc/os-release 1> /dev/null 2>&1);then (./scripts/workstation/{{.USER_ROLE}}/install_linux_ubuntu.sh);fi'
 
   install-packages:
     prompt: This will install all required packages locally... Are you certain you wish to continue?
@@ -114,9 +114,8 @@ tasks:
     - |
       {{if eq OS "linux"}}
         task workstation:install-linux-packages USER_ROLE=devops-role --yes
-        task workstation:arkade --yes
-        task workstation:krew --yes
-        task workstation:install-docker --yes
+        task workstation:arkade USER_ROLE=devops-role --yes
+        task workstation:krew USER_ROLE=devops-role --yes
         task workstation:install-dkp --yes
         task workstation:load-dotfiles --yes
       {{end}}

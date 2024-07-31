@@ -62,6 +62,9 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 ## add arkade bin
 export PATH=$PATH:$HOME/.arkade/bin/
 
+## add krew bin
+export PATH=$PATH:$HOME/.krew/bin/
+
 ## PS1 prompt to include git and kube-ps1 prompt
 source /opt/kube-ps1/kube-ps1.sh
 export KUBE_PS1_SYMBOL_ENABLE=false
